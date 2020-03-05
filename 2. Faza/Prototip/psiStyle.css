@@ -1,5 +1,5 @@
 .myRow{
-    background-color: 000fff;
+    background-color: darkslateblue;
     height: 100px;
 }
 
@@ -16,6 +16,19 @@
     text-align: right;
 }
 
+.pictureCell{
+    width:10%;
+}
+
+.textCentered{
+    text-align: center;
+}
+
+.classTableDesc{
+    text-align:left;
+    /*background-color: blanchedalmond;*/
+}
+
 .noPadding{
     padding: 0;
 }
@@ -23,10 +36,21 @@
 .leftPadding{
     padding-left: 25px;
 }
+
 #menu{
     color:gold;
     text-align:right;
     font-size 30px;
+}
+
+.textRed{
+    color:red;
+    font-weight: bold;
+}
+
+.tableInit{
+    border-color:green;
+    border-width:5px;
 }
 
 a:link{
