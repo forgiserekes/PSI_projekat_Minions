@@ -3,6 +3,26 @@
     height: 100px;
 }
 
+.myRowSmall{
+    background-color: darkslateblue;
+    height: 30px;
+}
+
+.myText{
+    color: gold;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+}
+
+.leftAlign{
+    text-align:left;
+}
+.rightAlign{
+    text-align: right;
+}
+
+
 .myTitle{
     color: gold;
     font-weight: bold;
@@ -40,7 +60,7 @@
 #menu{
     color:gold;
     text-align:right;
-    font-size 30px;
+    font-size: 30px;
 }
 
 .textRed{
