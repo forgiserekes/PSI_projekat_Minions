@@ -8,6 +8,24 @@
     height: 30px;
 }
 
+.smestiSeStyle{
+    color:gold;
+    font-style: oblique;
+    font-size:70px;
+    text-align: center;
+    text-shadow: 2px 2px black;
+}
+
+.myRowGraySmall{
+    background-color: gray;
+    height: 30px;
+}
+
+.blackTextTitleCenter{
+    color:darkslategray;
+    font-size: 30px;
+    text-align: center;
+}
 .myText{
     color: gold;
     font-weight: bold;
@@ -15,14 +33,67 @@
     text-align: right;
 }
 
+.myTextCenter{
+    color:gold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.imgAvatar{
+    border-radius: 50%;
+}
+.myTextLeft{
+    color:gold;
+    font-size:20px;
+    text-align:left;
+}
+
+.myTextRight{
+    color:gold;
+    font-size:20px;
+    text-align:right;
+}
+
+.blackTextCenter{
+    color:darkslategray;
+    font-size: 20px;
+    text-align: center;
+}
+
+.blackTextLeft{
+    color:darkslategray;
+    font-size:20px;
+    text-align:left;
+}
+
+.blackTextRight{
+    color:darkslategray;
+    font-size:20px;
+    text-align:right;
+}
+
+
+.tableText{
+    color:darkslategray;
+    position:relative;
+}
+
+.tableBorder{
+    border:3px;
+    border-right: darkslategray;
+}
+
 .leftAlign{
     text-align:left;
 }
+
 .rightAlign{
     text-align: right;
 }
 
-
+.marginTop{
+    margin-top: 15px;
+}
 .myTitle{
     color: gold;
     font-weight: bold;
@@ -53,14 +124,16 @@
     padding: 0;
 }
 
-.leftPadding{
+.leftPadding25{
     padding-left: 25px;
 }
 
-#menu{
-    color:gold;
-    text-align:right;
-    font-size: 30px;
+.rightPadding21{
+    padding-right: 21px;
+}
+
+.rightPadding41{
+    padding-right: 41px;
 }
 
 .textRed{
@@ -80,3 +153,48 @@ a:link{
 a:visited{
     color:gold;
 }
+
+.rating
+{
+    display: inline-flex;
+    transform:rotateY(180deg);
+}
+
+.rating label{
+    cursor: pointer;
+    display: inline-flex;
+}
+
+.rating input{
+    display: none;
+}
+
+.rating label:before{
+    content:'\f005';
+    font-family: fontAwesome;
+    color: darkslateblue;
+    top:0;
+    display: block;
+}
+
+.rating label:after{
+    content:'\f005';
+    font-family: fontAwesome;
+    color: gold;
+    display: block;
+    opacity: 0;
+    position:absolute;
+    transition: .5s;
+    text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.rating input:checked {
+    color:gold;
+}
+
+.rating label:hover:after,
+.rating input:checked ~ label:after{
+    opacity: 1;
+}
+
+
