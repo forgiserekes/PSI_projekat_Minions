@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Pogresna lozinka</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel = "stylesheet" href = "psiStyle.css">
+    </head>
+        <body>
+            <div class = 'container'>
+                <div class='row myRow' id='menu'>
+                    <div class='col-sm-1 myTitle leftPadding'>
+                        <img src='slike/logo2.jpg' width="100" height="100">
+                    </div>
+                </div>
+                <div class = 'row'>
+                    <div class = 'col-sm-12 text-center'>
+                        <h2>Prijavite se</h2>
+                        <hr>
+                    </div>
+                </div>
+                <div class = 'row'>
+                    <div class = 'offset-sm-4 '>
+                        <form method="POST" action="pocetna_stranica.html"> 
+                            <table>
+                                <tr>
+                                    <td>Korisnicko ime</td>
+                                        <td>
+                                            <input type='text' name='username'>
+                                        </td>
+                                </tr>
+                                <tr>
+                                    <td>Lozinka</td>
+                                    <td>
+                                        <input type='password' name = "pass">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan='2' class='text-center'>
+                                       <button class = 'btn btn-success offset-sm-3 col-sm-6'>Uloguj se</button> 
+                                    </td>
+                                </tr>
+                                <tr> 
+                                    <td colspan='2' class='text-center textRed'>
+                                        Pogresna lozinka, pokusajte ponovo.
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+                <footer align='center'>
+                    Copyright &reg;
+                </footer>
+            </div>
+        </body>
+</html>

@@ -1,0 +1,82 @@
+.myRow{
+    background-color: darkslateblue;
+    height: 100px;
+}
+
+.myRowSmall{
+    background-color: darkslateblue;
+    height: 30px;
+}
+
+.myText{
+    color: gold;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+}
+
+.leftAlign{
+    text-align:left;
+}
+.rightAlign{
+    text-align: right;
+}
+
+
+.myTitle{
+    color: gold;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.myLoginRegister{
+    color:gold;
+    font-weight: bold;
+    font-size:20px;
+    text-align: right;
+}
+
+.pictureCell{
+    width:10%;
+}
+
+.textCentered{
+    text-align: center;
+}
+
+.classTableDesc{
+    text-align:left;
+    /*background-color: blanchedalmond;*/
+}
+
+.noPadding{
+    padding: 0;
+}
+
+.leftPadding{
+    padding-left: 25px;
+}
+
+#menu{
+    color:gold;
+    text-align:right;
+    font-size: 30px;
+}
+
+.textRed{
+    color:red;
+    font-weight: bold;
+}
+
+.tableInit{
+    border-color:green;
+    border-width:5px;
+}
+
+a:link{
+    color:gold;
+}
+
+a:visited{
+    color:gold;
+}
