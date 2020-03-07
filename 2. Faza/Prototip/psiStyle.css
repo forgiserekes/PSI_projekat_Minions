@@ -72,6 +72,45 @@
     text-align:right;
 }
 
+.goldText{
+    color:gold;
+    font-weight: bold;
+}
+.darkText{
+    color:darkslategray;
+    font-weight: bold;
+}
+
+.textCenter{
+    text-align:center;
+}
+
+.textLeft{
+    text-align:left;
+}
+
+.textRight{
+    text-align:right;
+}
+
+.textSize10{
+    font-size:10;
+}
+
+.textSize15{
+    font-size:15;
+}
+.textSize20{
+    font-size:20;
+}
+
+.textSize25{
+    font-size:25;
+}
+
+.textSize30{
+    font-size:30;
+}
 
 .tableText{
     color:darkslategray;
