@@ -11,7 +11,7 @@ html,body{
 
 .bodyContent{
     /*background-image: linear-gradient("#F09819","#EDDE5D");*/
-    background-image: url("slike/pozadina1.jpg");
+    background-image: url('../slike/pozadina1.jpg');
     margin: auto;
     background-position: center; 
 }
@@ -29,6 +29,7 @@ html,body{
     margin: auto;
     text-align:left;
 }
+
 .gallery{
  margin:auto;   
 }
@@ -49,10 +50,14 @@ html,body{
     width:70%;
     margin:auto;
 }
+.registerDiv{
+    width:30%;
+    margin:auto;
+}
 
-.myRow{
-    background-color: rgb(48, 168, 184);
-    height: 100px;
+.adPlacingDiv{
+    width:40%;
+    margin:auto;
 }
 
 .lateBlueBackground{
@@ -84,6 +89,15 @@ html,body{
     font-size:70px;
     text-align: center;
     text-shadow: 2px 2px gray;
+}
+
+#mainTitle a:link,a:visited,a:hover{
+    color:gold;
+    text-decoration: none;
+}
+
+#logReg a:hover,a:visited,a:active{
+    color:gold;
 }
 
 .myRowGraySmall{
@@ -217,11 +231,6 @@ html,body{
 .marginTop{
     margin-top: 15px;
 }
-.myTitle{
-    color: gold;
-    font-weight: bold;
-    font-size: 30px;
-}
 
 .myLoginRegister{
     color:gold;
@@ -237,7 +246,6 @@ html,body{
 .grayBackground{
     background-color:lightgray
 }
-
 
 .pictureCell{
     width:10%;
@@ -274,14 +282,6 @@ html,body{
 .textRed{
     color:red;
     font-weight: bold;
-}
-
-a:link{
-    color:gold;
-}
-
-a:visited{
-    color:gold;
 }
 
 .rating

@@ -7,14 +7,14 @@
 </head>
 <body>
     <div class='header'>
-        <div class='row myRow col-sm-12'>
+        <div class='row col-sm-12'>
             <div class='col-sm-4 myTextLeft'>
                 <img class='leftAlign' src="<?=base_url('slike/logo2.png');?>" width="100" height="100">
             </div>
-            <div class='col-sm-4 myTextCenter'>
-                <h2 class='smestiSeStyle'>Smesti.se</h2>
+            <div class='col-sm-4 myTextCenter' id='mainTitle'>
+                <?= anchor("Gost/backToHome", "<h2 class='smestiSeStyle'>Smesti.se</h2>") ?>
             </div>
-            <div class='col-sm-4 myTextRight'>
+            <div class='col-sm-4 myTextRight' id='logReg'>
                 <?= anchor("Gost/login", "Uloguj se") ?>|
                 <?= anchor("Gost/register", "Registruj se") ?>
             </div>
