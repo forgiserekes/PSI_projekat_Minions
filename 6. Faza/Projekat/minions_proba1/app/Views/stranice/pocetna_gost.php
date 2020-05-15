@@ -18,14 +18,14 @@
                 </div>
             </div>
             <div class='row col-sm-12'>
-                <div class='col-sm-6 left'>
+                <div class='col-sm-6 blackTextLeft'>
                     <h3>Vila Bavaniste, Bavaniste</h3>                    
                 </div>
-                <div class='col-sm-6 right'>
+                <div class='col-sm-6 blackTextRight'>
                     <h5>30e | <a href='smestaj.html'>Pregledaj oglas</a></h5>
                 </div>
             </div>
-             <div class='col-sm-12'>
+             <div class='col-sm-12 blackTextLeft textSize15'>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum vulputate sagittis. Morbi sem massa, vehicula auctor quam at, ultrices dapibus urna. Sed ullamcorper est sed urna dapibus, sit amet feugiat risus auctor.
                     Sed ac dui eget augue iaculis iaculis. Pellentesque vitae posuere arcu, at posuere enim. Nulla at maximus nisl. Donec ut euismod libero, vel elementum velit.
@@ -52,14 +52,14 @@
                 </div>
             </div>
             <div class='row col-sm-12'>
-                <div class='col-sm-6 left'>
+                <div class='col-sm-6 blackTextLeft'>
                     <h3>Zam Residence, Valjevo</h3>                    
                 </div>
-                <div class='col-sm-6 right'>
+                <div class='col-sm-6 blackTextRight'>
                     <h5>30e | <a href='smestaj.html'>Pregledaj oglas</a></h5>
                 </div>
             </div>
-             <div class='col-sm-12'>
+             <div class='col-sm-12 blackTextLeft textSize15'>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum vulputate sagittis. Morbi sem massa, vehicula auctor quam at, ultrices dapibus urna. Sed ullamcorper est sed urna dapibus, sit amet feugiat risus auctor.
                     Sed ac dui eget augue iaculis iaculis. Pellentesque vitae posuere arcu, at posuere enim. Nulla at maximus nisl. Donec ut euismod libero, vel elementum velit.
@@ -86,14 +86,14 @@
                 </div>
             </div>
             <div class='row col-sm-12'>
-                <div class='col-sm-6 left'>
+                <div class='col-sm-6 blackTextLeft'>
                     <h3>Vila Valjevo, Valjevo</h3>                    
                 </div>
-                <div class='col-sm-6 right'>
+                <div class='col-sm-6 blackTextRight'>
                     <h5>30e | <a href='smestaj.html'>Pregledaj oglas</a></h5>
                 </div>
             </div>
-             <div class='col-sm-12'>
+             <div class='col-sm-12 blackTextLeft textSize15'>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum vulputate sagittis. Morbi sem massa, vehicula auctor quam at, ultrices dapibus urna. Sed ullamcorper est sed urna dapibus, sit amet feugiat risus auctor.
                     Sed ac dui eget augue iaculis iaculis. Pellentesque vitae posuere arcu, at posuere enim. Nulla at maximus nisl. Donec ut euismod libero, vel elementum velit.
@@ -120,14 +120,14 @@
                 </div>
             </div>
             <div class='row col-sm-12'>
-                <div class='col-sm-6 left'>
+                <div class='col-sm-6 blackTextLeft'>
                     <h3>Rooms 'Skockana', Pancevo</h3>                    
                 </div>
-                <div class='col-sm-6 right'>
+                <div class='col-sm-6 blackTextRight'>
                     <h5>30e | <a href='smestaj.html'>Pregledaj oglas</a></h5>
                 </div>
             </div>
-             <div class='col-sm-12'>
+             <div class='col-sm-12 blackTextLeft textSize15'>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum vulputate sagittis. Morbi sem massa, vehicula auctor quam at, ultrices dapibus urna. Sed ullamcorper est sed urna dapibus, sit amet feugiat risus auctor.
                     Sed ac dui eget augue iaculis iaculis. Pellentesque vitae posuere arcu, at posuere enim. Nulla at maximus nisl. Donec ut euismod libero, vel elementum velit.
@@ -154,14 +154,14 @@
                 </div>
             </div>
             <div class='row col-sm-12'>
-                <div class='col-sm-6 left'>
+                <div class='col-sm-6 blackTextLeft'>
                     <h3>Hotel Kragujevac, Kragujevac</h3>                    
                 </div>
-                <div class='col-sm-6 right'>
+                <div class='col-sm-6 blackTextRight'>
                     <h5>30e | <a href='smestaj.html'>Pregledaj oglas</a></h5>
                 </div>
             </div>
-             <div class='col-sm-12'>
+             <div class='col-sm-12 blackTextLeft textSize15'>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum vulputate sagittis. Morbi sem massa, vehicula auctor quam at, ultrices dapibus urna. Sed ullamcorper est sed urna dapibus, sit amet feugiat risus auctor.
                     Sed ac dui eget augue iaculis iaculis. Pellentesque vitae posuere arcu, at posuere enim. Nulla at maximus nisl. Donec ut euismod libero, vel elementum velit.
@@ -188,14 +188,14 @@
                 </div>
             </div>
             <div class='row col-sm-12'>
-                <div class='col-sm-6 left'>
+                <div class='col-sm-6 blackTextLeft'>
                     <h3>Aleksandar Apartment, Valjevo</h3>                    
                 </div>
-                <div class='col-sm-6 right'>
+                <div class='col-sm-6 blackTextRight'>
                     <h5>30e | <a href='smestaj.html'>Pregledaj oglas</a></h5>
                 </div>
             </div>
-             <div class='col-sm-12'>
+            <div class='col-sm-12 blackTextLeft textSize15'>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum vulputate sagittis. Morbi sem massa, vehicula auctor quam at, ultrices dapibus urna. Sed ullamcorper est sed urna dapibus, sit amet feugiat risus auctor.
                     Sed ac dui eget augue iaculis iaculis. Pellentesque vitae posuere arcu, at posuere enim. Nulla at maximus nisl. Donec ut euismod libero, vel elementum velit.

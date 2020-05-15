@@ -1,24 +1,27 @@
 html,body{
-
+   overflow-x: hidden;
    width:100%;
 }
 
 .header{
-    background-color: rgb(48, 168, 184);
+    background-color: rgb(49, 49, 56);
     height: 100px;
     margin: auto;
 }
 
 .bodyContent{
-    background-color: rgb(244, 250, 235);
+    /*background-image: linear-gradient("#F09819","#EDDE5D");*/
+    background-image: url("slike/pozadina1.jpg");
     margin: auto;
+    background-position: center; 
 }
 
 .footer{
     text-align: center;
     margin:auto;
     width:101%;
-    background-color: rgb(216, 203, 203);
+    color:yellow;
+    background-color: rgb(49, 49, 56);
 }
 
 .oglas{
@@ -34,7 +37,7 @@ html,body{
 .rowImages{
     float: left;
     width: 20%;   
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .active,
@@ -42,7 +45,10 @@ html,body{
     opacity:1;
 }
 
-
+.imgAvatarsAdmin{
+    width:70%;
+    margin:auto;
+}
 
 .myRow{
     background-color: rgb(48, 168, 184);
@@ -126,19 +132,19 @@ html,body{
 }
 
 .blackTextCenter{
-    color:darkslategray;
+    color:rgb(37, 40, 44);
     font-size: 20px;
     text-align: center;
 }
 
 .blackTextLeft{
-    color:darkslategray;
+    color:rgb(37, 40, 44);
     font-size:20px;
     text-align:left;
 }
 
 .blackTextRight{
-    color:darkslategray;
+    color:rgb(37, 40, 44);
     font-size:20px;
     text-align:right;
 }
