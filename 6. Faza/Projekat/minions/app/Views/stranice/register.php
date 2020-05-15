@@ -5,7 +5,7 @@
 </div>
 <div class = 'row'>
     <div class = 'registerDiv'>
-        <?php echo form_open("Gost/register","method=post"); ?>
+        <?php echo form_open("Gost/registerCommit","method=post"); ?>
             <table class='table table-striped'>
                 <tr>
                     <td>
@@ -136,7 +136,9 @@
                     </td>
                 </tr>
             </table>
-        <?php echo form_submit("registerSubmit", "Registruj se"); ?>
-        <?php form_close(); ?>
+        <div class='myTextCenter'>
+            <?php echo form_submit("registerSubmit", "Registruj se"); ?>
+            <?php form_close(); ?>
+        </div>
     </div>
 </div>

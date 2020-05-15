@@ -138,27 +138,64 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Adresa:</td>
+                    <td>Ulica:</td>
                     <td>
                         <?php 
-                            echo form_input('ulica',set_value('ulica')); 
-                            echo " Ulica ";
-                            echo form_input('broj',set_value('broj')); 
-                            echo " Broj ";
-                            echo form_input('grad',set_value('grad')); 
-                            echo " Grad ";
-                            echo form_input('ptt',set_value('ptt')); 
-                            echo " Postanski broj ";
-                            echo form_input('drzava',set_value('drzava')); 
-                            echo " Drzava ";
-                        ?>
+                            echo form_input('ulica',set_value('ulica'));
+                         ?>
+                    </td>
+                     <td>
+                        <font color='red'>
+                            <?php if(!empty($errors['ulica'])) echo $errors['ulica'];?>
+                        </font>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Broj:</td>
+                    <td>
+                        <?php 
+                            echo form_input('broj',set_value('broj'));
+                         ?>
+                    </td>
+                     <td>
+                        <font color='red'>
+                            <?php if(!empty($errors['broj'])) echo $errors['broj'];?>
+                        </font>
+                    </td>
+                </tr><tr>
+                    <td>Grad:</td>
+                    <td>
+                        <?php 
+                            echo form_input('grad',set_value('grad'));
+                         ?>
+                    </td>
+                     <td>
+                        <font color='red'>
+                            <?php if(!empty($errors['grad'])) echo $errors['grad'];?>
+                        </font>
+                    </td>
+                </tr><tr>
+                    <td>Postanski broj:</td>
+                    <td>
+                        <?php 
+                            echo form_input('ptt',set_value('ptt'));
+                         ?>
+                    </td>
+                     <td>
+                        <font color='red'>
+                            <?php if(!empty($errors['ptt'])) echo $errors['ptt'];?>
+                        </font>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Drzava:</td>
+                    <td>
+                        <?php 
+                            echo form_input('drzava',set_value('drzava'));
+                         ?>
                     </td>
                     <td>
                         <font color='red'>
-                            <?php if(!empty($errors['ulica'])) echo $errors['ulica'];?>
-                            <?php if(!empty($errors['broj'])) echo $errors['broj'];?>
-                            <?php if(!empty($errors['grad'])) echo $errors['grad'];?>
-                            <?php if(!empty($errors['ptt'])) echo $errors['ptt'];?>
                             <?php if(!empty($errors['drzava'])) echo $errors['drzava'];?>
                         </font>
                     </td>

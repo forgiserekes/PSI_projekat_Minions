@@ -24,7 +24,7 @@ class Oglasavac extends BaseController
         public function postavljanjeOglasaSubmit(){
             if(!$this->validate(['room_type'=>'required','kapacitet'=>'required','povrsina'=>'required',
                 'cena'=>'required','kitchen_type'=>'required','parking'=>'required','terasa'=>'required',
-                'ulica'=>'required','broj'=>'required','opis'=>'required','koordinateX'=>'required',
+                'ulica'=>'required','broj'=>'required','grad'=>'required','drzava'=>'required','opis'=>'required','koordinateX'=>'required',
                 'koordinateY'=>'required','slikeSmestaja'=>'required'])){
                 return $this->prikaz('postavljanje_oglasa',['errors'=>$this->validator->getErrors()]);
             }

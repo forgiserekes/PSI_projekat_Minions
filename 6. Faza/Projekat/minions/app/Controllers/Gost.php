@@ -15,7 +15,10 @@ class Gost extends BaseController
         $this->prikaz('pocetna_gost',[]);
     }
     
-    public function register(){
+    public function register($poruka = null){
+        $this->prikaz('register',['poruka'=>$poruka]);
+    }
+    public function registerCommit(){
         if(!$this->validate(['ime'=>'required|min_length[5]|max_length[45]', 'prezime'=>'required|min_length[5]|max_length[45]',
             'registration_password'=>'required|min_length[8]|max_length[45]','registration_password_confirm' => 'required|min_length[8]|max_length[45]|matches[registration_password]',
             'datum_rodjenja'=>'required','adresa'=>'required|max_length[70]','registration_type'=>'required'])){
