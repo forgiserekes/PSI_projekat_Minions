@@ -6,10 +6,10 @@
         <div class = 'registerDiv textCenter'>
             <?php if(isset($poruka)) echo "<span> <font color='red'>$poruka</font><br> </span>"; ?>
             <?php echo form_open("Gost/loginSubmit","method=post"); ?>
-            <table class='table table-striped' align='center'>
+            <table class='table' align='center'>
                 <tr>
                     <td>
-                        <?php echo "Korisnicko ime:" ?>
+                        <?php echo "Korisničko ime:" ?>
                     </td>
                     <td>
                         <?php echo form_input("login_username",set_value("login_username")); ?>

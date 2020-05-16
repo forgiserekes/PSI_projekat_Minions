@@ -1,12 +1,20 @@
-<div class='row'>
-    <div class = 'col-sm-12 myTextCenter'>
-        <h2 class='blackTextTitleCenter'>Postavite vaš oglas:</h2>
+<div class='bodyContent'>
+    <div class='row'>
+        <div class = 'col-sm-12 myTextCenter'>
+            <h2 class='blackTextTitleCenter'>Postavite vaš oglas:</h2>
+        </div>
     </div>
-</div>
-<div class='row'>
-    <div class='adPlacingDiv'>
-        <?php echo form_open("Oglasavac/postavljanjeOglasaSubmit","method=post"); ?>
-            <table class='table table-striped'>
+    <div class='row'>
+        <div class='adPlacingDiv'>
+            
+            <?php
+                $data=[
+                    "method"=>"post",
+                    "enctype"=>"multipart/form-data"
+                ];      
+                echo form_open("Oglasavac/postavljanjeOglasaSubmit",$data); 
+            ?>
+            <table class='table'>
                 <tr>
                     <td>Tip smestaja:</td>
                     <td>
@@ -40,7 +48,7 @@
                 <tr>
                     <td>Povrsina [m<sup>2</sup>]:</td>
                     <td>
-                        <?php echo form_input("povrsina",set_value("povrsina")); ?>
+                        <?php echo form_input('povrsina',set_value('povrsina')); ?>
                     </td>
                     <td>
                         <font color='red'>
@@ -249,17 +257,18 @@
                 <tr>
                     <td>Slike smeštaja:</td>
                     <td>
+                        
                         <?php
                             $data=[
                                 'name' => 'slikeSmestaja[]',
-                                'id' => 'slikeSmestaja',
                                 'multiple'=>'true',
                                 'accept'=>'image/png, image/jpeg'
-                            ];
+                           ];
                             echo form_upload($data);
                         ?>
+                        <!--<input type='file' name='slikeSmestaja[]' multiple='true' accept='image/png, image/jpeg' />-->
                     </td>
-                    <td>
+                     <td>
                         <font color='red'>
                             <?php if(!empty($errors['slikeSmestaja[]'])) echo $errors['slikeSmestaja[]'];?>
                         </font>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2020 at 11:38 PM
+-- Generation Time: May 16, 2020 at 03:02 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -30,13 +30,12 @@ USE `minions`;
 -- Table structure for table `adresa`
 --
 
-DROP TABLE IF EXISTS `adresa`;
 CREATE TABLE IF NOT EXISTS `adresa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `broj` int(11) NOT NULL,
   `idUlica` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -44,12 +43,11 @@ CREATE TABLE IF NOT EXISTS `adresa` (
 -- Table structure for table `drzava`
 --
 
-DROP TABLE IF EXISTS `drzava`;
 CREATE TABLE IF NOT EXISTS `drzava` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ime` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -57,7 +55,6 @@ CREATE TABLE IF NOT EXISTS `drzava` (
 -- Table structure for table `filepathdokumentacijekorisnika`
 --
 
-DROP TABLE IF EXISTS `filepathdokumentacijekorisnika`;
 CREATE TABLE IF NOT EXISTS `filepathdokumentacijekorisnika` (
   `idFilepathDokumentacijeKorisnika` int(11) NOT NULL AUTO_INCREMENT,
   `filepath` varchar(100) NOT NULL,
@@ -71,13 +68,12 @@ CREATE TABLE IF NOT EXISTS `filepathdokumentacijekorisnika` (
 -- Table structure for table `filepathdokumentacijesmestaja`
 --
 
-DROP TABLE IF EXISTS `filepathdokumentacijesmestaja`;
 CREATE TABLE IF NOT EXISTS `filepathdokumentacijesmestaja` (
-  `idFilepath` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `filepath` varchar(100) NOT NULL,
-  `idOglas` int(11) NOT NULL,
-  PRIMARY KEY (`idFilepath`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idSmestaj` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -85,14 +81,13 @@ CREATE TABLE IF NOT EXISTS `filepathdokumentacijesmestaja` (
 -- Table structure for table `grad`
 --
 
-DROP TABLE IF EXISTS `grad`;
 CREATE TABLE IF NOT EXISTS `grad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `Ime` varchar(45) NOT NULL,
+  `ime` varchar(45) NOT NULL,
   `ptt` varchar(45) NOT NULL,
   `idDrzava` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -100,7 +95,6 @@ CREATE TABLE IF NOT EXISTS `grad` (
 -- Table structure for table `korisnici`
 --
 
-DROP TABLE IF EXISTS `korisnici`;
 CREATE TABLE IF NOT EXISTS `korisnici` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ime` varchar(45) NOT NULL,
@@ -128,7 +122,6 @@ INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `tip`, `username`, `password`, 
 -- Table structure for table `odgovor`
 --
 
-DROP TABLE IF EXISTS `odgovor`;
 CREATE TABLE IF NOT EXISTS `odgovor` (
   `idOdgovor` int(11) NOT NULL AUTO_INCREMENT,
   `idRecenzija` int(11) DEFAULT NULL,
@@ -144,7 +137,6 @@ CREATE TABLE IF NOT EXISTS `odgovor` (
 -- Table structure for table `recenzija`
 --
 
-DROP TABLE IF EXISTS `recenzija`;
 CREATE TABLE IF NOT EXISTS `recenzija` (
   `idRecenzija` int(11) NOT NULL AUTO_INCREMENT,
   `cistoca` int(11) NOT NULL,
@@ -166,7 +158,6 @@ CREATE TABLE IF NOT EXISTS `recenzija` (
 -- Table structure for table `rezervacija`
 --
 
-DROP TABLE IF EXISTS `rezervacija`;
 CREATE TABLE IF NOT EXISTS `rezervacija` (
   `idRezervacija` int(11) NOT NULL AUTO_INCREMENT,
   `datumOd` date NOT NULL,
@@ -184,9 +175,8 @@ CREATE TABLE IF NOT EXISTS `rezervacija` (
 -- Table structure for table `smestaj`
 --
 
-DROP TABLE IF EXISTS `smestaj`;
 CREATE TABLE IF NOT EXISTS `smestaj` (
-  `idOglasi` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `opis` varchar(200) NOT NULL,
   `cena` int(11) NOT NULL,
   `idVlasnik` int(11) NOT NULL,
@@ -197,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `smestaj` (
   `kuhinja` tinyint(1) NOT NULL,
   `terasa` tinyint(4) NOT NULL,
   `parking` tinyint(4) NOT NULL,
-  PRIMARY KEY (`idOglasi`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -206,13 +196,12 @@ CREATE TABLE IF NOT EXISTS `smestaj` (
 -- Table structure for table `ulica`
 --
 
-DROP TABLE IF EXISTS `ulica`;
 CREATE TABLE IF NOT EXISTS `ulica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ime` varchar(45) DEFAULT NULL,
   `idGrad` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

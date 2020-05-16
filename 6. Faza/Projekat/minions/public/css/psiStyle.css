@@ -24,17 +24,20 @@ html,body{
     background-color: rgb(49, 49, 56);
 }
 
+
+/*div za oglas na pocetnim stranama*/
 .oglas{
     width: 70%;
     margin: auto;
     text-align:left;
 }
 
+
+/*za galeriju slika na pocetnim*/
 .gallery{
- margin:auto;   
+    margin:auto;   
 }
 
-/*za galeriju slika na pocetnoj*/
 .rowImages{
     float: left;
     width: 20%;   
@@ -46,43 +49,26 @@ html,body{
     opacity:1;
 }
 
-.imgAvatarsAdmin{
-    width:70%;
-    margin:auto;
+
+/*pocetna oglasavac*/
+.pocetna_ogl{
+    width:80%;
+    margin: auto;
 }
+
+/*content za registraciju*/
 .registerDiv{
     width:30%;
     margin:auto;
 }
 
+/*content za postavljanje oglasa*/
 .adPlacingDiv{
     width:40%;
     margin:auto;
 }
 
-.lateBlueBackground{
-    background-color: darkslateblue;
-}
-
-.myRowSmall{
-    background-color: darkslateblue;
-    height: 30px;
-}
-
-.rowGray40{
-    background-color: lightgray;
-    height: 40px;
-}
-
-.rowGray30{
-    background-color: lightgray;
-    height: 30px;
-}
-
-.height50{
-    height:50px;
-}
-
+/*naslov na headerima*/
 .smestiSeStyle{
     color:gold;
     font-style: oblique;
@@ -96,25 +82,22 @@ html,body{
     text-decoration: none;
 }
 
+#logReg{
+    color:gold;
+    font-size: 20px;
+    text-align: right;
+}
+
 #logReg a:hover,a:visited,a:active{
     color:gold;
 }
 
-.myRowGraySmall{
-    background-color: lightgray;
-    height: 30px;
-}
+
 
 .blackTextTitleCenter{
     color:darkslategray;
     font-size: 30px;
     text-align: center;
-}
-.myText{
-    color: gold;
-    font-weight: bold;
-    font-size: 20px;
-    text-align: right;
 }
 
 .myTextCenter{
@@ -123,26 +106,21 @@ html,body{
     text-align: center;
 }
 
-.imgAvatar{
-    border-radius: 50%;
-}
 .myTextLeft{
     color:gold;
     font-size:20px;
     text-align:left;
 }
 
-.darkTextLight{
-    color:darkslategray;
-}
-.skyBackground{
-    background-color: rgb(48, 168, 184);
-}
 .myTextRight{
     color:gold;
     font-size:20px;
     font-weight: bold;
     text-align:right;
+}
+
+.imgAvatar{
+    border-radius: 50%;
 }
 
 .blackTextCenter{
@@ -165,14 +143,6 @@ html,body{
 
 .valign{
     vertical-align:middle;
-}
-.goldText{
-    color:gold;
-    font-weight: bold;
-}
-.darkText{
-    color:darkslategray;
-    font-weight: bold;
 }
 
 .textCenter{

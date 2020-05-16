@@ -1,6 +1,6 @@
 <?php namespace App\Controllers;
 
-use App\Models\FilePathDokumentacijaSmestajaModel;
+use App\Models\FilePathDokumentacijeSmestajaModel;
 use App\Models\SmestajModel;
 use App\Models\GradModel;
 use App\Models\UlicaModel;
@@ -9,11 +9,11 @@ use App\Models\AdresaModel;
 
 class Oglasavac extends BaseController
 { 
-	protected function prikaz($page,$data3){
-            $data3['controller']='Oglasavac';
-            $data3['oglasavac']=$this->session->get('oglasavac');
-            echo view('sablon/header_oglasavac',$data3);
-            echo view("stranice/$page",$data3);
+	protected function prikaz($page,$data){
+            $data['controller']='Oglasavac';
+            $data['oglasavac']=$this->session->get('oglasavac');
+            echo view('sablon/header_oglasavac',$data);
+            echo view("stranice/$page",$data);
             echo view('sablon/footer');
 	}
         
@@ -29,6 +29,9 @@ class Oglasavac extends BaseController
                 return $this->prikaz('postavljanje_oglasa',['errors'=>$this->validator->getErrors()]);
             }
             
+            //$this->session->set('oglasavac',$korisnik);
+            //$korisnik = $korisniciModel->where('username',$this->request->getVar('login_username'))->first();
+            
             $drzavaModel = new DrzavaModel();
             $drzavaModel->save([
                 'ime'=>$this->request->getVar('drzava')
@@ -38,7 +41,7 @@ class Oglasavac extends BaseController
             $gradModel->save([
                 'ime'=>$this->request->getVar('grad'),
                 'ptt'=>$this->request->getVar('ptt'),
-                'idDrzava'=>$drzavaModel->getInsertId()
+                'idDrzava'=>$drzavaModel->getInsertID()
             ]);
             
             $ulicaModel = new UlicaModel();
@@ -46,7 +49,7 @@ class Oglasavac extends BaseController
                 'ime'=>$this->request->getVar('ulica'),
                 'idGrad'=>$gradModel->getInsertId()
             ]);
-            
+           
             $adresaModel = new AdresaModel();
             $adresaModel->save([
                 'broj'=>$this->request->getVar('broj'),
@@ -66,26 +69,25 @@ class Oglasavac extends BaseController
                 'opis'=>$this->request->getVar('opis'),
                 'cena'=>(int)$this->request->getVar('cena'),
                 'idVlasnik'=>$this->session->get('oglasavac')->id,
-                'idAdresa'=>$adresaModel->getInsertId(),
                 'tipSmestaja'=>$this->request->getVar('room_type'),
                 'kapacitet'=>(int)$this->request->getVar('kapacitet'),
                 'povrsina'=>(int)$this->request->getVar('povrsina'),
                 'kuhinja'=> $this->request->getVar('kitchen_type')==='da'?true:false,
                 'terasa'=>$this->request->getVar('terasa')==='da'?true:false,
                 'parking'=>$this->request->getVar('parking')==='da'?true:false,
+                'idAdresa'=>$adresaModel->getInsertId()
             ]);
             
-            $filepathSmestajModel = new FilePathDokumentacijaSmestajaModel();
+            $slikeModel = new FilePathDokumentacijeSmestajaModel();
+            $images = $this->request->getVar("slikeSmestaja");
+            foreach($images as $image){
+                $slikeModel->save([
+                    'filepath' => "./public/slike/".$image,
+                    'idSmestaj' => $smestajModel->getInsertId()
+                ]);
+            }
             
-            //$files = array();
-            //$count_files = count($_FILES["slikeSmestaja"]["name"]);
-            //if($count_files!=0){
-            //    for($i=0;$i<$count_files;$i++){
-                    
-            //    }
-            //}
-            //if(is_uploaded_file($_FILES["pic"]["tmp_name"]))
-            //    move_uploaded_file($_FILES["pic"]["tmp_name"],"./public/slike/".$_FILES["pic"]["name"]);
+            $this->prikaz('provera',['poruka'=>'Smestaj uspesno postavljen.']);
         }
         
         public function neodgRecenzijeOglasavaca(){
