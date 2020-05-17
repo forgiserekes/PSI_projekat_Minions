@@ -1,19 +1,25 @@
 <div class='bodyContent'>
-    <div class='row'>
-        <div class='col-sm-7' align='right'>
-            <img src= '<?=base_url('slike/search.png');?>' style='width:30'>                
-        </div>
-        <div class='col-sm-5 blackTextLeft' align='right' id='search'>
-            <?php echo form_open("Oglasavac/pretraga","method=post"); ?>
-            <?php echo form_input("kljucPretrage",set_value("kljucPretrage")); ?>
-            <?php echo form_submit("pretragaBtn", "Pretrazi"); ?>
-            <?php form_close(); ?>
-        </div>    
-    </div>
-    <?php
-    use App\Models\FilePathDokumentacijeSmestajaModel;
+    <?php if(!empty($trazeno)){ 
+        echo "<div class='row'>";
+        echo    "<div class='col-sm-12 blackTextCenter'>";
+        echo        "<p>Rezultat pretrage za ". $trazeno . " je:</p>";
+        echo   "</div>";
+        echo "</div>"; 
+    }else{
+        echo "<div class='row'>";
+        echo    "<div class='col-sm-7' align='right'>";
+        echo        "<img src= " .base_url('slike/search.png')." style='width:30'>";             
+        echo   "</div>";
+        echo    "<div class='col-sm-5 blackTextLeft' align='right' id='search'>";
+        form_open("Oglasavac/pretraga","method=post"); 
+        echo form_input("kljucPretrage",set_value("kljucPretrage")); 
+        echo form_submit("pretragaBtn", "Pretrazi"); 
+        form_close(); 
+        echo "</div>";    
+        echo "</div>";
+    }
     if(count($smestaji)>0){
-        $slikeModel = new FilePathDokumentacijeSmestajaModel();
+        $slikeModel = new App\Models\FilePathDokumentacijeSmestajaModel();
         foreach($smestaji as $smestaj){
             echo "<div class='oglas'>";
             echo    "<div class='row col-sm-12 gallery'>";
@@ -40,6 +46,6 @@
             echo    "<hr>";
             echo "</div>";
         }
-    }else echo "<div class='row col-sm-12 blackTextCenter'>Ni jedan smestaj niste jos uvek oglasili.</div>"
+    }else echo "<div class='row col-sm-12 blackTextCenter'>Ni jedan smestaj niste jos uvek oglasili.</div>"  
     ?>
 </div>

@@ -83,12 +83,16 @@ class Oglasavac extends BaseController
         public function obrisiOglas($id){
             
         }
+        
         public function neodgRecenzijeOglasavaca(){
             
         }
         
         public function pretraga(){
-            
+            $kljucPretrage = $this->request->getVar('kljucPretrage');
+            $smestajModel = new SmestajModel();
+            $smestaji = $smestajModel->pretrazi($kljucPretrage);
+            $this->prikaz('smestaji_oglasavaca',['smestaji'=>$smestaji,'trazeno'=>$kljucPretrage]);
         }
         
         public function smestajiOglasavaca(){

@@ -32,6 +32,15 @@ html,body{
     text-align:left;
 }
 
+/*pretraga stranica*/
+.ui-helper-center {
+    text-align: right;
+}
+
+.tabela-pretraga{
+    margin: 0 auto;
+    width: 20%;
+}
 
 /*za galeriju slika na pocetnim*/
 .gallery{

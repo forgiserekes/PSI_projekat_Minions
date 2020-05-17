@@ -10,95 +10,179 @@
             </div>
         </div>
         <div class = 'row'>
-            <div class = 'offset-sm-3 col-sm-6 text-center'>
-                <form method="POST" action="rezultat_pretrage.html">
-                    <table class='table'>
-                        <tr>
-                            <td>Naziv:</td>
-                            <td>
-                                <input type='search'>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Datum od:</td>
-                            <td>
-                                <input type='date'>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Datum do:</td>
-                            <td>
-                                <input type='date'>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kategorija:</td>
-                            <td>
-                                <select>
-                                    <option>Stan</option>
-                                    <option>Apartman</option>
-                                    <option>Vikendica</option>
-                                    <option>Hotelska soba</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Broj osoba:</td>
-                            <td>
-                                <input type="number">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Cena (do):</td>
-                            <td>
-                                <input type="text">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Izabrati grad:</td>
-                            <td>
-                                <select>
-                                    <option>Valjevo</option>
-                                    <option>Beograd</option>
-                                    <option>Kragujevac</option>
-                                    <option>Sombor</option>
-                                    <option>Sabac</option>
-                                    <option>Smederevo</option>
-                                    <option>Subotica</option>
-                                    <option>Pancevo</option>
-                                    <option>Kovin</option>
-                                    <option>Leskovac</option>
-                                    <option>Novi Sad</option>
-                                    <option>Nis</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sortiraj po:</td>
-                            <td>
-                                <input type="radio" name="group"> Ceni
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="radio" name="group"> Nazivu</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="radio" name="group"> Udaljenosti</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="radio" name="group"> Oceni</td>
-                        </tr>   
-                        <tr>
-                            <td colspan='2' class='text-center'>
-                                <a href="rezultat_pretrage.html " class='btn btn-info '>Pretrazi</a>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
+            <div class = 'text-center tabela-pretraga'>
+                <?php echo form_open("$controller/pretragaSubmit","method=post"); ?>
+                <table class='table tabela-pretraga'>
+                    <tr >
+                        <td>
+                            <?php echo "Naziv:"; ?>
+                        </td>
+                        <td >
+                            <?php echo form_input("naziv",set_value("naziv")); ?>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td>  
+                            <?php echo "Datum od:"; ?>
+                        </td>
+                        <td >
+                            <?php
+                                $data = [
+                                    'type'  => 'date',
+                                    'name'  => 'datumOd'
+                                ];                       
+                                echo form_input($data);                           
+                            ?>                           
+                        </td>
+                    </tr>
+                    <tr >
+                        <td>  
+                            <?php echo "Datum do:"; ?>
+                        </td>
+                        <td>
+                            <?php
+                                $data = [
+                                    'type'  => 'date',
+                                    'name'  => 'datumDo'
+                                ];                       
+                                echo form_input($data);                           
+                            ?>                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            <?php echo "Kategorija:"; ?>
+                        </td>
+                        <td>
+                            <?php
+                                $options = [
+                                    'Stan'  =>  'Stan',
+                                    'Apartman'    =>  'Apartman',
+                                    'Vikendica'  => 'Vikendica',
+                                    'HotelskaSoba' => 'HotelskaSoba',
+                                ];
+                                echo form_dropdown('kategorija', $options, 'Stan');                         
+                            ?> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            <?php echo "Broj soba:"; ?>
+                        </td>
+                        <td>
+                            <?php
+                                $data = [
+                                    'type'  => 'number',
+                                    'name'  => 'brojSoba'
+                                ];                       
+                                echo form_input($data);                           
+                            ?>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            <?php echo "Cena do"; ?>
+                        </td>
+                        <td>
+                            <?php
+                                $data = [
+                                    'type'  => 'number',
+                                    'name'  => 'cenaDo'
+                                ];                       
+                                echo form_input($data);                           
+                            ?>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            <?php echo "Grad"; ?>
+                        </td>
+                        <td>
+                        <?php
+                                $options = [
+                                    'Valjevo'  =>  'Valjevo',
+                                    'Beograd'    =>  'Beograd',
+                                    'Kragujevac'  => 'Kragujevac',
+                                    'Sombor' => 'Sombor',
+                                    'Sabac' => 'Sabac',
+                                    'Smederevo' => 'Smederevo',
+                                    'Subotica' => 'Subotica',
+                                    'Pancevo' => 'Pancevo',
+                                    'Kovin' => 'Kovin',
+                                    'Leskovac' => 'Leskovac',
+                                    'Nis' => 'Nis'
+                                ];
+                                echo form_dropdown('grad', $options, 'Stan');                         
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sortiraj po:</td>
+                        <td>                              
+                            <?php
+                                $data = [
+                                    'name'    => 'cena',
+                                    'checked' => False
+                                ];                      
+                                echo form_radio($data);
+                                
+                            ?>
+                            Ceni
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>                              
+                            <?php
+                                $data = [
+                                    'name'    => 'nazivu',
+                                    'checked' => False
+                                ];                      
+                                echo form_radio($data);
+                                
+                            ?>
+                            Nazivu
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>                              
+                            <?php
+                                $data = [
+                                    'name'    => 'udaljenost',
+                                    'checked' => False,
+                                ];                      
+                                echo form_radio($data);
+                                
+                            ?>
+                            Udaljenosti
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>                              
+                            <?php
+                                $data = [
+                                    'name'    => 'ocena',
+                                    'checked' => False,
+                                ];                      
+                                echo form_radio($data);
+                                
+                            ?>
+                            Oceni
+                        </td>
+                    </tr>   
+                    <tr>
+                        <td colspan='2' class='text-center'>
+                            <div class='myTextCenter'>
+                                <?php echo form_submit("pretragaSubmit", "Pretrazi"); ?>
+                                <?php form_close(); ?>
+                            </div>                           
+                        </td>
+                    </tr>
+                </table>
             </div>
+
         </div>
     </div>
 </div>

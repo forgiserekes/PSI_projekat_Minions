@@ -1,16 +1,15 @@
 <div class='bodyContent'>
-    <div class='row'>
-        <div class='col-sm-7' align='right'>
-            <img src= '<?=base_url('slike/search.png');?>' style='width:30'>                
-        </div>
-        <div class='col-sm-5 blackTextLeft' align='right' id='search'>
-            <?php echo form_open("Gost/pretraga","method=post"); ?>
-            <?php echo form_input("kljucPretrage",set_value("kljucPretrage")); ?>
-            <?php echo form_submit("pretragaBtn", "Pretrazi"); ?>
-            <?php form_close(); ?>
-        </div>    
-    </div>
-    <?php
+    <?php if(!empty($trazeno)){ 
+        echo "<div class='row'>";
+        echo    "<div class='col-sm-12 blackTextCenter'>";
+        echo        "<p>Rezultat pretrage:</p>";
+        echo   "</div>";
+        echo "</div>"; 
+    }else{
+        echo "<div class='oglas'>";
+        echo anchor("Gost/pretraga", "<img src=" . base_url('slike/search.png') ." style='width:30' align='right'>");
+        echo "</div>";
+    }
     use App\Models\FilePathDokumentacijeSmestajaModel;
     if(count($sviSmestaji)>0){
         $slikeModel = new FilePathDokumentacijeSmestajaModel();
@@ -37,7 +36,7 @@
             echo            "{$smestaj->opis}";
             echo        "</p>";
             echo    "</div>";
-            echo    "<hr>";
+            echo    "&nbsp";
             echo "</div>";
         }
     }else echo "<div class='row col-sm-12 blackTextCenter'>Ni jedan smestaj jos uvek nije oglasen.</div>"

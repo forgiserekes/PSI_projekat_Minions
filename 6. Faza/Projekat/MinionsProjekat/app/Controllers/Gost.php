@@ -21,12 +21,15 @@ class Gost extends BaseController
         $this->prikaz('register',['poruka'=>$poruka]);
     }
     
-    public function pretrazi(){
+    public function pretraga(){
         $this->prikaz('pretraga',[]);
     }
 
-    public function pretraziSubmit(){
-
+    public function pretragaSubmit(){
+        $smestajModel = new SmestajModel();
+        $sviSmestaji = $smestajModel->dohvTrazeneOglase($this->request->getVar('naziv'));
+        //$smestaji = $smestajModel->dohvSveOglase();
+        $this->prikaz('pocetna_gost',['sviSmestaji'=>$sviSmestaji,'trazeno'=>$this->request->getVar('naziv')]);
     }
 
     public function registerCommit(){

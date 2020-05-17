@@ -15,4 +15,17 @@ class SmestajModel extends Model
     public function dohvSveOglase(){
         return $this->findAll();
     }
+    public function pretrazi($kljuc){
+        return $this->like('naziv',$kljuc)->orLike('drzava',$kljuc)->orLike('grad',$kljuc)->orLike('ulica',$kljuc)->findAll();
+    }
+    
+    public function dohvTrazeneOglase($naziv){
+
+        /*
+            za sad poredi samo po nazivu, u listu parametara dodati sve ostale
+            stvari po kojima se poredi i onda napravili sql query 
+        */
+
+        return $this->like('naziv',$naziv)->findAll();
+    }
 }

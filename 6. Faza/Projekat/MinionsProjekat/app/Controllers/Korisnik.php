@@ -17,12 +17,15 @@ class Korisnik extends BaseController
             $this->prikaz('pocetna_korisnik',['sviSmestaji'=>$smestajModel->dohvSveOglase()]);
         }
         
-        public function pretrazi(){
+         public function pretraga(){
             $this->prikaz('pretraga',[]);
         }
-        
-        public function pretraziSubmit(){
-            
+
+        public function pretragaSubmit(){
+            $smestajModel = new SmestajModel();
+            $sviSmestaji = $smestajModel->dohvTrazeneOglase($this->request->getVar('naziv'));
+            //$smestaji = $smestajModel->dohvSveOglase();
+            $this->prikaz('pocetna_korisnik',['sviSmestaji'=>$sviSmestaji,'trazeno'=>$this->request->getVar('naziv')]);
         }
         
         public function smestajPrikaz($id){
