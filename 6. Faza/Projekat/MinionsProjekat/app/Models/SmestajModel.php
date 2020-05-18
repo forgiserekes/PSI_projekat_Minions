@@ -7,7 +7,22 @@ class SmestajModel extends Model
     protected $table      = 'smestaj';
     protected $primaryKey = 'id';
     protected $returnType = 'object';
-    protected $allowedFields = ['naziv','opis', 'cena','idVlasnik','drzava','grad','ulica','broj','tipSmestaja','kapacitet','povrsina','cena','kuhinja','terasa','parking'];
+    protected $allowedFields = ['naziv',
+                                'opis', 
+                                'cena',
+                                'idVlasnik',
+                                'drzava',
+                                'grad',
+                                'ulica',
+                                'broj',
+                                'tipSmestaja',
+                                'kapacitet',
+                                'povrsina',
+                                'cena',
+                                'kuhinja',
+                                'terasa',
+                                'parking'
+                               ];
 
     public function dohvOglaseOglasavaca($idOglasavaca){
         return $this->where('idVlasnik',$idOglasavaca)->findAll();
@@ -21,7 +36,7 @@ class SmestajModel extends Model
     public function obrisiSmestaj($id){
         return $this->delete($id);
     }
-    public function dohvTrazeneOglase($naziv){
+    public function dohvTrazeneOglase($naziv, $cena, $grad){
 
         /*
             za sad poredi samo po nazivu, u listu parametara dodati sve ostale
@@ -29,5 +44,8 @@ class SmestajModel extends Model
         */
 
         return $this->like('naziv',$naziv)->findAll();
+    }
+    public function dohvatiSmestajSaId($id) {
+        return $this->where('id', $id)->findAll();      
     }
 }

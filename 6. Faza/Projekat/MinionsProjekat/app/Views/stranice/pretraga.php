@@ -18,7 +18,7 @@
                             <?php echo "Naziv:"; ?>
                         </td>
                         <td >
-                            <?php echo form_input("naziv",set_value("naziv")); ?>
+                            <input type="text" name="naziv">   
                         </td>
                     </tr>
                     <tr >
@@ -26,13 +26,7 @@
                             <?php echo "Datum od:"; ?>
                         </td>
                         <td >
-                            <?php
-                                $data = [
-                                    'type'  => 'date',
-                                    'name'  => 'datumOd'
-                                ];                       
-                                echo form_input($data);                           
-                            ?>                           
+                             <input type="date" name="datumOd">                        
                         </td>
                     </tr>
                     <tr >
@@ -40,43 +34,28 @@
                             <?php echo "Datum do:"; ?>
                         </td>
                         <td>
-                            <?php
-                                $data = [
-                                    'type'  => 'date',
-                                    'name'  => 'datumDo'
-                                ];                       
-                                echo form_input($data);                           
-                            ?>                           
+                            <input type="date" name="datumDo">                       
                         </td>
                     </tr>
                     <tr>
                         <td> 
                             <?php echo "Kategorija:"; ?>
                         </td>
-                        <td>
-                            <?php
-                                $options = [
-                                    'Stan'  =>  'Stan',
-                                    'Apartman'    =>  'Apartman',
-                                    'Vikendica'  => 'Vikendica',
-                                    'HotelskaSoba' => 'HotelskaSoba',
-                                ];
-                                echo form_dropdown('kategorija', $options, 'Stan');                         
-                            ?> 
+                        <td>                
+                            <select name="kategorija">
+                                <option>stan</option>
+                                <option>apartman</option>
+                                <option>vikendica</option>
+                                <option>hotelskaSoba</option>
+                            </select> 
                         </td>
                     </tr>
                     <tr>
                         <td> 
-                            <?php echo "Broj soba:"; ?>
+                             Broj soba:
                         </td>
                         <td>
-                            <?php
-                                $data = [
-                                    'type'  => 'number',
-                                    'name'  => 'brojSoba'
-                                ];                       
-                                echo form_input($data);                           
-                            ?>    
+                            <input type="number" name="brojOsoba">
                         </td>
                     </tr>
                     <tr>
@@ -84,13 +63,7 @@
                             <?php echo "Cena do"; ?>
                         </td>
                         <td>
-                            <?php
-                                $data = [
-                                    'type'  => 'number',
-                                    'name'  => 'cenaDo'
-                                ];                       
-                                echo form_input($data);                           
-                            ?>    
+                            <input type="number" name="cena"> 
                         </td>
                     </tr>
                     <tr>
@@ -98,80 +71,22 @@
                             <?php echo "Grad"; ?>
                         </td>
                         <td>
-                        <?php
-                                $options = [
-                                    'Valjevo'  =>  'Valjevo',
-                                    'Beograd'    =>  'Beograd',
-                                    'Kragujevac'  => 'Kragujevac',
-                                    'Sombor' => 'Sombor',
-                                    'Sabac' => 'Sabac',
-                                    'Smederevo' => 'Smederevo',
-                                    'Subotica' => 'Subotica',
-                                    'Pancevo' => 'Pancevo',
-                                    'Kovin' => 'Kovin',
-                                    'Leskovac' => 'Leskovac',
-                                    'Nis' => 'Nis'
-                                ];
-                                echo form_dropdown('grad', $options, 'Stan');                         
-                            ?>
+                            <select name="grad">
+                                 <option>Valjevo</option>
+                                 <option>Beograd</option>
+                                 <option>Kragujevac</option>
+                                 <option>Sombor</option>
+                                 <option>Sabac</option>
+                                 <option>Smederevo</option>
+                                 <option>Subotica</option>
+                                 <option>Pancevo</option>
+                                 <option>Kovin</option>
+                                 <option>Leskovac</option>
+                                 <option>Novi Sad</option>
+                                 <option>Nis</option>
+                             </select>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Sortiraj po:</td>
-                        <td>                              
-                            <?php
-                                $data = [
-                                    'name'    => 'cena',
-                                    'checked' => False
-                                ];                      
-                                echo form_radio($data);
-                                
-                            ?>
-                            Ceni
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>                              
-                            <?php
-                                $data = [
-                                    'name'    => 'nazivu',
-                                    'checked' => False
-                                ];                      
-                                echo form_radio($data);
-                                
-                            ?>
-                            Nazivu
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>                              
-                            <?php
-                                $data = [
-                                    'name'    => 'udaljenost',
-                                    'checked' => False,
-                                ];                      
-                                echo form_radio($data);
-                                
-                            ?>
-                            Udaljenosti
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>                              
-                            <?php
-                                $data = [
-                                    'name'    => 'ocena',
-                                    'checked' => False,
-                                ];                      
-                                echo form_radio($data);
-                                
-                            ?>
-                            Oceni
-                        </td>
-                    </tr>   
+                    </tr>                   
                     <tr>
                         <td colspan='2' class='text-center'>
                             <div class='myTextCenter'>
