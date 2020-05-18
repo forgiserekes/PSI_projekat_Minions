@@ -43,9 +43,12 @@ class Gost extends BaseController
         $korisniciModel = new KorisniciModel();
         if($this->request->getVar('registration_type') == 'oglasavacReg'){
             $tip = 'oglasavac';
+            $status = 'cekanje';
         }else{
-            $tip='korisnik';
+            $tip = 'korisnik';
+            $status = 'aktivan';
         }
+        
         $korisniciModel->save([
            'ime' => $this->request->getVar('ime'),
            'prezime' => $this->request->getVar('prezime'),   
@@ -54,7 +57,8 @@ class Gost extends BaseController
            'password'=> $this->request->getVar('registration_password'),
            'email'=>$this->request->getVar('email'),
            'datumRodjenja'=>$this->request->getVar('datum_rodjenja'),
-           'adresa' => $this->request->getVar('adresa')
+           'adresa' => $this->request->getVar('adresa'),
+           'status'=>$status
         ]);
         return redirect()->to(site_url("Gost/login/"));
     }
@@ -83,12 +87,18 @@ class Gost extends BaseController
         if($korisnik->password!=$this->request->getVar('login_password'))
             return $this->login('Pogresna lozinka');
         if($korisnik->tip=='oglasavac'){
+            if($korisnik->status=='naCekanju') return $this->login('Zahtev na cekanju.');
+            else if($korisnik->status=='odbijen') return $this->login('Zahtev je odbijen.');
             $this->session->set('oglasavac',$korisnik);
             return redirect()->to(site_url('Oglasavac'));
         }
-        else{ 
+        else if($korisnik->tip=='korisnik'){
             $this->session->set('korisnik',$korisnik);
             return redirect()->to(site_url('Korisnik'));
+        }
+        else{ 
+            $this->session->set('admin',$korisnik);
+            return redirect()->to(site_url('Admin'));
         } 
     }
     

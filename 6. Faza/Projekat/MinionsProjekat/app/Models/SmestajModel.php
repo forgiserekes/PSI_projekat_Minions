@@ -18,7 +18,9 @@ class SmestajModel extends Model
     public function pretrazi($kljuc){
         return $this->like('naziv',$kljuc)->orLike('drzava',$kljuc)->orLike('grad',$kljuc)->orLike('ulica',$kljuc)->findAll();
     }
-    
+    public function obrisiSmestaj($id){
+        return $this->delete($id);
+    }
     public function dohvTrazeneOglase($naziv){
 
         /*

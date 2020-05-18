@@ -73,7 +73,6 @@ class Oglasavac extends BaseController
             return redirect()->to(site_url("Oglasavac/smestajPrikaz/{$smestajModel->getInsertId()}"));
         }
         
-        
         public function smestajPrikaz($id){
             $smestajModel = new SmestajModel();
             $smestaj = $smestajModel->find($id);
@@ -81,7 +80,9 @@ class Oglasavac extends BaseController
         }
         
         public function obrisiOglas($id){
-            
+            $smestajModel = new SmestajModel();
+            $smestajModel->obrisiSmestaj($id);
+            return redirect()->to(site_url("Oglasavac/smestajiOglasavaca/"));
         }
         
         public function neodgRecenzijeOglasavaca(){

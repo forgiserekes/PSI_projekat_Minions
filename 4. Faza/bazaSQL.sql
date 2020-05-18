@@ -1,169 +1,252 @@
--- MySQL Workbench Forward Engineering
+-- phpMyAdmin SQL Dump
+-- version 5.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: May 15, 2020 at 03:36 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -----------------------------------------------------
--- Schema minions
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema minions
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `minions` DEFAULT CHARACTER SET utf8 ;
--- -----------------------------------------------------
-USE `minions` ;
--- -----------------------------------------------------
--- Table `minions`.`Korisnici`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Korisnici` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `ime` VARCHAR(45) NOT NULL,
-  `prezime` VARCHAR(45) NOT NULL,
-  `tip` VARCHAR(15) NOT NULL,
-  `username` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `datumRodjenja` DATE NOT NULL,
-  `adresa` VARCHAR(70) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
--- -----------------------------------------------------
--- Table `minions`.`Smestaj`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Smestaj` (
-  `idOglasi` INT NOT NULL AUTO_INCREMENT,
-  `opis` VARCHAR(200) NOT NULL,
-  `cena` INT NOT NULL,
-  `idVlasnik` INT NOT NULL,
-  `idAdresa` INT NOT NULL,
-  `tipSmestaja` VARCHAR(45) NOT NULL,
-  `kapacitet` INT NOT NULL,
-  `povrsina` INT NOT NULL,
-  `kuhinja` VARCHAR(5) NOT NULL,
-  `terasa` TINYINT NOT NULL,
-  `parking` TINYINT NOT NULL,
-  `datum` DATE NOT NULL,
-  PRIMARY KEY (`idOglasi`))
-ENGINE = InnoDB;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Database: `school`
+--
+CREATE DATABASE IF NOT EXISTS `school` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `school`;
 
--- -----------------------------------------------------
--- Table `minions`.`Adresa`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Adresa` (
-  `idAdresa` INT NOT NULL AUTO_INCREMENT,
-  `broj` INT NOT NULL,
-  `idUlica` INT NOT NULL,
-  PRIMARY KEY (`idAdresa`))
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `admin`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
 
--- -----------------------------------------------------
--- Table `minions`.`Grad`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Grad` (
-  `idgrad` INT NOT NULL AUTO_INCREMENT,
-  `Ime` VARCHAR(45) NOT NULL,
-  `ptt` VARCHAR(45) NOT NULL,
-  `idDrzava` INT NOT NULL,
-  PRIMARY KEY (`idgrad`))
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
+  `ime` varchar(45) NOT NULL,
+  `prezime` varchar(45) DEFAULT NULL,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idAdmin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `minions`.`Drzava`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Drzava` (
-  `iddrzava` INT NOT NULL AUTO_INCREMENT,
-  `ime` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`iddrzava`))
-ENGINE = InnoDB;
+--
+-- Table structure for table `adresa`
+--
+-- Creation: May 15, 2020 at 09:58 AM
+--
 
+DROP TABLE IF EXISTS `adresa`;
+CREATE TABLE IF NOT EXISTS `adresa` (
+  `idAdresa` int(11) NOT NULL AUTO_INCREMENT,
+  `broj` int(11) NOT NULL,
+  `idUlica` int(11) NOT NULL,
+  PRIMARY KEY (`idAdresa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `minions`.`Ulica`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Ulica` (
-  `idUlica` INT NOT NULL AUTO_INCREMENT,
-  `ime` VARCHAR(45) NULL,
-  `idGrad` INT NOT NULL,
-  PRIMARY KEY (`idUlica`))
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `drzava`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
 
--- -----------------------------------------------------
--- Table `school`.`FilepathDokumentacijeSmestaja`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`FilepathDokumentacijeSmestaja` (
-  `idFilepath` INT NOT NULL AUTO_INCREMENT,
-  `filepath` VARCHAR(100) NOT NULL,
-  `idOglas` INT NOT NULL,
-  PRIMARY KEY (`idFilepath`))
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `drzava`;
+CREATE TABLE IF NOT EXISTS `drzava` (
+  `iddrzava` int(11) NOT NULL AUTO_INCREMENT,
+  `ime` varchar(45) NOT NULL,
+  PRIMARY KEY (`iddrzava`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `minions`.`Recenzija`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Recenzija` (
-  `idRecenzija` INT NOT NULL AUTO_INCREMENT,
-  `cistoca` INT NOT NULL,
-  `komfor` INT NOT NULL,
-  `kvalitet` INT NOT NULL,
-  `lokacija` INT NOT NULL,
-  `ljubaznost` INT NOT NULL,
-  `osptiUtisak` INT NOT NULL,
-  `tip` VARCHAR(45) NOT NULL,
-  `idOglasa` INT NOT NULL,
-  `idKorisnika` INT NOT NULL,
-  `komentar` VARCHAR(500) NULL,
-  PRIMARY KEY (`idRecenzija`))
-ENGINE = InnoDB;
+--
+-- Table structure for table `filepathdokumentacijekorisnika`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
 
+DROP TABLE IF EXISTS `filepathdokumentacijekorisnika`;
+CREATE TABLE IF NOT EXISTS `filepathdokumentacijekorisnika` (
+  `idFilepathDokumentacijeKorisnika` int(11) NOT NULL AUTO_INCREMENT,
+  `filepath` varchar(100) NOT NULL,
+  `idKorisnika` int(11) NOT NULL,
+  PRIMARY KEY (`idFilepathDokumentacijeKorisnika`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `minions`.`Rezervacija`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Rezervacija` (
-  `idRezervacija` INT NOT NULL AUTO_INCREMENT,
-  `datumOd` DATE NOT NULL,
-  `datumDo` DATE NOT NULL,
-  `brojOsoba` INT NOT NULL,
-  `napomena` VARCHAR(500) NOT NULL,
-  `idSmestaj` INT NOT NULL,
-  `idKorisnika` INT NOT NULL,
-  PRIMARY KEY (`idRezervacija`))
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `filepathdokumentacijesmestaja`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
 
--- -----------------------------------------------------
--- Table `minions`.`Odgovor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`Odgovor` (
-  `idOdgovor` INT NOT NULL AUTO_INCREMENT,
-  `idRecenzija` INT NULL,
-  `idKorisnick` INT NOT NULL,
-  `idOdgovorNa` INT NULL,
-  `text` VARCHAR(300) NOT NULL,
-  PRIMARY KEY (`idOdgovor`))
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `filepathdokumentacijesmestaja`;
+CREATE TABLE IF NOT EXISTS `filepathdokumentacijesmestaja` (
+  `idFilepath` int(11) NOT NULL AUTO_INCREMENT,
+  `filepath` varchar(100) NOT NULL,
+  `idOglas` int(11) NOT NULL,
+  PRIMARY KEY (`idFilepath`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `minions`.`FilepathDokumentacijeKorisnika`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `minions`.`FilepathDokumentacijeKorisnika` (
-  `idFilepathDokumentacijeKorisnika` INT NOT NULL AUTO_INCREMENT,
-  `filepath` VARCHAR(100) NOT NULL,
-  `idKorisnika` INT NOT NULL,
-  PRIMARY KEY (`idFilepathDokumentacijeKorisnika`))
-ENGINE = InnoDB;
+--
+-- Table structure for table `grad`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
 
+DROP TABLE IF EXISTS `grad`;
+CREATE TABLE IF NOT EXISTS `grad` (
+  `idgrad` int(11) NOT NULL AUTO_INCREMENT,
+  `Ime` varchar(45) NOT NULL,
+  `ptt` varchar(45) NOT NULL,
+  `idDrzava` int(11) NOT NULL,
+  PRIMARY KEY (`idgrad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `korisnici`
+--
+-- Creation: May 15, 2020 at 09:58 AM
+--
+
+DROP TABLE IF EXISTS `korisnici`;
+CREATE TABLE IF NOT EXISTS `korisnici` (
+  `idKorisnici` int(11) NOT NULL AUTO_INCREMENT,
+  `Ime` varchar(45) NOT NULL,
+  `Prezime` varchar(45) NOT NULL,
+  `tip` varchar(15) NOT NULL,
+  `userName` varchar(45) NOT NULL,
+  `eMail` varchar(45) NOT NULL,
+  `datumRodjenja` date NOT NULL,
+  `adresa` varchar(70) NOT NULL,
+  PRIMARY KEY (`idKorisnici`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `odgovor`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
+
+DROP TABLE IF EXISTS `odgovor`;
+CREATE TABLE IF NOT EXISTS `odgovor` (
+  `idOdgovor` int(11) NOT NULL AUTO_INCREMENT,
+  `idRecenzija` int(11) DEFAULT NULL,
+  `idKorisnick` int(11) NOT NULL,
+  `idOdgovorNa` int(11) DEFAULT NULL,
+  `text` varchar(300) NOT NULL,
+  PRIMARY KEY (`idOdgovor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recenzija`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
+
+DROP TABLE IF EXISTS `recenzija`;
+CREATE TABLE IF NOT EXISTS `recenzija` (
+  `idRecenzija` int(11) NOT NULL AUTO_INCREMENT,
+  `cistoca` int(11) NOT NULL,
+  `komfor` int(11) NOT NULL,
+  `kvalitet` int(11) NOT NULL,
+  `lokacija` int(11) NOT NULL,
+  `ljubaznost` int(11) NOT NULL,
+  `osptiUtisak` int(11) NOT NULL,
+  `tip` varchar(45) NOT NULL,
+  `idOglasa` int(11) NOT NULL,
+  `idKorisnika` int(11) NOT NULL,
+  `komentar` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`idRecenzija`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rezervacija`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
+
+DROP TABLE IF EXISTS `rezervacija`;
+CREATE TABLE IF NOT EXISTS `rezervacija` (
+  `idRezervacija` int(11) NOT NULL AUTO_INCREMENT,
+  `datumOd` date NOT NULL,
+  `datumDo` date NOT NULL,
+  `brojOsoba` int(11) NOT NULL,
+  `napomena` varchar(500) NOT NULL,
+  `idSmestaj` int(11) NOT NULL,
+  `idKorisnika` int(11) NOT NULL,
+  PRIMARY KEY (`idRezervacija`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `smestaj`
+--
+-- Creation: May 15, 2020 at 09:58 AM
+--
+
+DROP TABLE IF EXISTS `smestaj`;
+CREATE TABLE IF NOT EXISTS `smestaj` (
+  `idOglasi` int(11) NOT NULL AUTO_INCREMENT,
+  `opis` varchar(200) NOT NULL,
+  `cena` int(11) NOT NULL,
+  `idVlasnik` int(11) NOT NULL,
+  `idAdresa` int(11) NOT NULL,
+  `tipSmestaja` varchar(45) NOT NULL,
+  `kapacitet` int(11) NOT NULL,
+  `povrsina` int(11) NOT NULL,
+  `kuhinja` varchar(5) NOT NULL,
+  `terasa` tinyint(4) NOT NULL,
+  `parking` tinyint(4) NOT NULL,
+  `datum` date NOT NULL,
+  PRIMARY KEY (`idOglasi`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ulica`
+--
+-- Creation: May 15, 2020 at 09:59 AM
+--
+
+DROP TABLE IF EXISTS `ulica`;
+CREATE TABLE IF NOT EXISTS `ulica` (
+  `idUlica` int(11) NOT NULL AUTO_INCREMENT,
+  `ime` varchar(45) DEFAULT NULL,
+  `idGrad` int(11) NOT NULL,
+  PRIMARY KEY (`idUlica`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -112,6 +112,7 @@ html,body{
     text-decoration: none;
 }
 
+
 /*opcije u okviru oglasa(pregledaj,izbrisi)*/
 #oglasOpcije{
     color:black;
@@ -124,6 +125,22 @@ html,body{
     text-align: right;
 }
 
+/* admin */
+.zahteviDiv{
+    margin:auto;
+    width: 75%;
+}
+/*za odobravanje na stranici sa zahtevima*/
+#zahtevi{
+   color:black;
+   font-size: 20px; 
+}
+
+#zahtevi a:link, a:hover, a:visited, a:active{
+    color:black;
+    font-size: 20px;
+    text-decoration: none;
+}
 /*Stranica smestaj*/
 .informacijeSmestaj{
     margin:auto;

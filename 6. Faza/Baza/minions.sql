@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2020 at 06:34 PM
+-- Generation Time: May 18, 2020 at 02:57 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -32,10 +32,10 @@ USE `minions`;
 
 DROP TABLE IF EXISTS `filepathdokumentacijekorisnika`;
 CREATE TABLE IF NOT EXISTS `filepathdokumentacijekorisnika` (
-  `idFilepathDokumentacijeKorisnika` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `filepath` varchar(100) NOT NULL,
   `idKorisnika` int(11) NOT NULL,
-  PRIMARY KEY (`idFilepathDokumentacijeKorisnika`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -100,17 +100,18 @@ CREATE TABLE IF NOT EXISTS `korisnici` (
   `email` varchar(45) NOT NULL,
   `datumRodjenja` date NOT NULL,
   `adresa` varchar(70) NOT NULL,
+  `status` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `korisnici`
 --
 
-INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `tip`, `username`, `password`, `email`, `datumRodjenja`, `adresa`) VALUES
-(7, 'Nikola', 'Marovic', 'oglasavac', 'nidzulitza', 'asdfasdf', 'nixy.marovic@gmail.com', '1998-05-23', 'Brace Velickovic 4'),
-(9, 'Aleksandar', 'Nikolic', 'korisnik', 'coasort', 'sifra123', 'aleksandarnikolic@hotmail.rs', '1998-10-06', 'Bavaniste bb'),
-(10, 'Momcilo', 'Niketic', 'oglasavac', 'speedy', 'qwerqwer', 'momciloniketic@gmail.com', '1998-07-20', 'Bresnica bb');
+INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `tip`, `username`, `password`, `email`, `datumRodjenja`, `adresa`, `status`) VALUES
+(7, 'Nikola', 'Marovic', 'oglasavac', 'nidzulitza', 'asdfasdf', 'nixy.marovic@gmail.com', '1998-05-23', 'Brace Velickovic 4', 'aktivan'),
+(9, 'Aleksandar', 'Nikolic', 'korisnik', 'coasort', 'sifra123', 'aleksandarnikolic@hotmail.rs', '1998-10-06', 'Bavaniste bb', 'aktivan'),
+(11, 'Nikola', 'Marovic', 'admin', 'admin', 'admin', 'nmarovic998@gmail.com', '1998-05-23', 'Brace Velickovic 4', 'aktivan');
 
 -- --------------------------------------------------------
 
@@ -120,12 +121,12 @@ INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `tip`, `username`, `password`, 
 
 DROP TABLE IF EXISTS `odgovor`;
 CREATE TABLE IF NOT EXISTS `odgovor` (
-  `idOdgovor` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idRecenzija` int(11) DEFAULT NULL,
   `idKorisnick` int(11) NOT NULL,
   `idOdgovorNa` int(11) DEFAULT NULL,
   `text` varchar(300) NOT NULL,
-  PRIMARY KEY (`idOdgovor`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -136,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `odgovor` (
 
 DROP TABLE IF EXISTS `recenzija`;
 CREATE TABLE IF NOT EXISTS `recenzija` (
-  `idRecenzija` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `cistoca` int(11) NOT NULL,
   `komfor` int(11) NOT NULL,
   `kvalitet` int(11) NOT NULL,
@@ -147,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `recenzija` (
   `idOglasa` int(11) NOT NULL,
   `idKorisnika` int(11) NOT NULL,
   `komentar` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`idRecenzija`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -158,14 +159,14 @@ CREATE TABLE IF NOT EXISTS `recenzija` (
 
 DROP TABLE IF EXISTS `rezervacija`;
 CREATE TABLE IF NOT EXISTS `rezervacija` (
-  `idRezervacija` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `datumOd` date NOT NULL,
   `datumDo` date NOT NULL,
   `brojOsoba` int(11) NOT NULL,
   `napomena` varchar(500) NOT NULL,
   `idSmestaj` int(11) NOT NULL,
   `idKorisnika` int(11) NOT NULL,
-  PRIMARY KEY (`idRezervacija`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -201,9 +202,7 @@ CREATE TABLE IF NOT EXISTS `smestaj` (
 INSERT INTO `smestaj` (`id`, `naziv`, `opis`, `cena`, `idVlasnik`, `drzava`, `grad`, `ulica`, `broj`, `tipSmestaja`, `kapacitet`, `povrsina`, `kuhinja`, `terasa`, `parking`) VALUES
 (1, 'Aleksandar Apartments', 'Objekat Apartment ALEKSANDAR Valjevo se nalazi u Valjevu, u regionu Centralne Srbije i nudi popločano dvorište i pogled na grad. Ovaj klimatizovani smeštaj pruža gostima besplatan WiFi i privatni parking u okviru objekta. Divčibare su udaljene 36 km.\r\n\r\nApartman sadrži 1 spavaću sobu, opremljenu kuhinju sa frižiderom i mikrotalasnom pećnicom, flat-screen TV sa kablovskim kanalima, mašinu za pranje veša i 1 kupatilo sa bideom.\r\n\r\nGosti apartmana mogu da koriste terasu.\r\n\r\nNajbliži aerodrom je Aerodrom Nikola Tesla u Beogradu, udaljen 106 km od objekta Apartment ALEKSANDAR.', 30, 7, 'Srbija', 'Valjevo', 'Panticeva', '107', 'apartman', 66, 65, 1, 1, 1),
 (2, 'Vila Beograd', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 80, 7, 'Srbija', 'Beograd', 'Vojvode Stepe', '33', 'vikendica', 12, 120, 1, 1, 1),
-(3, 'Hotel Kragujevac', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 20, 10, 'Srbija', 'Kragujevac', 'Daniciceva', '78', 'hotelskaSoba', 2, 12, 0, 1, 1),
-(4, 'Pancevo Apartments', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 35, 7, 'Srbija', 'Pancevo', '7. jul', '1', 'hotelskaSoba', 5, 45, 1, 1, 0),
-(7, 'Vila Beograd', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 30, 7, 'Srbija', 'Beograd', 'Ruzveltova', '55', 'apartman', 5, 23, 1, 0, 1);
+(3, 'Hotel Kragujevac', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 20, 10, 'Srbija', 'Kragujevac', 'Daniciceva', '78', 'hotelskaSoba', 2, 12, 0, 1, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

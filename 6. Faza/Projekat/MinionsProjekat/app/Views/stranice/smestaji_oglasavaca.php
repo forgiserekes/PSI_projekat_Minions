@@ -11,14 +11,14 @@
         echo        "<img src= " .base_url('slike/search.png')." style='width:30'>";             
         echo   "</div>";
         echo    "<div class='col-sm-5 blackTextLeft' align='right' id='search'>";
-        form_open("Oglasavac/pretraga","method=post"); 
+        echo form_open("Oglasavac/pretraga","method=post"); 
         echo form_input("kljucPretrage",set_value("kljucPretrage")); 
         echo form_submit("pretragaBtn", "Pretrazi"); 
-        form_close(); 
+        echo form_close(); 
         echo "</div>";    
         echo "</div>";
     }
-    if(count($smestaji)>0){
+   if(count($smestaji)>0){
         $slikeModel = new App\Models\FilePathDokumentacijeSmestajaModel();
         foreach($smestaji as $smestaj){
             echo "<div class='oglas'>";
@@ -43,7 +43,7 @@
             echo            "{$smestaj->opis}";
             echo        "</p>";
             echo    "</div>";
-            echo    "<hr>";
+            echo    "&nbsp";
             echo "</div>";
         }
     }else echo "<div class='row col-sm-12 blackTextCenter'>Ni jedan smestaj niste jos uvek oglasili.</div>"  
