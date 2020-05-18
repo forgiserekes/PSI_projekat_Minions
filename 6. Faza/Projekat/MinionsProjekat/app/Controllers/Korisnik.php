@@ -24,7 +24,9 @@ class Korisnik extends BaseController
 
         public function pretragaSubmit(){
             $smestajModel = new SmestajModel();
+            $rezervacijaModel = new RezervacijaModel();
             $sviSmestaji = $smestajModel->dohvSveOglase();
+            
             
             
             //echo $this->request->getVar('naziv')." ".gettype($this->request->getVar('naziv'))."<br>";
@@ -42,6 +44,28 @@ class Korisnik extends BaseController
                     } 
                 } 
             }
+            if($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != ''){               
+                foreach($sviSmestaji as $smestaj => $valSmestaj) { 
+                    $rezervacije = $rezervacijaModel->pretraziRezervacijeSmestaja($valSmestaj->id);
+                        foreach($rezervacije as $rezervacija => $valRezervacija) { 
+                            if(strtotime($valRezervacija->datumOd)< strtotime($this->request->getVar('datumOd')) &&
+                               strtotime($valRezervacija->datumDo)> strtotime($this->request->getVar('datumOd'))){
+                                unset($sviSmestaji[$smestaj]); 
+                                 break; 
+                            }
+                            if(strtotime($valRezervacija->datumOd)< strtotime($this->request->getVar('datumDo')) &&
+                               strtotime($valRezervacija->datumDo)> strtotime($this->request->getVar('datumDo'))){
+                                unset($sviSmestaji[$smestaj]); 
+                                 break; 
+                            }
+                            if(strtotime($valRezervacija->datumOd)> strtotime($this->request->getVar('datumOd')) &&
+                               strtotime($valRezervacija->datumDo)< strtotime($this->request->getVar('datumDo'))){
+                                unset($sviSmestaji[$smestaj]); 
+                                 break; 
+                            }                            
+                        } 
+                } 
+            }
             if($this->request->getVar('kategorija') != ''){
                 foreach($sviSmestaji as $k => $val) { 
                     if($val->tipSmestaja != $this->request->getVar('kategorija')) { 
@@ -54,7 +78,7 @@ class Korisnik extends BaseController
                 foreach($sviSmestaji as $k => $val) { 
                     if($val->kapacitet < $this->request->getVar('brojOsoba')) { 
                         unset($sviSmestaji[$k]); 
-                        echo 'brojOsoba';
+                        //echo 'brojOsoba';
                     } 
                 } 
             }  
@@ -62,7 +86,7 @@ class Korisnik extends BaseController
                 foreach($sviSmestaji as $k => $val) { 
                     if($val->grad < $this->request->getVar('cena')) { 
                         unset($sviSmestaji[$k]); 
-                        echo 'cena';
+                        //echo 'cena';
                     } 
                 } 
             } 
@@ -70,7 +94,7 @@ class Korisnik extends BaseController
                 foreach($sviSmestaji as $k => $val) { 
                     if($val->grad != $this->request->getVar('grad')) { 
                         unset($sviSmestaji[$k]);
-                        echo 'grad';
+                        //echo 'grad';
                     } 
                 } 
             }                         
