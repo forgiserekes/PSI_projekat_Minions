@@ -4,7 +4,20 @@ use CodeIgniter\Model;
 
 class RezervacijaModel extends Model
 {
-    protected $table      = 'autor';
-    protected $primaryKey = 'korime';
+    protected $table      = 'rezervacija';
+    protected $primaryKey = 'id';
     protected $returnType = 'object';
+
+    protected $allowedFields = ['datumOd', 
+                                'datumDo',
+                                'brojOsoba',
+                                'napomena',
+                                'idSmestaj',
+                                'idKorisnika'
+                                ];
+
+    public function pretraziRezervacijeSmestaja($kljuc){
+        return $this->where('idSmestaj',$kljuc)->findAll();
+    }
+
 }

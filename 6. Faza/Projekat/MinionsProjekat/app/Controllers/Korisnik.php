@@ -1,6 +1,7 @@
 <?php namespace App\Controllers;
 
 use App\Models\SmestajModel;
+use App\Models\RezervacijaModel;
 
 class Korisnik extends BaseController
 { 
@@ -35,11 +36,60 @@ class Korisnik extends BaseController
         }
         
         public function rezervisi($id){
-            
+            $smestajModel = new SmestajModel();
+            $smestaj = $smestajModel->dohvatiSmestajSaId($id);
+            $this->session->set('id',$id);
+            $this->prikaz('rezervacija_smestaja',[]);
         }
         
         public function rezervisiSubmit(){
             
+            if(!$this->validate(['datumOd'=>'required',
+                                 'datumDo'=>'required',
+                                 'brojOsoba' =>'required',
+                                 'napomena'=>'required']))
+                                 {            
+                                    return $this->prikaz('rezervacija_smestaja', 
+                                    ['errors'=>$this->validator->getErrors()]);
+            }
+            //provera da li je zadati smesta razervisan u trazenom terminu
+            $rezervacijaModel = new RezervacijaModel();
+            $rezervacije = $rezervacijaModel->pretraziRezervacijeSmestaja($this->session->get('id'));
+            $greska = 'nedostupan termin';
+            // echo count($rezervacije). "<br>";
+            foreach ($rezervacije as $value){
+                // echo $value->datumOd." ". strtotime($value->datumOd). "<br>";
+                //pocetni datum trazene rezervacije se nalazi unutar vec recervisanog termina
+                if(strtotime($value->datumOd)<=strtotime($this->request->getVar('datumOd')) &&
+                   strtotime($value->datumDo)>=strtotime($this->request->getVar('datumOd'))){
+                  
+                   return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+                }
+                ////krajnji datum trazene rezervacije se nalazi unutar vec recervisanog termina
+                else if(strtotime($value->datumOd)<=strtotime($this->request->getVar('datumDo')) &&
+                        strtotime($value->datumDo)>=strtotime($this->request->getVar('datumDo'))){
+                       
+                        return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+                }
+                //ako trazeni termin obuhvata neki drugi termin
+                else if(strtotime($value->datumOd)>=strtotime($this->request->getVar('datumOd')) &&
+                        strtotime($value->datumDo)<=strtotime($this->request->getVar('datumDo'))){
+                        
+                        return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+                } 
+                
+            }
+
+            $rezervacijaModel->save([
+                'datumOd' => $this->request->getVar('datumOd'),
+                'datumDo' => $this->request->getVar('datumDo'),   
+                'brojOsoba'=> $this->request->getVar('brojOsoba'),
+                'napomena'=> $this->request->getVar('napomena'),
+                'idSmestaj'=> $this->session->get('id') ,
+                'idKorisnika'=> $this->session->get('korisnik')->id             
+             ]);
+                     
+            return redirect()->to(site_url('Korisnik')); 
         }
         
         public function logout(){
@@ -49,5 +99,20 @@ class Korisnik extends BaseController
         
         public function backToHome(){
             return redirect()->to(site_url('Korisnik')); 
+        }
+
+        public function date_range($first, $last, $step = '+1 day', $output_format = 'd/m/Y' ) {
+
+            $dates = array();
+            $current = strtotime($first);
+            $last = strtotime($last);
+        
+            while( $current <= $last ) {
+        
+                $dates[] = date($output_format, $current);
+                $current = strtotime($step, $current);
+            }
+        
+            return $dates;
         }
 }
