@@ -47,6 +47,10 @@ class Admin extends BaseController
     public function ukloniKorisnika($id){
         $korisniciModel = new KorisniciModel();
         $korisniciModel->obrisiKorisnika($id);
+        $smestajModel = new SmestajModel();
+        $smestajModel->obrisiSmestajeKorisnika($id);
+        
+        
         return redirect()->to(site_url("Admin/pregledSvihKorisnika/"));
     }
     

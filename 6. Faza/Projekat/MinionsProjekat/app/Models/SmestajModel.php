@@ -37,7 +37,12 @@ class SmestajModel extends Model
     public function obrisiSmestaj($id){
         return $this->delete($id);
     }
-    
+    public function obrisiSmestajeKorisnika($id){
+        $smestajiKorisnika = $this->where('idVlasnik',$id)->findAll();
+        foreach($smestajiKorisnika as $smestaj){
+            $this->delete($smestaj->id);
+        }
+    }
     public function dohvOglasPoNazivu($naziv){
         return $this->like('naziv',$naziv)->findAll();
     }
