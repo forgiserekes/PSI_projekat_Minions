@@ -1,3 +1,3 @@
 <?php
-    echo $poruka;
+    print_r($poruka);
 ?>

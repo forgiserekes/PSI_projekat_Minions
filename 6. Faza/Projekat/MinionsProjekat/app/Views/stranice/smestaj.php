@@ -133,7 +133,7 @@
     </div>
 
     <!-- nisam sredjiavao ovo ispod -->
-    <div class='row  '>
+    <div class='row'>
         <div class='col-sm-6 '>
             <div id="mapid" class="mapKlasa"></div>
         </div>
@@ -211,31 +211,27 @@
             <div class="row" style="height:25px"></div>
             <div class="row ">
                 <div class="col-sm-12 ">
-                    <a href="spisak_recenzija_korisnik.html " class="btn btn-info col-12 skyBackground" role="button">Recenzije(12)</a>
+                <?php echo  anchor("{$controller}/sveRecenzijeOglasa/{$smestaj->id}", "<button class='btn btn-info col-12 skyBackground' role='button'>Sve recenzije</button>"); ?>
                 </div>
             </div>
             <div class="row " style="height:25px; "></div>
-            <div class="row ">
-                <div class="col-sm-12 ">
-                    <a href="rezervisi.html " class="btn btn-info col-12 skyBackground " role="button">Rezervisi</a>
-                </div>
-            </div>
-            <div class="row " style="height:25px"></div>
-
-            <div class="row ">
-                <div class="col-sm-12 ">
-                    <a href="ostavljanje_recenzija.html" class="btn btn-info col-12 skyBackground "
-                        role="button">Ostavite recenziju</a>
-                </div>
-            </div>
-            <!-- <div class="row " style="height:25px; ">
-            </div>
-            <div class="row ">
-
-                <div class="col-sm-12 ">
-                    <a href="#link " class="btn btn-info col-12 skyBackground" role="button ">Oglasavac</a>
-                </div>
-            </div> -->
+            <?php if($controller =='Korisnik'){ 
+                        echo "<div class='row'>";
+                        echo    "<div class='col-sm-12'>";
+                        echo       anchor("Korisnik/rezervisi/{$smestaj->id}", "<button class='btn btn-info col-12 skyBackground' role='button'>Rezervisi</button>");
+                        echo    "</div>";
+                        echo "</div>";
+                        echo "<div class='row' style='height:25px'></div>";
+                        
+                        if($smeDaOstaviRecenziju){
+                            echo "<div class='row'>";
+                            echo    "<div class='col-sm-12'>";
+                            echo       anchor("Korisnik/ostaviRecenziju/{$smestaj->id}", "<button class='btn btn-info col-12 skyBackground' role='button'>Ostavi recenziju</button>");
+                            echo    "</div>";
+                            echo "</div>";
+                        }
+                  }
+            ?>
         </div>
     </div>
 </div>

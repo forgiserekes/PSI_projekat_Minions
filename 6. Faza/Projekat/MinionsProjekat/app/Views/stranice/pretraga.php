@@ -42,12 +42,16 @@
                             <?php echo "Kategorija:"; ?>
                         </td>
                         <td>                
-                            <select name="kategorija">
-                                <option>stan</option>
-                                <option>apartman</option>
-                                <option>vikendica</option>
-                                <option>hotelskaSoba</option>
-                            </select> 
+                            <?php 
+                            $options = [
+                                ''=>'',
+                                'soba' => 'Soba',
+                                'apartman' => 'Apartman',
+                                'hotelskaSoba' => 'Hotelska soba',
+                                'vikendica' => 'Vikendica',
+                            ];
+                            echo form_dropdown('kategorija',$options);
+                        ?>
                         </td>
                     </tr>
                     <tr>
@@ -71,20 +75,7 @@
                             <?php echo "Grad"; ?>
                         </td>
                         <td>
-                            <select name="grad">
-                                 <option>Valjevo</option>
-                                 <option>Beograd</option>
-                                 <option>Kragujevac</option>
-                                 <option>Sombor</option>
-                                 <option>Sabac</option>
-                                 <option>Smederevo</option>
-                                 <option>Subotica</option>
-                                 <option>Pancevo</option>
-                                 <option>Kovin</option>
-                                 <option>Leskovac</option>
-                                 <option>Novi Sad</option>
-                                 <option>Nis</option>
-                             </select>
+                            <input type="text" name="grad">   
                         </td>
                     </tr>                   
                     <tr>
