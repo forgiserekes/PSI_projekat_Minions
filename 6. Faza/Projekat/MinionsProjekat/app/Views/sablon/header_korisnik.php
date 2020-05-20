@@ -15,10 +15,10 @@
             <div class='col-sm-4 myTextCenter' id='mainTitle'>
                 <?= anchor("Korisnik/backToHome", "<h2 class='smestiSeStyle'>Smesti.se</h2>") ?>
             </div>
-            <div class='col-sm-2 '>
+            <div class='col-sm-2'>
                 <?php  echo "<p class='myTextRight' id='logRegStyle'>".$korisnik->ime."   ".$korisnik->prezime."</p>"; ?>
             </div>
-            <div class='col-sm-2 '>
+            <div class='col-sm-2'>
                 <?= anchor("Korisnik/logout", "<p class='logReg textLeft' id='logRegStyle'>Odjavi se </p>") ?> 
             </div>
         </div>

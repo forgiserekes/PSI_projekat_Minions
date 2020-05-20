@@ -30,7 +30,7 @@ class BrojRecenzijaModel extends Model
         $result = $res->getResultObject();
         foreach($result as $tmp){
             $this->update($tmp->id,[
-               'broj' => --$tmp->broj
+               'broj' => (--$tmp->broj<0?0:$tmp->broj)
             ]);
         } 
     }
@@ -52,6 +52,5 @@ class BrojRecenzijaModel extends Model
         foreach($result as $tmp){
             return $tmp->broj>0;
         }
-    }
-    
+    }    
 }

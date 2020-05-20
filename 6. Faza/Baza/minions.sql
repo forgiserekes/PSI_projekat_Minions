@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2020 at 05:06 PM
+-- Generation Time: May 20, 2020 at 10:58 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -171,9 +171,8 @@ DROP TABLE IF EXISTS `odgovor`;
 CREATE TABLE IF NOT EXISTS `odgovor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idRecenzija` int(11) DEFAULT NULL,
-  `idKorisnick` int(11) NOT NULL,
-  `idOdgovorNa` int(11) DEFAULT NULL,
-  `text` varchar(300) NOT NULL,
+  `idOglasavac` int(11) NOT NULL,
+  `tekst` varchar(300) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -197,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `recenzija` (
   `idKorisnik` int(11) NOT NULL,
   `komentar` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `recenzija`
@@ -205,7 +204,8 @@ CREATE TABLE IF NOT EXISTS `recenzija` (
 
 INSERT INTO `recenzija` (`id`, `cistoca`, `komfor`, `kvalitet`, `lokacija`, `ljubaznost`, `opstiUtisak`, `tip`, `idSmestaj`, `idKorisnik`, `komentar`) VALUES
 (11, 5, 5, 4, 4, 4, 'sjajno', 'porodica', 2, 9, 'Komentar na recenziju.'),
-(13, 3, 4, 4, 4, 5, 'sjajno', 'grupa prijatelja', 2, 9, 'Komentar');
+(13, 3, 4, 4, 4, 5, 'sjajno', 'grupa prijatelja', 2, 9, 'Komentar'),
+(14, 4, 5, 3, 4, 3, 'dobro', 'porodica', 1, 9, 'Ovo je komentar.');
 
 -- --------------------------------------------------------
 
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `rezervacija` (
   `idSmestaj` int(11) NOT NULL,
   `idKorisnika` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rezervacija`
@@ -234,7 +234,11 @@ INSERT INTO `rezervacija` (`id`, `datumOd`, `datumDo`, `brojOsoba`, `napomena`, 
 (18, '2020-05-01', '2020-05-02', 1, 'Nista', 'potvrdjena', 1, 9),
 (19, '2020-05-02', '2020-05-03', 1, 'Nista', 'odbijena', 1, 9),
 (20, '2020-05-01', '2020-05-02', 1, 'Nista', 'potvrdjena', 2, 9),
-(21, '2020-07-01', '2020-07-02', 1, 'Nista', 'potvrdjena', 2, 9);
+(21, '2020-07-01', '2020-07-02', 1, 'Nista', 'potvrdjena', 2, 9),
+(22, '2020-07-01', '2020-07-02', 2, 'Nista', 'potvrdjena', 1, 9),
+(23, '2020-05-13', '2020-05-15', 3, 'Nista', 'odbijena', 2, 9),
+(24, '2020-05-15', '2020-05-16', 3, 'Nista', 'odbijena', 2, 9),
+(25, '2020-05-28', '2020-05-29', 1, 'nista', 'odbijena', 2, 9);
 
 -- --------------------------------------------------------
 
