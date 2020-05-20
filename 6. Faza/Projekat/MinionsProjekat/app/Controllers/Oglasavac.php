@@ -2,6 +2,7 @@
 
 use App\Models\FilePathDokumentacijeSmestajaModel;
 use App\Models\SmestajModel;
+use App\Models\RezervacijaModel;
 
 class Oglasavac extends BaseController
 { 
@@ -94,6 +95,28 @@ class Oglasavac extends BaseController
             $smestajModel = new SmestajModel();
             $smestaji = $smestajModel->pretrazi($kljucPretrage);
             $this->prikaz('smestaji_oglasavaca',['smestaji'=>$smestaji,'trazeno'=>$kljucPretrage]);
+        }
+        
+        public function rezervacije(){
+            $rezervacijaModel = new \App\Models\RezervacijaModel();
+            $nepotvrdjeneRezervacije = $rezervacijaModel->dohvSveNepotrvrdjene($this->session->get('oglasavac')->id);
+            $this->prikaz('nepotvrdjene_rezervacije_oglasavac',['nepotvrdjeneRezervacije'=>$nepotvrdjeneRezervacije]);
+        }
+        
+        public function potvrdiRezervaciju($idRezervacija){
+            $brojRecenzijaModel = new \App\Models\BrojRecenzijaModel();
+            $brojRecenzijaModel->povecaj($_SESSION['idKorisnikRezervacija'],$_SESSION['idSmestajRezervacija']);
+            $rezervacijaModel = new RezervacijaModel();
+            $rezervacijaModel->potvrdiRezervaciju($idRezervacija);
+            return redirect()->to(site_url('Oglasavac/rezervacije'));
+        }
+        
+        public function odbijRezervaciju($idRezervacija){
+            $brojRecenzijaModel = new \App\Models\BrojRecenzijaModel();
+            $brojRecenzijaModel->smanji($_SESSION['idKorisnikRezervacija'],$_SESSION['idSmestajRezervacija']);
+            $rezervacijaModel = new RezervacijaModel();
+            $rezervacijaModel->odbijRezervaciju($idRezervacija);
+            return redirect()->to(site_url('Oglasavac/rezervacije'));
         }
         
         public function smestajiOglasavaca(){

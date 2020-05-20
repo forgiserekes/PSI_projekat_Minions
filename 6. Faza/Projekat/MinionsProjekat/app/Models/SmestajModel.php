@@ -33,19 +33,19 @@ class SmestajModel extends Model
     public function pretrazi($kljuc){
         return $this->like('naziv',$kljuc)->orLike('drzava',$kljuc)->orLike('grad',$kljuc)->orLike('ulica',$kljuc)->findAll();
     }
+    
     public function obrisiSmestaj($id){
         return $this->delete($id);
     }
-    public function dohvTrazeneOglase($naziv, $cena, $grad){
-
-        /*
-            za sad poredi samo po nazivu, u listu parametara dodati sve ostale
-            stvari po kojima se poredi i onda napravili sql query 
-        */
-
+    
+    public function dohvOglasPoNazivu($naziv){
         return $this->like('naziv',$naziv)->findAll();
     }
+    public function dohvSmestaj($id){
+        return ($this->where('id',$id)->findAll())[0];
+    }
     public function dohvatiSmestajSaId($id) {
-        return $this->where('id', $id)->findAll();      
+        return $this->where('id', $id)->find();      
+        
     }
 }

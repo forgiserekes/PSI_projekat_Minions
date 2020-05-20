@@ -14,7 +14,7 @@ class Gost extends BaseController
     
     public function index(){
         $smestajModel = new SmestajModel();
-        $this->prikaz('pocetna_gost',['sviSmestaji'=>$smestajModel->dohvSveOglase()]);
+        $this->prikaz('pocetna',['sviSmestaji'=>$smestajModel->dohvSveOglase()]);
     }
     
     public function register($poruka = null){
@@ -27,13 +27,53 @@ class Gost extends BaseController
 
     public function pretragaSubmit(){
         $smestajModel = new SmestajModel();
-        $sviSmestaji = $smestajModel->dohvTrazeneOglase($this->request->getVar('naziv'));
-        //$smestaji = $smestajModel->dohvSveOglase();
-        $this->prikaz('pocetna_gost',['sviSmestaji'=>$sviSmestaji,'trazeno'=>$this->request->getVar('naziv')]);
+        $sviSmestaji = $smestajModel->dohvSveOglase();
+
+        if($this->request->getVar('naziv') != ''){
+            foreach($sviSmestaji as $k => $val) { 
+                if($val->naziv != $this->request->getVar('naziv')) { 
+                    unset($sviSmestaji[$k]); 
+                } 
+            } 
+        }
+        if($this->request->getVar('kategorija') != ''){
+            foreach($sviSmestaji as $k => $val) { 
+                if($val->tipSmestaja != $this->request->getVar('kategorija')) { 
+                    unset($sviSmestaji[$k]); 
+                    echo 'kategorija';
+                } 
+            } 
+        }
+        if($this->request->getVar('brojOsoba') != ''){
+            foreach($sviSmestaji as $k => $val) { 
+                if($val->kapacitet < $this->request->getVar('brojOsoba')) { 
+                    unset($sviSmestaji[$k]); 
+                    echo 'brojOsoba';
+                } 
+            } 
+        }  
+        if($this->request->getVar('cena') != ''){
+            foreach($sviSmestaji as $k => $val) { 
+                if($val->grad < $this->request->getVar('cena')) { 
+                    unset($sviSmestaji[$k]); 
+                    echo 'cena';
+                } 
+            } 
+        } 
+        if($this->request->getVar('grad') != ''){
+            foreach($sviSmestaji as $k => $val) { 
+                if($val->grad != $this->request->getVar('grad')) { 
+                    unset($sviSmestaji[$k]);
+                    echo 'grad';
+                } 
+            } 
+        }                         
+
+        $this->prikaz('pocetna',['sviSmestaji'=>$sviSmestaji]);
     }
 
     public function registerCommit(){
-        if(!$this->validate(['ime'=>'required|min_length[5]|max_length[45]', 'prezime'=>'required|min_length[5]|max_length[45]',
+        if(!$this->validate(['ime'=>'required|min_length[1]|max_length[45]', 'prezime'=>'required|min_length[5]|max_length[45]',
             'registration_password'=>'required|min_length[8]|max_length[45]','registration_password_confirm' => 'required|min_length[8]|max_length[45]|matches[registration_password]',
             'datum_rodjenja'=>'required','adresa'=>'required|max_length[70]','registration_type'=>'required'])){
             return $this->prikaz('register', 
@@ -87,7 +127,7 @@ class Gost extends BaseController
         if($korisnik->password!=$this->request->getVar('login_password'))
             return $this->login('Pogresna lozinka');
         if($korisnik->tip=='oglasavac'){
-            if($korisnik->status=='naCekanju') return $this->login('Zahtev na cekanju.');
+            if($korisnik->status=='cekanje') return $this->login('Zahtev na cekanju.');
             else if($korisnik->status=='odbijen') return $this->login('Zahtev je odbijen.');
             $this->session->set('oglasavac',$korisnik);
             return redirect()->to(site_url('Oglasavac'));
@@ -100,6 +140,12 @@ class Gost extends BaseController
             $this->session->set('admin',$korisnik);
             return redirect()->to(site_url('Admin'));
         } 
+    }
+    
+    public function sveRecenzijeOglasa($id){
+        $smestajModel = new SmestajModel();
+        $smestaj = $smestajModel->dohvatiSmestajSaId($id);
+        $this->prikaz('spisak_recenzija_za_oglas',[]);
     }
     
     public function backToHome(){

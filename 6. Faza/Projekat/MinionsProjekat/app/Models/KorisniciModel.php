@@ -9,7 +9,7 @@ class KorisniciModel extends Model
     protected $returnType = 'object';
     protected $allowedFields = ['ime', 'prezime','username','password','email','adresa','tip','datumRodjenja','status'];
     public function dohvSveZahteve(){
-        return $this->where('status','naCekanju')->findAll();
+        return $this->where('status','cekanje')->findAll();
     }
     public function odobriZahtev($id){
        $data = [
@@ -28,5 +28,8 @@ class KorisniciModel extends Model
     }
     public function obrisiKorisnika($id){
       return $this->delete($id);
+    }
+    public function dohvKorisnika($id){
+        return $this->where('id',$id)->findAll();
     }
 }

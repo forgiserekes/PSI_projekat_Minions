@@ -7,8 +7,8 @@
     &nbsp;
     <div class='row'>
         <div class='zahteviDiv'>
-            <table class='table table-striped'>
-                <thead class='grayBackground'>
+            <table class='table table-striped table-dark'>
+                <thead>
                     <th>ID</th>
                     <th>Ime</th>
                     <th>Prezime</th>
@@ -28,10 +28,10 @@
                         echo    "<td>". $korisnik->username ."</td>";
                         echo    "<td>". $korisnik->email ."</td>";
                         echo    "<td>";
-                        echo    "<p id='zahtevi'>" . anchor("Admin/odobriZahtev/{$korisnik->id}", "Da")."</p>";
+                        echo    "<p class='myTextLeft textSize15' id='tabelaLinkovi'>" . anchor("Admin/odobriZahtev/{$korisnik->id}", "Da")."</p>";
                         echo    "</td>";
                         echo    "<td>";
-                        echo    "<p id='zahtevi'>" . anchor("Admin/odbijZahtev/{$korisnik->id}", "Ne")."</p>";
+                        echo    "<p class='myTextLeft textSize15' id='tabelaLinkovi'>" . anchor("Admin/odbijZahtev/{$korisnik->id}", "Ne")."</p>";
                         echo    "</td>";
                         echo "</tr>";
                     }
