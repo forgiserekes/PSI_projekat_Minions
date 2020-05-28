@@ -8,7 +8,7 @@ class Gost extends BaseController
 {   
     protected function prikaz($page, $data){
         $data['controller']='Gost';
-        echo view('sablon/header_gost');
+        echo view('sablon/header',$data);
         echo view("stranice/$page",$data);
         echo view('sablon/footer');
     }
@@ -173,8 +173,8 @@ class Gost extends BaseController
     
     public function sveRecenzijeOglasa($id){
         $smestajModel = new SmestajModel();
-        $smestaj = $smestajModel->dohvSmestaj($id);
-        $this->prikaz('spisak_recenzija_za_oglas',['smestaj'=>$smestaj]);
+        $smestaj = $smestajModel->dohvSmestaj($id)[0];
+        $this->prikaz('spisak_recenzija',['smestaj'=>$smestaj]);
     }
     
     public function backToHome(){

@@ -4,15 +4,16 @@
             <h2 class='blackTextTitleCenter'>Postavite vaš oglas:</h2>
         </div>
     </div>
-    <div class='row'>
-        <div class='adPlacingDiv'>
-            <form name="postavkaOglasaForm" action="<?= site_url("Oglasavac/postavljanjeOglasaSubmit") ?>" method="post">
+    <div class='adPlacingDiv'>
+        <form action="postavljanje_oglasa_submit" method="post" enctype="multipart/form-data">
             <table class='table table-borderless'>
                 <tr>
                     <td></td>
                     <td>
                         <font color='red'>
                             <?php if(!empty($errors['naziv'])) echo $errors['naziv'];?>
+                            <?php if(isset($greska)){echo $greska;}
+                        ?>  
                         </font>
                     </td>
                     <td></td>
@@ -276,15 +277,8 @@
                     </td>
                     <td>Slike smeštaja:</td>
                     <td>
-                        
-                        <?php
-                            $data=[
-                                'name' => 'slikeSmestaja[]',
-                                'multiple'=>'true',
-                                'accept'=>'image/png, image/jpeg'
-                           ];
-                            echo form_upload($data);
-                        ?>
+
+                    <input type="file" name="fileToUpload[]" id="fileToUpload" multiple accept='image/*' >
                         <!--<input type='file' name='slikeSmestaja[]' multiple='true' accept='image/png, image/jpeg' />-->
                     </td>
                 </tr>
@@ -313,10 +307,14 @@
                         ?>
                     </td>
                 </tr>
-            </table>
-            <div class='row adPlacingDiv'>
-                <input type="submit" value="Postavite smeštaj" align='center'/>
-            </div>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Postavi oglas" name="submit">
+                    </td>
+                </tr>
+            </table>            
         </form>
     </div>
 </div>

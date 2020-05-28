@@ -31,19 +31,28 @@ class RezervacijaModel extends Model
         $smestajModel = new SmestajModel();
         $sviSmestajiOglasavaca = $smestajModel->dohvOglaseOglasavaca($id);
         $cnt=0;
+        $rezervacije = array();
         foreach($sviSmestajiOglasavaca as $smestaj){
             if(count($this->where('idSmestaj',$smestaj->id)->findAll())>0){
                 $rezervacije[$cnt++] = $this->where('idSmestaj',$smestaj->id)->findAll();
             }
         }
-        
-        foreach($rezervacije as $rezervacijaKey=>$rezervacijaValue){
-            foreach($rezervacijaValue as $rezKey=>$rezValue){
-                if($rezervacijaValue[$rezKey]->status ==='potvrdjena' || $rezervacijaValue[$rezKey]->status ==='odbijena') unset($rezervacije[$rezervacijaKey][$rezKey]);   
+        if(count($rezervacije)>0){
+            foreach($rezervacije as $rezervacijaKey=>$rezervacijaValue){
+                foreach($rezervacijaValue as $rezKey=>$rezValue){
+                    if($rezervacijaValue[$rezKey]->status ==='potvrdjena' || $rezervacijaValue[$rezKey]->status ==='odbijena') unset($rezervacije[$rezervacijaKey][$rezKey]);   
+                }
+
             }
-            
         }
         
         return $rezervacije;
+    }
+    
+    public function obrisiRezervacijeZaOglas($id){
+        $rezervacije = $this->where('idSmestaj',$id)->findAll();
+        foreach($rezervacije as $rezervacija){
+            $this->delete($rezervacija->id);
+        }
     }
 }

@@ -1,7 +1,7 @@
 <div class='bodyContent'>
     <div class='row '>
         <div class='col-sm-12'>
-            <h1 class='blackTextCenter'>Spisak nepotvredjenih rezervacija:</h1>
+            <h1 class='pocetnaTextNaslov'>Spisak nepotvredjenih rezervacija:</h1>
         </div>
     </div>
     &nbsp;
@@ -15,7 +15,7 @@
                     <th>Smeštaj</th>
                     <th>Status</th>
                     <th>Korisnik</th>
-                    <th>Status </th>
+                    <th>Potvrda</th>
                 </thead>
                     <tbody>
                 <?php

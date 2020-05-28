@@ -33,7 +33,6 @@ class SmestajModel extends Model
     public function pretrazi($kljuc){
         return $this->like('naziv',$kljuc)->orLike('drzava',$kljuc)->orLike('grad',$kljuc)->orLike('ulica',$kljuc)->findAll();
     }
-    
     public function obrisiSmestaj($id){
         return $this->delete($id);
     }
@@ -47,10 +46,13 @@ class SmestajModel extends Model
         return $this->like('naziv',$naziv)->findAll();
     }
     public function dohvSmestaj($id){
-        return ($this->where('id',$id)->findAll())[0];
+        return ($this->where('id',$id)->find());
     }
     public function dohvatiSmestajSaId($id) {
-        return $this->where('id', $id)->find();      
-        
+        return $this->where('id', $id)->find();
+    }
+    
+    public function dohvBrojSmestaja(){
+        return count($this->findAll());
     }
 }

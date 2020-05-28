@@ -10,7 +10,7 @@ class Korisnik extends BaseController
 	protected function prikaz($page,$data){
             $data['controller']='Korisnik';
             $data['korisnik']=$this->session->get('korisnik');
-            echo view('sablon/header_korisnik',$data);
+            echo view('sablon/header',$data);
             echo view("stranice/$page",$data);
             echo view('sablon/footer');
 	}
@@ -187,8 +187,8 @@ class Korisnik extends BaseController
         
         public function sveRecenzijeOglasa($id){
             $smestajModel = new SmestajModel();
-            $smestaj = $smestajModel->dohvSmestaj($id);
-            $this->prikaz('spisak_recenzija_za_oglas',['smestaj'=>$smestaj]);
+            $smestaj = $smestajModel->dohvSmestaj($id)[0];
+            $this->prikaz('spisak_recenzija',['smestaj'=>$smestaj]);
         }
         
         public function smeDaOstaviRecenziju($idSmestaj){
@@ -202,6 +202,9 @@ class Korisnik extends BaseController
         }
         
         public function ostaviRecenzijuSubmit($id){
+            $smestajModel = new SmestajModel();
+            $smestaj = $smestajModel->dohvSmestaj($id)[0];
+            
             $recenzijaModel = new RecenzijaModel();
             $recenzijaModel->save([
                 'cistoca'=>$this->request->getVar('cistoca'),
@@ -213,6 +216,7 @@ class Korisnik extends BaseController
                 'tip'=>$this->request->getVar('tipPutnika'),
                 'komentar'=>$this->request->getVar('recenzijaKomentar'),
                 'idSmestaj'=>$id,
+                'idOglasavac'=>$smestaj->id,
                 'idKorisnik'=>$this->session->get('korisnik')->id,
             ]);
             

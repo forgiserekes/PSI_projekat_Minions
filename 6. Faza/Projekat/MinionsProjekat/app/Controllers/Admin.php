@@ -2,13 +2,14 @@
 
 use App\Models\KorisniciModel;
 use App\Models\SmestajModel;
+use App\Models\RecenzijaModel;
 
 class Admin extends BaseController
 {    
     protected function prikaz($page,$data){
         $data['controller']='Admin';
         $data['admin']=$this->session->get('admin');
-        echo view('sablon/header_admin',$data);
+        echo view('sablon/header',$data);
         echo view("stranice/$page",$data);
         echo view('sablon/footer');
     }
@@ -27,12 +28,16 @@ class Admin extends BaseController
     public function pregledSvihSmestaja(){
         $smestajModel = new SmestajModel();
         $smestaji = $smestajModel->dohvSveOglase();
-        $this->prikaz('spisak_smestaja_admin',['smestaji'=>$smestaji]);
+        $this->prikaz('pocetna',['sviSmestaji'=>$smestaji]);
     }
     
     public function obrisiSmestaj($id){
         $smestajModel = new SmestajModel();
         $smestajModel->obrisiSmestaj($id);
+        $recenzijaModel = new \App\Models\RecenzijaModel();
+        $recenzijaModel->obrisiRecenzijeZaOglas($id);
+        $rezervacijaModel = new \App\Models\RezervacijaModel();
+        $rezervacijaModel->obrisiRezervacijeZaOglas($id);
         return redirect()->to(site_url("Admin/pregledSvihSmestaja/"));
     }
     
@@ -75,13 +80,37 @@ class Admin extends BaseController
         $smestaj = $smestajModel->find($id);
         $this->prikaz('smestaj',['smestaj'=>$smestaj]);
     }
-
+    public function obrisiRecenziju($idRecenzije){
+        $recenzijaModel = new RecenzijaModel();
+        $recenzijaModel->obrisiRecenziju($idRecenzije);
+        return redirect()->to(site_url("Admin/pregledSvihRecenzija/")); 
+    }
     public function logout(){
         $this->session->destroy();
-        return redirect()->to(site_url('/')); 
+        return redirect()->to(site_url('/'));
     }
 
     public function backToHome(){
         return redirect()->to(site_url('Admin')); 
+    }
+    
+    public function dohvUkupanBrojAdmin(){
+        $recenzijaModel = new RecenzijaModel();
+        $smestajModel = new SmestajModel();
+        $korisniciModel = new KorisniciModel();
+        
+        $smestajBroj = $smestajModel->dohvBrojSmestaja();
+        $zahteviBroj = $korisniciModel->dohvBrojZahteva();
+        $recenzijeBroj = $recenzijaModel->dohvBrojSvihRecenzija();
+        $korisniciBroj = $korisniciModel->dohvBrojKorisnika();
+        
+        $data = [
+            'smestajBroj' => $smestajBroj,
+            'zahteviBroj' => $zahteviBroj,
+            'recenzijeBroj' => $recenzijeBroj,
+            'korisniciBroj' => $korisniciBroj,
+        ];
+        header("Conent-Type: application/json" );
+        echo json_encode($data);
     }
 }

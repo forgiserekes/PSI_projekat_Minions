@@ -1,10 +1,22 @@
 <div class='bodyContent'>
     <div class='row'>
         <div class='col-sm-12'>
-            <h4 class='darkText textSize40 textCenter'>
-                <?php echo $smestaj->naziv; ?>
-                <h4 class='textCenter'><i class="fa fa-map-marker textRight "></i>    <?php echo $smestaj->grad; ?></h4>
-            </h4>
+            <h1 class='smestajNaslov textCenter'><?php echo $smestaj->naziv; ?></h1>
+            <div class='row'>
+                <div class='col-sm-12' style="margin-left: 46%">
+                    <div class='ratingsSmestaj'>
+                    <?php
+                        $recenzijaModel = new App\Models\RecenzijaModel();
+                        for($i=0;$i<floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id));$i++)
+                            echo "<span class='fa fa-star'></span>";
+                        echo "<span class='fa fa-star-half-o'></span>";
+                        for($i=floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id)+1);$i<5;$i++)
+                            echo "<span class='fa fa-star-o'></span>";
+                    ?>
+                    </div>
+                </div>
+            </div>
+            <h4 class='textCenter'><i class="fa fa-map-marker textRight"></i><?php echo $smestaj->grad; ?></h4>
         </div>
     </div>
     <script type='text/javascript' src='<?=base_url('js/skripta_galerija.js');?>'></script>
@@ -57,7 +69,7 @@
         </div>
         <div class="row">
             <div class='col-sm-12 '>
-                <table class='table table table-striped tableInit '>
+                <table class='table table table-dark table-striped tableText'>
                     <tr>
                         <td>
                             Tip Smestaja:
@@ -132,83 +144,121 @@
         </div>
     </div>
 
-    <!-- nisam sredjiavao ovo ispod -->
     <div class='row'>
         <div class='col-sm-6 '>
-            <div id="mapid" class="mapKlasa"></div>
+            <div id="mapid" class="mapKlasa">
+                <!--OVDE IDE MAPA-->
+            </div>
         </div>
         <div class='col-sm-6'>
-            <div clas='row padding10'>
-                <div class='col-sm-12 skyBackground'>
-                    <span class=" heading goldText">Prosecna Ocena:</span>
-                    <span class="fa fa-star checked "></span>
-                    <span class="fa fa-star checked "></span>
-                    <span class="fa fa-star checked "></span>
-                    <span class="fa fa-star checked "></span>
-                    <span class="fa fa-star "></span>
-                    <p class='goldText'>4.56 average based on 228 reviews.</p>
-                    <hr style="border:3px solid #f1f1f1 ">
-                    <div class="row ">
-                        <div class="side ">
-                            <div class='goldText textCenter'>5 star</div>
-                        </div>
-                        <div class="middle ">
-                            <div class="bar-container ">
-                                <div class="bar-5"></div>
-                            </div>
-                        </div>
-                        <div class="side right ">
-                            <div class='goldText textCenter'>150</div>
-                        </div>
-                        <div class="side ">
-                            <div class='goldText textCenter'>4 star</div>
-                        </div>
-                        <div class="middle ">
-                            <div class="bar-container ">
-                                <div class="bar-4"></div>
-                            </div>
-                        </div>
-                        <div class="side right ">
-                            <div class='goldText textCenter'>63</div>
-                        </div>
-                        <div class="side ">
-                            <div class='goldText textCenter'>3 star</div>
-                        </div>
-                        <div class="middle ">
-                            <div class="bar-container ">
-                                <div class="bar-3 "></div>
-                            </div>
-                        </div>
-                        <div class="side right ">
-                            <div class='goldText textCenter'>8</div>
-                        </div>
-                        <div class="side ">
-                            <div class='goldText textCenter'>2 star</div>
-                        </div>
-                        <div class="middle ">
-                            <div class="bar-container ">
-                                <div class="bar-2 "></div>
-                            </div>
-                        </div>
-                        <div class="side right ">
-                            <div class='goldText textCenter'>6</div>
-                        </div>
-                        <div class="side ">
-                            <div class='goldText textCenter'>1 star</div>
-                        </div>
-                        <div class="middle ">
-                            <div class="bar-container ">
-                                <div class="bar-1 "></div>
-                            </div>
-                        </div>
-                        <div class="side right ">
-                            <div class='goldText textCenter'>1</div>
-                        </div>
+            <div clas='row'>
+                <div class='col-sm-12'>
+                    <div class='ratings1'>
+                        <span class='pocetnaTextNaslov'>Prosecna ocena: <?php echo round($recenzijaModel->dohvProsecnuOcenu($smestaj->id),1);?>
+                        <?php
+                        for($i=0;$i<floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id));$i++)
+                            echo "<span class='fa fa-star'></span>";
+                        echo "<span class='fa fa-star-half-o'></span>";
+                        for($i=floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id)+1);$i<5;$i++)
+                            echo "<span class='fa fa-star--o'></span>";
+                        ?>
+                        </span>
+                        <p>na osnovu <?php echo (string)$recenzijaModel->dohvBrojRecenzija($smestaj->id); ?> recenzije</p>
                     </div>
+                    <table class='table'>
+                        <tr>
+                            <td>
+                                Sjajno:
+                            </td>
+                            <td>
+                                <div class="progress">
+                                   <?php
+                                        if($recenzijaModel->dohvProsek('Sjajno', $smestaj->id)>0)
+                                                $cnt = ((string)$recenzijaModel->dohvProsek('Sjajno', $smestaj->id)) . "%";
+                                        else {
+                                            echo "Ne postoje ocene ovog tipa.";
+                                            $cnt = 0;
+                                        }
+                                   ?>
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $cnt; ?>" aria-valuenow="<?php echo $cnt; ?> " aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width='15%'>
+                                Dobro:
+                            </td>
+                            <td width='85%'>
+                                <div class="progress">
+                                    <?php
+                                        if($recenzijaModel->dohvProsek('Dobro', $smestaj->id)>0)
+                                                $cnt = ((string)$recenzijaModel->dohvProsek('Dobro', $smestaj->id)) . "%";
+                                        else {
+                                            echo "Ne postoje ocene ovog tipa.";
+                                            $cnt = 0;
+                                        }
+                                    ?>
+                                  <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $cnt; ?>" aria-valuenow="<?php echo $cnt; ?> " aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width='15%'>
+                                Okej:
+                            </td>
+                            <td width='85%'>
+                                <div class="progress">
+                                    <?php
+                                        if($recenzijaModel->dohvProsek('Okej', $smestaj->id)>0)
+                                                $cnt = ((string)$recenzijaModel->dohvProsek('Sjajno', $smestaj->id)) . "%";
+                                        else {
+                                            echo "Ne postoje ocene ovog tipa.";
+                                            $cnt = 0;
+                                        }
+                                    ?>
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $cnt; ?>" aria-valuenow="<?php echo $cnt; ?> " aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width='15%'>
+                                Loše:
+                            </td>
+                            <td width='85%'>
+                                <div class="progress">
+                                    <?php
+                                        if($recenzijaModel->dohvProsek('Lose', $smestaj->id)>0)
+                                                $cnt = ((string)$recenzijaModel->dohvProsek('Sjajno', $smestaj->id)) . "%";
+                                        else {
+                                            echo "Ne postoje ocene ovog tipa.";
+                                            $cnt = 0;
+                                        }
+                                    ?>
+                                  <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $cnt; ?>" aria-valuenow="<?php echo $cnt; ?> "  aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width='15%'>
+                                Veoma loše:
+                            </td>
+                            <td width='85%'>
+                                <div class="progress">
+                                    <?php
+                                        if($recenzijaModel->dohvProsek('Veoma lose', $smestaj->id)>0)
+                                                $cnt = ((string)$recenzijaModel->dohvProsek('Sjajno', $smestaj->id)) . "%";
+                                        else {
+                                            echo "Ne postoje ocene ovog tipa.";
+                                            $cnt = 0;
+                                        }
+                                    ?>
+                                  <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $cnt; ?>" aria-valuenow="<?php echo $cnt; ?> "  aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div class="row" style="height:25px"></div>
-            <div class="row" style="height:25px"></div>
             <div class="row ">
                 <div class="col-sm-12 ">
                 <?php echo  anchor("{$controller}/sveRecenzijeOglasa/{$smestaj->id}", "<button class='btn btn-info col-12 skyBackground' role='button'>Sve recenzije</button>"); ?>
@@ -235,4 +285,3 @@
         </div>
     </div>
 </div>
-

@@ -30,6 +30,12 @@ class KorisniciModel extends Model
       return $this->delete($id);
     }
     public function dohvKorisnika($id){
-        return $this->where('id',$id)->findAll();
+        return $this->where('id',$id)->findAll()[0];
+    }
+    public function dohvBrojKorisnika(){
+        return count($this->findAll());
+    }
+    public function dohvBrojZahteva(){
+       return count($this->where('status','cekanje')->findAll()); 
     }
 }

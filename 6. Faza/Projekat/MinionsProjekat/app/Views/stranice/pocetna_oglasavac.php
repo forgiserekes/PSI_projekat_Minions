@@ -14,7 +14,7 @@
             </div>
             <div class='col-sm-6'align='center'>
                 <img class='imgAvatar' src="<?=base_url('slike/recenzijeAvatar.jpg');?>" width="70%" height="250" alt="Avatar">
-                <?= anchor("Oglasavac/neodgRecenzijeOglasavaca", "<p class='blackTextCenter'>Neodgovorene recenzije</p>") ?> 
+                <?= anchor("Oglasavac/sveRecenzijeOglasavaca", "<p class='blackTextCenter'>Neodgovorene recenzije</p>") ?> 
             </div>
         </div>
         <div class='row col-sm-12'> 

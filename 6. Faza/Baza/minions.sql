@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2020 at 10:58 PM
+-- Generation Time: May 28, 2020 at 06:17 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -36,29 +36,16 @@ CREATE TABLE IF NOT EXISTS `brojrecenzija` (
   `idSmestaj` int(11) NOT NULL,
   `broj` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `brojrecenzija`
 --
 
 INSERT INTO `brojrecenzija` (`id`, `idKorisnik`, `idSmestaj`, `broj`) VALUES
-(5, 9, 1, 0),
-(6, 9, 2, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `filepathdokumentacijekorisnika`
---
-
-DROP TABLE IF EXISTS `filepathdokumentacijekorisnika`;
-CREATE TABLE IF NOT EXISTS `filepathdokumentacijekorisnika` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `filepath` varchar(100) NOT NULL,
-  `idKorisnika` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(7, 16, 14, 0),
+(8, 16, 18, 0),
+(9, 16, 15, 0);
 
 -- --------------------------------------------------------
 
@@ -72,38 +59,13 @@ CREATE TABLE IF NOT EXISTS `filepathdokumentacijesmestaja` (
   `filepath` varchar(100) NOT NULL,
   `idSmestaj` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `filepathdokumentacijesmestaja`
 --
 
 INSERT INTO `filepathdokumentacijesmestaja` (`id`, `filepath`, `idSmestaj`) VALUES
-(1, 'slike/proba/slika31.jpg', 1),
-(2, 'slike/proba/slika32.jpg', 1),
-(3, 'slike/proba/slika33.jpg', 1),
-(4, 'slike/proba/slika34.jpg', 1),
-(5, 'slike/proba/slika35.jpg', 1),
-(16, 'slike/proba/slika21.jpg', 2),
-(17, 'slike/proba/slika22.jpg', 2),
-(18, 'slike/proba/slika23.jpg', 2),
-(19, 'slike/proba/slika24.jpg', 2),
-(20, 'slike/proba/slika25.jpg', 2),
-(21, 'slike/proba/slika11.jpg', 3),
-(22, 'slike/proba/slika12.jpg', 3),
-(23, 'slike/proba/slika13.jpg', 3),
-(24, 'slike/proba/slika14.jpg', 3),
-(25, 'slike/proba/slika15.jpg', 3),
-(26, 'slike/proba/slika41.jpg', 4),
-(27, 'slike/proba/slika42.jpg', 4),
-(28, 'slike/proba/slika43.jpg', 4),
-(29, 'slike/proba/slika44.jpg', 4),
-(30, 'slike/proba/slika45.jpg', 4),
-(41, 'slike/proba/slika51.jpg', 7),
-(42, 'slike/proba/slika52.jpg', 7),
-(43, 'slike/proba/slika53.jpg', 7),
-(44, 'slike/proba/slika54.jpg', 7),
-(45, 'slike/proba/slika55.jpg', 7),
 (46, 'slike/proba/slika1.jpg', 8),
 (47, 'slike/proba/slika2.jpg', 8),
 (48, 'slike/proba/slika3.jpg', 8),
@@ -128,7 +90,42 @@ INSERT INTO `filepathdokumentacijesmestaja` (`id`, `filepath`, `idSmestaj`) VALU
 (67, 'slike/proba/slika62.jpg', 12),
 (68, 'slike/proba/slika63.jpg', 12),
 (69, 'slike/proba/slika64.jpg', 12),
-(70, 'slike/proba/slika65.jpg', 12);
+(70, 'slike/proba/slika65.jpg', 12),
+(71, 'slike/Hotel Metropol/slika61.jpg', 13),
+(72, 'slike/Hotel Metropol/slika62.jpg', 13),
+(73, 'slike/Hotel Metropol/slika63.jpg', 13),
+(74, 'slike/Hotel Metropol/slika64.jpg', 13),
+(75, 'slike/Hotel Metropol/slika65.jpg', 13),
+(76, 'slike/Aleksandar Apartments/slika31.jpg', 14),
+(77, 'slike/Aleksandar Apartments/slika32.jpg', 14),
+(78, 'slike/Aleksandar Apartments/slika33.jpg', 14),
+(79, 'slike/Aleksandar Apartments/slika34.jpg', 14),
+(80, 'slike/Aleksandar Apartments/slika35.jpg', 14),
+(81, 'slike/Hotel Metropol/slika21.jpg', 15),
+(82, 'slike/Hotel Metropol/slika22.jpg', 15),
+(83, 'slike/Hotel Metropol/slika23.jpg', 15),
+(84, 'slike/Hotel Metropol/slika24.jpg', 15),
+(85, 'slike/Hotel Metropol/slika25.jpg', 15),
+(86, 'slike/Vila Beograd/slika11.jpg', 16),
+(87, 'slike/Vila Beograd/slika12.jpg', 16),
+(88, 'slike/Vila Beograd/slika13.jpg', 16),
+(89, 'slike/Vila Beograd/slika14.jpg', 16),
+(90, 'slike/Vila Beograd/slika15.jpg', 16),
+(91, 'slike/Kragujevac Apartment/slika41.jpg', 17),
+(92, 'slike/Kragujevac Apartment/slika42.jpg', 17),
+(93, 'slike/Kragujevac Apartment/slika43.jpg', 17),
+(94, 'slike/Kragujevac Apartment/slika44.jpg', 17),
+(95, 'slike/Kragujevac Apartment/slika45.jpg', 17),
+(96, 'slike/Vila Niketic/slika51.jpg', 18),
+(97, 'slike/Vila Niketic/slika52.jpg', 18),
+(98, 'slike/Vila Niketic/slika53.jpg', 18),
+(99, 'slike/Vila Niketic/slika54.jpg', 18),
+(100, 'slike/Vila Niketic/slika55.jpg', 18),
+(101, 'slike/Apartment Valjevo/slika61.jpg', 19),
+(102, 'slike/Apartment Valjevo/slika62.jpg', 19),
+(103, 'slike/Apartment Valjevo/slika63.jpg', 19),
+(104, 'slike/Apartment Valjevo/slika64.jpg', 19),
+(105, 'slike/Apartment Valjevo/slika65.jpg', 19);
 
 -- --------------------------------------------------------
 
@@ -149,32 +146,18 @@ CREATE TABLE IF NOT EXISTS `korisnici` (
   `adresa` varchar(70) NOT NULL,
   `status` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `korisnici`
 --
 
 INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `tip`, `username`, `password`, `email`, `datumRodjenja`, `adresa`, `status`) VALUES
-(7, 'Nikola', 'Marovic', 'oglasavac', 'nidzulitza', 'asdfasdf', 'nixy.marovic@gmail.com', '1998-05-23', 'Brace Velickovic 4', 'aktivan'),
-(9, 'Aleksandar', 'Nikolic', 'korisnik', 'coasort', 'sifra123', 'aleksandarnikolic@hotmail.rs', '1998-10-06', 'Bavaniste bb', 'aktivan'),
 (11, 'Nikola', 'Marovic', 'admin', 'admin', 'admin', 'nmarovic998@gmail.com', '1998-05-23', 'Brace Velickovic 4', 'aktivan'),
-(12, 'Mina', 'Urosevic', 'oglasavac', 'minka', 'qwerqwer', 'mina.urosevic@gmail.com', '1999-01-01', 'Karadjordjeva', 'aktivan');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `odgovor`
---
-
-DROP TABLE IF EXISTS `odgovor`;
-CREATE TABLE IF NOT EXISTS `odgovor` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idRecenzija` int(11) DEFAULT NULL,
-  `idOglasavac` int(11) NOT NULL,
-  `tekst` varchar(300) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(13, 'Nikola', 'Marovic', 'oglasavac', 'nidzulitza', 'qwerqwer', 'nmarovic998@gmail.com', '1998-05-23', 'Brace Velickovic 4', 'aktivan'),
+(14, 'Momcilo', 'Niketic', 'oglasavac', 'moma98', 'zxcvzxcv', 'moma98kg@gmail.com', '1998-08-06', 'Bresnica bb', 'aktivan'),
+(15, 'Mina', 'Urosevic', 'oglasavac', 'minka', 'asdfasdf', 'mina.urosevic12@gmail.com', '1999-01-31', 'Karadjordjeva 10', 'aktivan'),
+(16, 'Aleksandar', 'Nikolic', 'korisnik', 'coa98', 'sifra123', 'aleksandarnikolic@hotmail.rs', '1998-10-06', 'Bavaniste bb', 'aktivan');
 
 -- --------------------------------------------------------
 
@@ -194,18 +177,22 @@ CREATE TABLE IF NOT EXISTS `recenzija` (
   `tip` varchar(45) NOT NULL,
   `idSmestaj` int(11) NOT NULL,
   `idKorisnik` int(11) NOT NULL,
+  `idOglasavac` int(11) NOT NULL,
   `komentar` varchar(500) DEFAULT NULL,
+  `odgovor` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `recenzija`
 --
 
-INSERT INTO `recenzija` (`id`, `cistoca`, `komfor`, `kvalitet`, `lokacija`, `ljubaznost`, `opstiUtisak`, `tip`, `idSmestaj`, `idKorisnik`, `komentar`) VALUES
-(11, 5, 5, 4, 4, 4, 'sjajno', 'porodica', 2, 9, 'Komentar na recenziju.'),
-(13, 3, 4, 4, 4, 5, 'sjajno', 'grupa prijatelja', 2, 9, 'Komentar'),
-(14, 4, 5, 3, 4, 3, 'dobro', 'porodica', 1, 9, 'Ovo je komentar.');
+INSERT INTO `recenzija` (`id`, `cistoca`, `komfor`, `kvalitet`, `lokacija`, `ljubaznost`, `opstiUtisak`, `tip`, `idSmestaj`, `idKorisnik`, `idOglasavac`, `komentar`, `odgovor`) VALUES
+(16, 4, 5, 5, 4, 5, 'Sjajno', 'Porodica', 14, 16, 14, 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic type', 'Similar to the contextual text color classes, easily set the background of an element to any contextual class. Anchor components will darken on hover, just like the text classes. Background utilities do not set color, so in some cases you’ll want to '),
+(17, 5, 4, 5, 5, 4, 'Sjajno', 'Porodica', 14, 16, 14, 'Odlican smestaj, za svaku pohvalu! Ponovo cemo doci! Pozdrav iz Panceva!', NULL),
+(19, 5, 4, 4, 5, 4, 'Dobro', 'Porodica', 14, 16, 14, 'Odlican smestaj, ponovo cemo doci.', NULL),
+(20, 5, 5, 5, 5, 5, 'Dobro', 'Grupa prijatelja', 15, 16, 15, 'Ovo je bio odlican smestaj. Uvek cemo doci! Veliki pozdrav iz Bavanista!', NULL),
+(21, 5, 5, 4, 5, 5, 'Sjajno', 'Porodica', 15, 16, 15, 'Opet cemo doci, sve je odlicno! Pozdrav!', NULL);
 
 -- --------------------------------------------------------
 
@@ -224,21 +211,18 @@ CREATE TABLE IF NOT EXISTS `rezervacija` (
   `idSmestaj` int(11) NOT NULL,
   `idKorisnika` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rezervacija`
 --
 
 INSERT INTO `rezervacija` (`id`, `datumOd`, `datumDo`, `brojOsoba`, `napomena`, `status`, `idSmestaj`, `idKorisnika`) VALUES
-(18, '2020-05-01', '2020-05-02', 1, 'Nista', 'potvrdjena', 1, 9),
-(19, '2020-05-02', '2020-05-03', 1, 'Nista', 'odbijena', 1, 9),
-(20, '2020-05-01', '2020-05-02', 1, 'Nista', 'potvrdjena', 2, 9),
-(21, '2020-07-01', '2020-07-02', 1, 'Nista', 'potvrdjena', 2, 9),
-(22, '2020-07-01', '2020-07-02', 2, 'Nista', 'potvrdjena', 1, 9),
-(23, '2020-05-13', '2020-05-15', 3, 'Nista', 'odbijena', 2, 9),
-(24, '2020-05-15', '2020-05-16', 3, 'Nista', 'odbijena', 2, 9),
-(25, '2020-05-28', '2020-05-29', 1, 'nista', 'odbijena', 2, 9);
+(27, '2020-05-27', '2020-05-28', 4, 'Nista', 'potvrdjena', 14, 16),
+(28, '2020-05-29', '2020-05-30', 2, 'Nista', 'potvrdjena', 14, 16),
+(30, '2020-05-31', '2020-06-01', 2, 'Nista', 'potvrdjena', 14, 16),
+(31, '2020-05-13', '2020-05-14', 2, 'Nista', 'potvrdjena', 15, 16),
+(32, '2020-05-29', '2020-05-30', 2, 'Nista', 'potvrdjena', 15, 16);
 
 -- --------------------------------------------------------
 
@@ -264,19 +248,18 @@ CREATE TABLE IF NOT EXISTS `smestaj` (
   `terasa` tinyint(4) NOT NULL,
   `parking` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `smestaj`
 --
 
 INSERT INTO `smestaj` (`id`, `naziv`, `opis`, `cena`, `idVlasnik`, `drzava`, `grad`, `ulica`, `broj`, `tipSmestaja`, `kapacitet`, `povrsina`, `kuhinja`, `terasa`, `parking`) VALUES
-(1, 'Aleksandar Apartments', 'Objekat Apartment ALEKSANDAR Valjevo se nalazi u Valjevu, u regionu Centralne Srbije i nudi popločano dvorište i pogled na grad. Ovaj klimatizovani smeštaj pruža gostima besplatan WiFi i privatni parking u okviru objekta. Divčibare su udaljene 36 km.\r\n\r\nApartman sadrži 1 spavaću sobu, opremljenu kuhinju sa frižiderom i mikrotalasnom pećnicom, flat-screen TV sa kablovskim kanalima, mašinu za pranje veša i 1 kupatilo sa bideom.\r\n\r\nGosti apartmana mogu da koriste terasu.\r\n\r\nNajbliži aerodrom je Aerodrom Nikola Tesla u Beogradu, udaljen 106 km od objekta Apartment ALEKSANDAR.', 30, 7, 'Srbija', 'Valjevo', 'Panticeva', '107', 'apartman', 6, 65, 1, 1, 1),
-(2, 'Vila Beograd', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 80, 7, 'Srbija', 'Beograd', 'Vojvode Stepe', '33', 'vikendica', 12, 120, 1, 1, 1),
-(9, 'Vila Pancevo', 'You can have the results returned as an instance of a custom class instead of a stdClass or array, as the getResult() and getResultArray() methods allow. If the class is not already loaded into memory, the Autoloader will attempt to load it. The object will have all values returned from the database set as properties. If these have been declared and are non-public then you should provide a __set() method to allow them to be set.', 45, 7, 'Srbija', 'Pancevo', 'Visnjicka', '5', 'hotelskaSoba', 5, 55, 1, 1, 0),
-(10, 'Skockana', 'You can have the results returned as an instance of a custom class instead of a stdClass or array, as the getResult() and getResultArray() methods allow. If the class is not already loaded into memory, the Autoloader will attempt to load it. The object will have all values returned from the database set as properties. If these have been declared and are non-public then you should provide a __set() method to allow them to be set.', 30, 7, 'Srbija', 'Valjevo', 'Divcibarski put', '10', 'vikendica', 8, 50, 1, 1, 1),
-(11, 'Sabac Apartments', 'You can have the results returned as an instance of a custom class instead of a stdClass or array, as the getResult() and getResultArray() methods allow. If the class is not already loaded into memory, the Autoloader will attempt to load it. The object will have all values returned from the database set as properties. If these have been declared and are non-public then you should provide a __set() method to allow them to be set.', 30, 12, 'Srbija', 'Sabac', 'Janka Veselinovic', '5', 'apartman', 3, 34, 1, 1, 0),
-(12, 'Hotel Kragujevac', 'You can have the results returned as an instance of a custom class instead of a stdClass or array, as the getResult() and getResultArray() methods allow. If the class is not already loaded into memory, the Autoloader will attempt to load it. The object will have all values returned from the database set as properties. If these have been declared and are non-public then you should provide a __set() method to allow them to be set.', 30, 12, 'Srbija', 'Kragujevac', 'Daniciceva', '5', 'hotelskaSoba', 2, 15, 0, 1, 1);
+(14, 'Aleksandar Apartments', 'Stan se nalazi u centru Valjeva. Smesten je na samoj raskrsnici ulica Dr. Pantica i Sindjeliceve ulice u privatnoj zgradi. Od samog centra je udaljen 200m. Veoma prostran i komforan. U samoj blizini se nalaze prodavnice, pekare, kafici i restorani. Nov je i opremljen novim stvarima. Velicina je 65 m2. Ima besplatan WiFi. Raspolaze kompletno opremljenim kupatilom i kuhinjom. ', 30, 13, 'Srbija', 'Valjevo', 'Pantićeva', '107', 'apartman', 6, 65, 1, 1, 1),
+(15, 'Hotel Metropol', 'Fantastična lokacija hotela Metropol Palace pored veličanstvenog Tašmajdanskog parka poziva vas da istražite brojne znamenitosti, pozorišta i muzeje Beograda bogate domaćim i međunarodnim kulturnim sadržajima, sve na nekoliko minuta hoda of hotela.', 45, 13, 'Srbija', 'Beograd', 'Bulevar Kralja Aleksandra', '67', 'hotelskaSoba', 2, 23, 0, 1, 1),
+(16, 'Vila Beograd', '﻿﻿﻿﻿﻿Vikendica na obali Dedinju, vikend ekolosko naselje se nalazi preko puta usca Save u Dunav.   Povrsine 180 kvadrata, zidana od pune cigle, utvdjena obala, novogradnja, voda, struja led rasveta, asvaltirani put do nasela, od Beograda udaljeno naselje oko 60 km . Moze zamena za stan u Beogradu, uz moju doplatu ili zamena za skuplji auto uz Vasu doplatu.', 120, 13, 'Srbija', 'Beograd', 'Neznanog junaka', '10', 'vikendica', 12, 150, 1, 1, 1),
+(17, 'Kragujevac Apartment', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 35, 14, 'Srbija', 'Kragujevac', 'Karadjordjeva', '6', 'apartman', 4, 45, 1, 1, 1),
+(19, 'Apartment Valjevo', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 25, 15, 'Srbija', 'Valjevo', 'Karadjordjeva', '15', 'soba', 3, 23, 0, 1, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

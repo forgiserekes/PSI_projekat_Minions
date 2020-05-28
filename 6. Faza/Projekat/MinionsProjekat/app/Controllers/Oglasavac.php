@@ -3,13 +3,14 @@
 use App\Models\FilePathDokumentacijeSmestajaModel;
 use App\Models\SmestajModel;
 use App\Models\RezervacijaModel;
+use App\Models\RecenzijaModel;
 
 class Oglasavac extends BaseController
 { 
 	protected function prikaz($page,$data){
             $data['controller']='Oglasavac';
             $data['oglasavac']=$this->session->get('oglasavac');
-            echo view('sablon/header_oglasavac',$data);
+            echo view('sablon/header',$data);
             echo view("stranice/$page",$data);
             echo view('sablon/footer');
 	}
@@ -22,17 +23,32 @@ class Oglasavac extends BaseController
             $this->prikaz('postavljanje_oglasa',[]);
         }
         
-        public function postavljanjeOglasaSubmit(){
-            if(!$this->validate(['naziv'=>'required','room_type'=>'required','kapacitet'=>'required','povrsina'=>'required',
-                'cena'=>'required','kitchen_type'=>'required','parking'=>'required','opis'=>'required|max_length(1500)','terasa'=>'required',
-                'ulica'=>'required','broj'=>'required','grad'=>'required','drzava'=>'required','opis'=>'required','koordinateX'=>'required',
-                'koordinateY'=>'required'])){
+        public function postavljanje_oglasa_submit(){
+            if(!$this->validate([
+                                 'naziv'=>'required',
+                                 'room_type'=>'required',
+                                 'kapacitet'=>'required',
+                                 'povrsina'=>'required',
+                                 'cena'=>'required',
+                                 'kitchen_type'=>'required',
+                                 'parking'=>'required',
+                                 'opis'=>'required|max_length(1500)',
+                                 'terasa'=>'required',
+                                 'ulica'=>'required',
+                                 'broj'=>'required',
+                                 'grad'=>'required',
+                                 'drzava'=>'required',
+                                 'opis'=>'required',
+                                 'koordinateX'=>'required',
+                                 'koordinateY'=>'required'
+                                ])){                                   
                 return $this->prikaz('postavljanje_oglasa',['errors'=>$this->validator->getErrors()]);
             }
             
             //$this->session->set('oglasavac',$korisnik);
             //$korisnik = $korisniciModel->where('username',$this->request->getVar('login_username'))->first();
             
+           
             $smestajModel = new SmestajModel();
             if($this->request->getVar('room_type')=='soba'){
                 $room_type='Soba';
@@ -44,6 +60,15 @@ class Oglasavac extends BaseController
                 $room_type = 'Vikendica';
             }
             
+            $smestaji = $smestajModel->findAll();
+            foreach ($smestaji as $smestaj) {
+                if($this->request->getVar('naziv') == $smestaj->naziv){
+                    $greska = "Ovo ime je vec zauzeto.";
+                    return $this->prikaz('postavljanje_oglasa',['greska'=>$greska]);
+                }
+            }
+            
+
             $smestajModel->save([
                 'naziv'=>$this->request->getVar('naziv'),
                 'opis'=>$this->request->getVar('opis'),
@@ -62,16 +87,35 @@ class Oglasavac extends BaseController
             ]);
             
             $slikeModel = new FilePathDokumentacijeSmestajaModel();
-            $images = $this->request->getVar("slikeSmestaja");
-            if($images!=null){
-                foreach($images as $image){
+            //napravi nov direktorijum u public/slike koji se zove kao naziv smestaja
+            $ime = $this->request->getVar('naziv');
+            mkdir("slike/".$ime."/");
+            
+            $count = count($_FILES["fileToUpload"]["name"]);
+          
+            $target_dir = "slike/".$ime ."/";
+            $uploadOk = 1;
+            //prevera da li je file odgovarajuceg tipa
+            
+            //echo $imageFileType;
+
+            for ($i=0; $i < $count; $i++) { 
+                $target_dir = "slike/".$ime ."/";
+                $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"][$i]);
+                $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                if($imageFileType == 'png' || $imageFileType == 'jpg' || $imageFileType == 'jpeg'|| 
+                   $imageFileType == 'PNG' || $imageFileType == 'JPG' || $imageFileType == 'JPEG'
+                ){
                     $slikeModel->save([
-                        'filepath' => "slike/proba/".$image,
+                        'filepath' => "slike/".$ime."/".$_FILES["fileToUpload"]["name"][$i],
                         'idSmestaj' => $smestajModel->getInsertId()
-                    ]);
+                    ]);  
+                    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"][$i], $target_file);
+    
                 }
             }
-            return redirect()->to(site_url("Oglasavac/smestajPrikaz/{$smestajModel->getInsertId()}"));
+            
+             return redirect()->to(site_url("Oglasavac/smestajPrikaz/{$smestajModel->getInsertId()}"));
         }
         
         public function smestajPrikaz($id){
@@ -83,18 +127,28 @@ class Oglasavac extends BaseController
         public function obrisiOglas($id){
             $smestajModel = new SmestajModel();
             $smestajModel->obrisiSmestaj($id);
+            $recenzijaModel = new \App\Models\RecenzijaModel();
+            $recenzijaModel->obrisiRecenzijeZaOglas($id);
+            $rezervacijaModel = new \App\Models\RezervacijaModel();
+            $rezervacijaModel->obrisiRezervacijeZaOglas($id);
             return redirect()->to(site_url("Oglasavac/smestajiOglasavaca/"));
         }
         
-        public function neodgRecenzijeOglasavaca(){
-            
+         public function sveRecenzijeOglasa($id){
+            $smestajModel = new SmestajModel();
+            $smestaj = $smestajModel->dohvSmestaj($id)[0];
+            $this->prikaz('spisak_recenzija',['smestaj'=>$smestaj]);
+        }
+        
+        public function sveRecenzijeOglasavaca(){
+            $this->prikaz('spisak_recenzija',['idOglasavaca'=>$this->session->get('oglasavac')->id]);
         }
         
         public function pretraga(){
             $kljucPretrage = $this->request->getVar('kljucPretrage');
             $smestajModel = new SmestajModel();
             $smestaji = $smestajModel->pretrazi($kljucPretrage);
-            $this->prikaz('smestaji_oglasavaca',['smestaji'=>$smestaji,'trazeno'=>$kljucPretrage]);
+            $this->prikaz('pocetna',['smestaji'=>$smestaji,'trazeno'=>$kljucPretrage]);
         }
         
         public function rezervacije(){
@@ -118,11 +172,21 @@ class Oglasavac extends BaseController
             $rezervacijaModel->odbijRezervaciju($idRezervacija);
             return redirect()->to(site_url('Oglasavac/rezervacije'));
         }
+        public function odgovorNaRecenziju($idRecenzije){
+            $this->prikaz('odgovor_na_recenziju',['idRecenzije'=>$idRecenzije]);
+        }
+        
+        public function odgovorNaRecenzijuSubmit($idRecenzije){
+            $odgovor = $this->request->getVar('recenzijaOdgovor');
+            $recenzijaModel = new RecenzijaModel();
+            $recenzijaModel->unesiOdgovor($idRecenzije,$odgovor);
+            return redirect()->to(site_url('Oglasavac/sveRecenzijeOglasavaca'));
+        }
         
         public function smestajiOglasavaca(){
             $smestajModel = new SmestajModel();
             $smestaji = $smestajModel->dohvOglaseOglasavaca($this->session->get('oglasavac')->id);
-            $this->prikaz('smestaji_oglasavaca',['smestaji'=>$smestaji]);
+            $this->prikaz('pocetna',['sviSmestaji'=>$smestaji]);
         }
         
         public function index(){

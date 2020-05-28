@@ -89,31 +89,31 @@
                 <table>
                     <tr>
                         <td>
-                            <input type="radio" name='utisak' value='sjajno'>
+                            <input type="radio" name='utisak' value='Sjajno'>
                         </td>
                         <td>Sjajno: 9+</td>
                     </tr>
                     <tr>
                         <td>
-                            <input type='radio' name='utisak'value='dobro'>
+                            <input type='radio' name='utisak'value='Dobro'>
                         </td>
                         <td>Dobro: 7-9</td>
                     </tr>
                     <tr>
                         <td>
-                            <input type='radio' name='utisak' value='okej'>
+                            <input type='radio' name='utisak' value='Okej'>
                         </td>
                         <td>Okej: 5-7</td>
                     </tr>
                     <tr >
                         <td>
-                            <input type='radio' name='utisak' value='lose'>
+                            <input type='radio' name='utisak' value='Loše'>
                         </td>
                         <td>Lose: 3-5</td>
                     </tr>
                     <tr>
                         <td>
-                            <input type='radio' name='utisak' value='veoma lose'>
+                            <input type='radio' name='utisak' value='Veoma loše'>
                         </td>
                         <td>Veoma lose: 1-3</td>
                     </tr>
@@ -124,31 +124,31 @@
                 <table>
                     <tr>
                         <td>
-                            <input type="radio" name="tipPutnika" value='porodica'>
+                            <input type="radio" name="tipPutnika" value='Porodica'>
                         </td>
                         <td>Porodica</td>
                     </tr>
                     <tr>
                         <td>
-                            <input type='radio' name='tipPutnika' value='par'>
+                            <input type='radio' name='tipPutnika' value='Par'>
                         </td>
                         <td>Par</td>
                     </tr>
                     <tr>
                         <td>
-                            <input type='radio' name='tipPutnika'value='grupa prijatelja'>
+                            <input type='radio' name='tipPutnika'value='Grupa prijatelja'>
                         </td>
-                        <td class='tableText'>Grupa prijatelja</td>
+                        <td>Grupa prijatelja</td>
                     </tr>
                     <tr>
                         <td>
-                            <input type='radio' name='tipPutnika' value='poslovni putnik'>
+                            <input type='radio' name='tipPutnika' value='Poslovni putnik'>
                         </td>
                         <td>Poslovni putnik</td>
                     </tr>
                     <tr>
                         <td>
-                            <input type='radio' name='tipPutnika' value='solo'>
+                            <input type='radio' name='tipPutnika' value='Solo'>
                         </td>
                         <td>Solo</td>
                     </tr>
