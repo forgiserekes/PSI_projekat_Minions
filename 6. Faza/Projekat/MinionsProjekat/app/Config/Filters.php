@@ -10,6 +10,10 @@ class Filters extends BaseConfig
 		'csrf'     => \CodeIgniter\Filters\CSRF::class,
 		'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
 		'honeypot' => \CodeIgniter\Filters\Honeypot::class,
+                'gostFilter' => \App\Filters\GostFilter::class,
+                'korisnikFilter' => \App\Filters\KorisnikFilter::class,
+                'adminFilter' => \App\Filters\AdminFilter::class,
+                'oglasavacFilter' => \App\Filters\OglasavacFilter::class,
 	];
 
 	// Always applied before every request
@@ -32,5 +36,12 @@ class Filters extends BaseConfig
 	// List filter aliases and any before/after uri patterns
 	// that they should run on, like:
 	//    'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
-	public $filters = [];
+	public $filters = [
+            'korisnikFilter' => ['before' => ['Korisnik/*', 'Korisnik']],
+            'gostFilter' => ['before' => ['Gost/*', 'Gost', '/']],
+            'oglasavacFilter' => ['before' => ['Oglasavac/*', 'Oglasavac']],
+            'adminFilter' => ['before' => ['Admin/*', 'Admin']],
+            
+            
+        ];
 }
