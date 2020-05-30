@@ -331,6 +331,18 @@ html,body{
     text-align:right;
 }
 
+#map {
+    width: 100%;
+    height: 400px;
+    padding: 0;
+    margin: 0 auto;
+}
+.address {
+    cursor: pointer;
+  }
 
-
+.address:hover {
+color: #AA0000;
+text-decoration: underline
+}
 

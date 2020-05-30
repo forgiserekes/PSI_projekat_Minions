@@ -21,7 +21,9 @@ class SmestajModel extends Model
                                 'cena',
                                 'kuhinja',
                                 'terasa',
-                                'parking'
+                                'parking',
+                                'lat',
+                                'lon'
                                ];
 
     public function dohvOglaseOglasavaca($idOglasavaca){

@@ -9,7 +9,7 @@ class KorisnikFilter implements FilterInterface
     public function before(RequestInterface $request)
     {
         $session = session();
-        if(!$session->has('Korisnik'))
+        if(!$session->has('korisnik'))
             return redirect()->to(site_url('Gost'));
     }
 

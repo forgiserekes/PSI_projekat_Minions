@@ -148,6 +148,55 @@
         <div class='col-sm-6 '>
             <div id="mapid" class="mapKlasa">
                 <!--OVDE IDE MAPA-->
+                <div id="map"></div>
+                <input type="hidden" name="lat" id="lat" size=12 value="">
+                <input type="hidden" name="lon" id="lon" size=12 value="">
+                <br>
+                <script type="text/javascript">
+                    // New York
+                    var startlat = "<?php echo $smestaj->lat; ?>";
+                    var startlon = "<?php echo $smestaj->lon; ?>";
+
+                    var options = {
+                        center: [startlat, startlon],
+                        zoom: 9
+                    }
+
+                    document.getElementById('lat').value = startlat;
+                    document.getElementById('lon').value = startlon;
+
+                    var map = L.map('map', options);
+                    var nzoom = 12;
+
+                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                        attribution: 'OSM'
+                    }).addTo(map);
+
+                    var myMarker = L.marker([startlat, startlon], {
+                        title: "Coordinates",
+                        alt: "Coordinates",
+                        draggable: true
+                    }).addTo(map).on('dragend', function() {
+                        var lat = myMarker.getLatLng().lat.toFixed(8);
+                        var lon = myMarker.getLatLng().lng.toFixed(8);
+                        var czoom = map.getZoom();
+                        if (czoom < 18) {
+                            nzoom = czoom + 2;
+                        }
+                        if (nzoom > 18) {
+                            nzoom = 18;
+                        }
+                        if (czoom != 18) {
+                            map.setView([lat, lon], nzoom);
+                        } else {
+                            map.setView([lat, lon]);
+                        }
+                        document.getElementById('lat').value = lat;
+                        document.getElementById('lon').value = lon;
+                        myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
+                    });
+
+                </script>
             </div>
         </div>
         <div class='col-sm-6'>

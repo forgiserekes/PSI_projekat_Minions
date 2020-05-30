@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2020 at 06:17 PM
+-- Generation Time: May 30, 2020 at 05:43 PM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.6
+-- PHP Version: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `minions`
 --
-CREATE DATABASE IF NOT EXISTS `minions` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `minions`;
 
 -- --------------------------------------------------------
 
@@ -29,14 +27,12 @@ USE `minions`;
 -- Table structure for table `brojrecenzija`
 --
 
-DROP TABLE IF EXISTS `brojrecenzija`;
-CREATE TABLE IF NOT EXISTS `brojrecenzija` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `brojrecenzija` (
+  `id` int(11) NOT NULL,
   `idKorisnik` int(11) NOT NULL,
   `idSmestaj` int(11) NOT NULL,
-  `broj` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  `broj` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `brojrecenzija`
@@ -53,13 +49,11 @@ INSERT INTO `brojrecenzija` (`id`, `idKorisnik`, `idSmestaj`, `broj`) VALUES
 -- Table structure for table `filepathdokumentacijesmestaja`
 --
 
-DROP TABLE IF EXISTS `filepathdokumentacijesmestaja`;
-CREATE TABLE IF NOT EXISTS `filepathdokumentacijesmestaja` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `filepathdokumentacijesmestaja` (
+  `id` int(11) NOT NULL,
   `filepath` varchar(100) NOT NULL,
-  `idSmestaj` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
+  `idSmestaj` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `filepathdokumentacijesmestaja`
@@ -125,7 +119,23 @@ INSERT INTO `filepathdokumentacijesmestaja` (`id`, `filepath`, `idSmestaj`) VALU
 (102, 'slike/Apartment Valjevo/slika62.jpg', 19),
 (103, 'slike/Apartment Valjevo/slika63.jpg', 19),
 (104, 'slike/Apartment Valjevo/slika64.jpg', 19),
-(105, 'slike/Apartment Valjevo/slika65.jpg', 19);
+(105, 'slike/Apartment Valjevo/slika65.jpg', 19),
+(106, 'slike/Moma/Capture.PNG', 20),
+(107, 'slike/Moma/k.PNG', 20),
+(108, 'slike/Moma5/Capture.PNG', 21),
+(109, 'slike/Moma5/k.PNG', 21),
+(110, 'slike/Moma3/ca760b70976b52578da88e06973af542.jpg', 22),
+(111, 'slike/Moma3/download.jpg', 22),
+(112, 'slike/Moma3/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg', 22),
+(113, 'slike/Moma4/ca760b70976b52578da88e06973af542.jpg', 23),
+(114, 'slike/Moma4/download.jpg', 23),
+(115, 'slike/Moma4/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg', 23),
+(116, 'slike/Moma4/ca760b70976b52578da88e06973af542.jpg', 24),
+(117, 'slike/Moma4/download.jpg', 24),
+(118, 'slike/Moma4/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg', 24),
+(119, 'slike/Moma5/ca760b70976b52578da88e06973af542.jpg', 25),
+(120, 'slike/Moma5/download.jpg', 25),
+(121, 'slike/Moma5/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg', 25);
 
 -- --------------------------------------------------------
 
@@ -133,9 +143,8 @@ INSERT INTO `filepathdokumentacijesmestaja` (`id`, `filepath`, `idSmestaj`) VALU
 -- Table structure for table `korisnici`
 --
 
-DROP TABLE IF EXISTS `korisnici`;
-CREATE TABLE IF NOT EXISTS `korisnici` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `korisnici` (
+  `id` int(11) NOT NULL,
   `ime` varchar(45) NOT NULL,
   `prezime` varchar(45) NOT NULL,
   `tip` varchar(15) NOT NULL,
@@ -144,9 +153,8 @@ CREATE TABLE IF NOT EXISTS `korisnici` (
   `email` varchar(45) NOT NULL,
   `datumRodjenja` date NOT NULL,
   `adresa` varchar(70) NOT NULL,
-  `status` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  `status` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `korisnici`
@@ -165,9 +173,8 @@ INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `tip`, `username`, `password`, 
 -- Table structure for table `recenzija`
 --
 
-DROP TABLE IF EXISTS `recenzija`;
-CREATE TABLE IF NOT EXISTS `recenzija` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `recenzija` (
+  `id` int(11) NOT NULL,
   `cistoca` int(11) NOT NULL,
   `komfor` int(11) NOT NULL,
   `kvalitet` int(11) NOT NULL,
@@ -179,9 +186,8 @@ CREATE TABLE IF NOT EXISTS `recenzija` (
   `idKorisnik` int(11) NOT NULL,
   `idOglasavac` int(11) NOT NULL,
   `komentar` varchar(500) DEFAULT NULL,
-  `odgovor` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+  `odgovor` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `recenzija`
@@ -200,18 +206,16 @@ INSERT INTO `recenzija` (`id`, `cistoca`, `komfor`, `kvalitet`, `lokacija`, `lju
 -- Table structure for table `rezervacija`
 --
 
-DROP TABLE IF EXISTS `rezervacija`;
-CREATE TABLE IF NOT EXISTS `rezervacija` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `rezervacija` (
+  `id` int(11) NOT NULL,
   `datumOd` date NOT NULL,
   `datumDo` date NOT NULL,
   `brojOsoba` int(11) NOT NULL,
   `napomena` varchar(500) NOT NULL,
   `status` varchar(20) NOT NULL,
   `idSmestaj` int(11) NOT NULL,
-  `idKorisnika` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+  `idKorisnika` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rezervacija`
@@ -230,9 +234,8 @@ INSERT INTO `rezervacija` (`id`, `datumOd`, `datumDo`, `brojOsoba`, `napomena`, 
 -- Table structure for table `smestaj`
 --
 
-DROP TABLE IF EXISTS `smestaj`;
-CREATE TABLE IF NOT EXISTS `smestaj` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `smestaj` (
+  `id` int(11) NOT NULL,
   `naziv` varchar(45) NOT NULL,
   `opis` varchar(1500) NOT NULL,
   `cena` int(11) NOT NULL,
@@ -247,19 +250,102 @@ CREATE TABLE IF NOT EXISTS `smestaj` (
   `kuhinja` tinyint(1) NOT NULL,
   `terasa` tinyint(4) NOT NULL,
   `parking` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+  `lat` varchar(20) NOT NULL,
+  `lon` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `smestaj`
 --
 
-INSERT INTO `smestaj` (`id`, `naziv`, `opis`, `cena`, `idVlasnik`, `drzava`, `grad`, `ulica`, `broj`, `tipSmestaja`, `kapacitet`, `povrsina`, `kuhinja`, `terasa`, `parking`) VALUES
-(14, 'Aleksandar Apartments', 'Stan se nalazi u centru Valjeva. Smesten je na samoj raskrsnici ulica Dr. Pantica i Sindjeliceve ulice u privatnoj zgradi. Od samog centra je udaljen 200m. Veoma prostran i komforan. U samoj blizini se nalaze prodavnice, pekare, kafici i restorani. Nov je i opremljen novim stvarima. Velicina je 65 m2. Ima besplatan WiFi. Raspolaze kompletno opremljenim kupatilom i kuhinjom. ', 30, 13, 'Srbija', 'Valjevo', 'Pantićeva', '107', 'apartman', 6, 65, 1, 1, 1),
-(15, 'Hotel Metropol', 'Fantastična lokacija hotela Metropol Palace pored veličanstvenog Tašmajdanskog parka poziva vas da istražite brojne znamenitosti, pozorišta i muzeje Beograda bogate domaćim i međunarodnim kulturnim sadržajima, sve na nekoliko minuta hoda of hotela.', 45, 13, 'Srbija', 'Beograd', 'Bulevar Kralja Aleksandra', '67', 'hotelskaSoba', 2, 23, 0, 1, 1),
-(16, 'Vila Beograd', '﻿﻿﻿﻿﻿Vikendica na obali Dedinju, vikend ekolosko naselje se nalazi preko puta usca Save u Dunav.   Povrsine 180 kvadrata, zidana od pune cigle, utvdjena obala, novogradnja, voda, struja led rasveta, asvaltirani put do nasela, od Beograda udaljeno naselje oko 60 km . Moze zamena za stan u Beogradu, uz moju doplatu ili zamena za skuplji auto uz Vasu doplatu.', 120, 13, 'Srbija', 'Beograd', 'Neznanog junaka', '10', 'vikendica', 12, 150, 1, 1, 1),
-(17, 'Kragujevac Apartment', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 35, 14, 'Srbija', 'Kragujevac', 'Karadjordjeva', '6', 'apartman', 4, 45, 1, 1, 1),
-(19, 'Apartment Valjevo', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 25, 15, 'Srbija', 'Valjevo', 'Karadjordjeva', '15', 'soba', 3, 23, 0, 1, 1);
+INSERT INTO `smestaj` (`id`, `naziv`, `opis`, `cena`, `idVlasnik`, `drzava`, `grad`, `ulica`, `broj`, `tipSmestaja`, `kapacitet`, `povrsina`, `kuhinja`, `terasa`, `parking`, `lat`, `lon`) VALUES
+(14, 'Aleksandar Apartments', 'Stan se nalazi u centru Valjeva. Smesten je na samoj raskrsnici ulica Dr. Pantica i Sindjeliceve ulice u privatnoj zgradi. Od samog centra je udaljen 200m. Veoma prostran i komforan. U samoj blizini se nalaze prodavnice, pekare, kafici i restorani. Nov je i opremljen novim stvarima. Velicina je 65 m2. Ima besplatan WiFi. Raspolaze kompletno opremljenim kupatilom i kuhinjom. ', 30, 13, 'Srbija', 'Valjevo', 'Pantićeva', '107', 'apartman', 6, 65, 1, 1, 1, '44.272553', '19.890626'),
+(15, 'Hotel Metropol', 'Fantastična lokacija hotela Metropol Palace pored veličanstvenog Tašmajdanskog parka poziva vas da istražite brojne znamenitosti, pozorišta i muzeje Beograda bogate domaćim i međunarodnim kulturnim sadržajima, sve na nekoliko minuta hoda of hotela.', 45, 13, 'Srbija', 'Beograd', 'Bulevar Kralja Aleksandra', '67', 'hotelskaSoba', 2, 23, 0, 1, 1, '44.806540', '20.473444'),
+(16, 'Vila Beograd', '﻿﻿﻿﻿﻿Vikendica na obali Dedinju, vikend ekolosko naselje se nalazi preko puta usca Save u Dunav.   Povrsine 180 kvadrata, zidana od pune cigle, utvdjena obala, novogradnja, voda, struja led rasveta, asvaltirani put do nasela, od Beograda udaljeno naselje oko 60 km . Moze zamena za stan u Beogradu, uz moju doplatu ili zamena za skuplji auto uz Vasu doplatu.', 120, 13, 'Srbija', 'Beograd', 'Neznanog junaka', '10', 'vikendica', 12, 150, 1, 1, 1, '44.774108', '20.461578'),
+(17, 'Kragujevac Apartment', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 35, 14, 'Srbija', 'Kragujevac', 'Karadjordjeva', '6', 'apartman', 4, 45, 1, 1, 1, '44.010062', '20.917019'),
+(19, 'Apartment Valjevo', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 25, 15, 'Srbija', 'Valjevo', 'Karadjordjeva', '15', 'soba', 3, 23, 0, 1, 1, '44.271023', '19.888030'),
+(24, 'Moma4', 'sdfsdfs', 100, 13, 'Srbija', 'Beograd', 'Niska', '20', 'soba', 50, 100, 1, 1, 1, '40.75637123', '-73.98545321'),
+(25, 'Moma5', 'dfghfgh', 100, 13, 'Srbija', 'Beograd', ' Теразије ', '20', 'soba', 50, 100, 1, 1, 1, '44.80142690', '20.48234110');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `brojrecenzija`
+--
+ALTER TABLE `brojrecenzija`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `filepathdokumentacijesmestaja`
+--
+ALTER TABLE `filepathdokumentacijesmestaja`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `korisnici`
+--
+ALTER TABLE `korisnici`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `recenzija`
+--
+ALTER TABLE `recenzija`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `rezervacija`
+--
+ALTER TABLE `rezervacija`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `smestaj`
+--
+ALTER TABLE `smestaj`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `brojrecenzija`
+--
+ALTER TABLE `brojrecenzija`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `filepathdokumentacijesmestaja`
+--
+ALTER TABLE `filepathdokumentacijesmestaja`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+
+--
+-- AUTO_INCREMENT for table `korisnici`
+--
+ALTER TABLE `korisnici`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `recenzija`
+--
+ALTER TABLE `recenzija`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `rezervacija`
+--
+ALTER TABLE `rezervacija`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `smestaj`
+--
+ALTER TABLE `smestaj`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -37,11 +37,9 @@ class Filters extends BaseConfig
 	// that they should run on, like:
 	//    'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
 	public $filters = [
-            'korisnikFilter' => ['before' => ['Korisnik/*', 'Korisnik']],
             'gostFilter' => ['before' => ['Gost/*', 'Gost', '/']],
-            'oglasavacFilter' => ['before' => ['Oglasavac/*', 'Oglasavac']],
+			'korisnikFilter' => ['before' => ['Korisnik/*', 'Korisnik']],
+			'oglasavacFilter' => ['before' => ['Oglasavac/*', 'Oglasavac']],
             'adminFilter' => ['before' => ['Admin/*', 'Admin']],
-            
-            
         ];
 }

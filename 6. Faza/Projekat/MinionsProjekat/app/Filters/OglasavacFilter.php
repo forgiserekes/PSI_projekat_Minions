@@ -9,7 +9,7 @@ class OglasavacFilter implements FilterInterface
     public function before(RequestInterface $request)
     {
         $session = session();
-        if(!$session->has('Oglasavac'))
+        if(!$session->has('oglasavac'))
             return redirect()->to(site_url('Gost'));
     }
 

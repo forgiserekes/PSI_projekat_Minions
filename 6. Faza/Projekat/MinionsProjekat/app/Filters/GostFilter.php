@@ -9,12 +9,12 @@ class GostFilter implements FilterInterface
     public function before(RequestInterface $request)
     {
         $session = session();
-        if($session->has('Korisnik'))
+        if($session->has('korisnik'))
             return redirect()->to(site_url('Korisnik'));
-        if($session->has('Oglasavac'))
+        if($session->has('oglasavac'))
             return redirect()->to(site_url('Oglasavac'));
-        if($session->has('Admin'))
-            return redirect()-to(site_url('Admin'));
+        if($session->has('admin'))
+            return redirect()->to(site_url('Admin'));
     }
 
     //--------------------------------------------------------------------

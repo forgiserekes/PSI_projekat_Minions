@@ -9,7 +9,7 @@ class AdminFilter implements FilterInterface
     public function before(RequestInterface $request)
     {
         $session = session();
-        if(!$session->has('Admin'))
+        if(!$session->has('admin'))
             return redirect()->to(site_url('Gost'));
     }
 

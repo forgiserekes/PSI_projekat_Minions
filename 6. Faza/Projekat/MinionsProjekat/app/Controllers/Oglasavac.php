@@ -38,9 +38,7 @@ class Oglasavac extends BaseController
                                  'broj'=>'required',
                                  'grad'=>'required',
                                  'drzava'=>'required',
-                                 'opis'=>'required',
-                                 'koordinateX'=>'required',
-                                 'koordinateY'=>'required'
+                                 'opis'=>'required'
                                 ])){                                   
                 return $this->prikaz('postavljanje_oglasa',['errors'=>$this->validator->getErrors()]);
             }
@@ -67,7 +65,8 @@ class Oglasavac extends BaseController
                     return $this->prikaz('postavljanje_oglasa',['greska'=>$greska]);
                 }
             }
-            
+            echo $this->request->getVar('lat');
+            echo $this->request->getVar('lon');
 
             $smestajModel->save([
                 'naziv'=>$this->request->getVar('naziv'),
@@ -83,7 +82,9 @@ class Oglasavac extends BaseController
                 'povrsina'=>(int)$this->request->getVar('povrsina'),
                 'kuhinja'=> $this->request->getVar('kitchen_type')==='da'?true:false,
                 'terasa'=>$this->request->getVar('terasa')==='da'?true:false,
-                'parking'=>$this->request->getVar('parking')==='da'?true:false
+                'parking'=>$this->request->getVar('parking')==='da'?true:false,
+                'lat'=>$this->request->getVar('lat'),
+                'lon'=>$this->request->getVar('lon')
             ]);
             
             $slikeModel = new FilePathDokumentacijeSmestajaModel();
