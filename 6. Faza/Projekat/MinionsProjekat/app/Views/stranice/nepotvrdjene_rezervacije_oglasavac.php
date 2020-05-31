@@ -1,10 +1,14 @@
 <div class='bodyContent'>
-    <div class='row '>
-        <div class='col-sm-12'>
-            <h1 class='pocetnaTextNaslov'>Spisak nepotvredjenih rezervacija:</h1>
+<div class='row'>
+        <div class='col-sm-12'>    
+            <p class='pocetnaTextNaslov text-left' style='color:green'><span id='novaRezervacija'></span></p>
         </div>
     </div>
-    &nbsp;
+    <div class='row'>
+        <div class='col-sm-12'>
+            <h1 class='pocetnaTextNaslov text-center'>Spisak nepotvredjenih rezervacija:</h1>
+        </div>
+    </div>
     <div class='row'>
         <div class='zahteviDiv'>
             <table class='table table-striped table-dark'>
@@ -17,13 +21,11 @@
                     <th>Korisnik</th>
                     <th>Potvrda</th>
                 </thead>
-                    <tbody>
+                <tbody>
                 <?php
-                //print_r($nepotvrdjeneRezervacije);
-                
                 if(count($nepotvrdjeneRezervacije)>0){
-                    foreach($nepotvrdjeneRezervacije as $rezervacijaKey => $rezervacijaValue){
-                        foreach($rezervacijaValue as $rezKey=>$rezValue){
+                   // foreach($nepotvrdjeneRezervacije as $rezervacijaKey => $rezervacijaValue){
+                        foreach($nepotvrdjeneRezervacije as $rezKey=>$rezValue){
                             echo "<tr>";
                             echo    "<td>". $rezValue->id ."</td>";
                             echo    "<td>". $rezValue->datumOd ."</td>";
@@ -41,12 +43,38 @@
                             echo    "</td>";
                             echo "</tr>";
                         } 
-                    }
+                   // }
                 }
-                 
                 ?>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script>
+    function update(){
+        $.ajax({
+            url: "<?= site_url('Oglasavac/dohvNepotvrdjeneRezervacijeOglasavac');?>",
+            success:function(response){
+                response = JSON.parse(response);
+                let brojNovihRezervacija = response['brojNovih'];
+                if( typeof update.counter == 'undefined' ) {
+                    update.counter = brojNovihRezervacija;
+                    return;
+                }
+                
+                if(brojNovihRezervacija>update.counter){
+                    update.counter = brojNovihRezervacija - update.counter;
+                    $("#novaRezervacija").text("Broj novih rezervacija je:" + update.counter);
+
+                    if(confirm("Nova rezervacija! Da li želite da pogledate?")) location.reload();   
+                }
+            }    
+        });
+    }
+    $(document).ready(function (){
+        update();
+        setInterval(update, 6400);
+    });
+</script>

@@ -20,7 +20,6 @@
         </div>
     </div>
     <script type='text/javascript' src='<?=base_url('js/skripta_galerija.js');?>'></script>
-    <script type='text/javascript'src='<?=base_url('js/skripta_mapa.js');?>' ></script>
     <div class="row galerijaSmestajDiv">
         <div class='galerijaSmestajSlike'>
             <div class='col-sm-12'>
@@ -146,9 +145,8 @@
 
     <div class='row'>
         <div class='col-sm-6 '>
-            <div id="mapid" class="mapKlasa">
-                <!--OVDE IDE MAPA-->
-                <div id="map"></div>
+            <h5 class='pocetnaTextNaslov text-center'>Lokacija smeštaja</h5>
+            <div id="map">
                 <input type="hidden" name="lat" id="lat" size=12 value="">
                 <input type="hidden" name="lon" id="lon" size=12 value="">
                 <br>
@@ -195,15 +193,14 @@
                         document.getElementById('lon').value = lon;
                         myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
                     });
-
                 </script>
             </div>
         </div>
         <div class='col-sm-6'>
             <div clas='row'>
                 <div class='col-sm-12'>
-                    <div class='ratings1'>
-                        <span class='pocetnaTextNaslov'>Prosecna ocena: <?php echo round($recenzijaModel->dohvProsecnuOcenu($smestaj->id),1);?>
+                    <span class='pocetnaTextNaslov'>Prosecna ocena: <?php echo round($recenzijaModel->dohvProsecnuOcenu($smestaj->id),1);?>
+                    <div class='ratings1' style="margin-left: 30% margin-top:10%" '>    
                         <?php
                         for($i=0;$i<floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id));$i++)
                             echo "<span class='fa fa-star'></span>";

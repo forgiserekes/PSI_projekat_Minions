@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2020 at 05:43 PM
+-- Generation Time: May 31, 2020 at 12:25 PM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.5
+-- PHP Version: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,29 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `minions`
 --
-CREATE DATABASE minions;
-USE minions;
+CREATE DATABASE IF NOT EXISTS `minions` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `minions`;
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `brojrecenzija`
 --
 
-CREATE TABLE `brojrecenzija` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `brojrecenzija`;
+CREATE TABLE IF NOT EXISTS `brojrecenzija` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idKorisnik` int(11) NOT NULL,
   `idSmestaj` int(11) NOT NULL,
-  `broj` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `broj` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `brojrecenzija`
 --
 
 INSERT INTO `brojrecenzija` (`id`, `idKorisnik`, `idSmestaj`, `broj`) VALUES
-(7, 16, 14, 0),
+(7, 16, 14, 7),
 (8, 16, 18, 0),
-(9, 16, 15, 0);
+(9, 16, 15, 3);
 
 -- --------------------------------------------------------
 
@@ -50,11 +53,13 @@ INSERT INTO `brojrecenzija` (`id`, `idKorisnik`, `idSmestaj`, `broj`) VALUES
 -- Table structure for table `filepathdokumentacijesmestaja`
 --
 
-CREATE TABLE `filepathdokumentacijesmestaja` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `filepathdokumentacijesmestaja`;
+CREATE TABLE IF NOT EXISTS `filepathdokumentacijesmestaja` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `filepath` varchar(100) NOT NULL,
-  `idSmestaj` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idSmestaj` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `filepathdokumentacijesmestaja`
@@ -144,8 +149,9 @@ INSERT INTO `filepathdokumentacijesmestaja` (`id`, `filepath`, `idSmestaj`) VALU
 -- Table structure for table `korisnici`
 --
 
-CREATE TABLE `korisnici` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `korisnici`;
+CREATE TABLE IF NOT EXISTS `korisnici` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ime` varchar(45) NOT NULL,
   `prezime` varchar(45) NOT NULL,
   `tip` varchar(15) NOT NULL,
@@ -154,8 +160,9 @@ CREATE TABLE `korisnici` (
   `email` varchar(45) NOT NULL,
   `datumRodjenja` date NOT NULL,
   `adresa` varchar(70) NOT NULL,
-  `status` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `status` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `korisnici`
@@ -171,11 +178,45 @@ INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `tip`, `username`, `password`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `obavestenja`
+--
+
+DROP TABLE IF EXISTS `obavestenja`;
+CREATE TABLE IF NOT EXISTS `obavestenja` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idKorisnik` int(13) NOT NULL,
+  `naslov` varchar(45) NOT NULL,
+  `opis` varchar(250) NOT NULL,
+  `tip` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `obavestenja`
+--
+
+INSERT INTO `obavestenja` (`id`, `idKorisnik`, `naslov`, `opis`, `tip`) VALUES
+(6, 16, 'Neuspešna rezervacija!', 'Vlasnik smeštaja Nikola Marovic nije potvrdio Vaš boravak u smeštaju Aleksandar Apartments od 2020-05-06 do 2020-05-07. Ne možete da ostavite recenziju.', 'danger'),
+(7, 16, 'Uspešna rezervacija!', 'Vlasnik smeštaja Nikola Marovic je potvrdio Vaš boravak u smeštaju Aleksandar Apartments od 2020-05-08 do 2020-05-09. Molimo Vas da ostavite recenziju.', 'success'),
+(8, 16, 'Uspešna rezervacija!', 'Vlasnik smeštaja Nikola Marovic je potvrdio Vaš boravak u smeštaju Aleksandar Apartments od 2020-05-09 do 2020-05-10. Molimo Vas da ostavite recenziju.', 'success'),
+(9, 16, 'Uspešna rezervacija!', 'Vlasnik smeštaja Nikola Marovic je potvrdio Vaš boravak u smeštaju Hotel Metropol od 2020-04-26 do 2020-04-27. Molimo Vas da ostavite recenziju.', 'success'),
+(10, 16, 'Uspešna rezervacija!', 'Vlasnik smeštaja Nikola Marovic je potvrdio Vaš boravak u smeštaju Hotel Metropol od 2020-05-05 do 2020-05-06. Molimo Vas da ostavite recenziju.', 'success'),
+(11, 16, 'Uspešna rezervacija!', 'Vlasnik smeštaja Nikola Marovic je potvrdio Vaš boravak u smeštaju Hotel Metropol od 2020-06-06 do 2020-06-07. Molimo Vas da ostavite recenziju.', 'success'),
+(12, 16, 'Uspešna rezervacija!', 'Vlasnik smeštaja Nikola Marovic je potvrdio Vaš boravak u smeštaju Aleksandar Apartments od 2020-06-02 do 2020-06-03. Molimo Vas da ostavite recenziju.', 'success'),
+(13, 13, 'Nova recenzija!', 'Korisnik Aleksandar Nikolic je ostavio recenziju za boravak u Vašem smeštaju Aleksandar Apartments', 'success'),
+(14, 13, 'Nova recenzija!', 'Korisnik Aleksandar Nikolic je ostavio recenziju za boravak u Vašem smeštaju Aleksandar Apartments', 'success'),
+(15, 13, 'Nova recenzija!', 'Korisnik Aleksandar Nikolic je ostavio recenziju za boravak u Vašem smeštaju Aleksandar Apartments', 'success'),
+(16, 16, 'Odgovor na recenziju!', 'Vlasnik smeštaja Nikola Marovic je odgovorio na Vašu recenziju za smeštaj Aleksandar Apartments', 'success');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `recenzija`
 --
 
-CREATE TABLE `recenzija` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `recenzija`;
+CREATE TABLE IF NOT EXISTS `recenzija` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `cistoca` int(11) NOT NULL,
   `komfor` int(11) NOT NULL,
   `kvalitet` int(11) NOT NULL,
@@ -187,19 +228,26 @@ CREATE TABLE `recenzija` (
   `idKorisnik` int(11) NOT NULL,
   `idOglasavac` int(11) NOT NULL,
   `komentar` varchar(500) DEFAULT NULL,
-  `odgovor` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `odgovor` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `recenzija`
 --
 
 INSERT INTO `recenzija` (`id`, `cistoca`, `komfor`, `kvalitet`, `lokacija`, `ljubaznost`, `opstiUtisak`, `tip`, `idSmestaj`, `idKorisnik`, `idOglasavac`, `komentar`, `odgovor`) VALUES
-(16, 4, 5, 5, 4, 5, 'Sjajno', 'Porodica', 14, 16, 14, 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic type', 'Similar to the contextual text color classes, easily set the background of an element to any contextual class. Anchor components will darken on hover, just like the text classes. Background utilities do not set color, so in some cases you’ll want to '),
-(17, 5, 4, 5, 5, 4, 'Sjajno', 'Porodica', 14, 16, 14, 'Odlican smestaj, za svaku pohvalu! Ponovo cemo doci! Pozdrav iz Panceva!', NULL),
-(19, 5, 4, 4, 5, 4, 'Dobro', 'Porodica', 14, 16, 14, 'Odlican smestaj, ponovo cemo doci.', NULL),
-(20, 5, 5, 5, 5, 5, 'Dobro', 'Grupa prijatelja', 15, 16, 15, 'Ovo je bio odlican smestaj. Uvek cemo doci! Veliki pozdrav iz Bavanista!', NULL),
-(21, 5, 5, 4, 5, 5, 'Sjajno', 'Porodica', 15, 16, 15, 'Opet cemo doci, sve je odlicno! Pozdrav!', NULL);
+(16, 4, 5, 5, 4, 5, 'Sjajno', 'Porodica', 14, 16, 13, 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic type', 'Similar to the contextual text color classes, easily set the background of an element to any contextual class. Anchor components will darken on hover, just like the text classes. Background utilities do not set color, so in some cases you’ll want to '),
+(17, 5, 4, 5, 5, 4, 'Sjajno', 'Porodica', 14, 16, 13, 'Odlican smestaj, za svaku pohvalu! Ponovo cemo doci! Pozdrav iz Panceva!', 'Hvala! Cast nam je bila ugostiti Vas! Veliki pozdrav!'),
+(19, 5, 4, 4, 5, 4, 'Dobro', 'Porodica', 14, 16, 13, 'Odlican smestaj, ponovo cemo doci.', NULL),
+(20, 5, 5, 5, 5, 5, 'Dobro', 'Grupa prijatelja', 15, 16, 13, 'Ovo je bio odlican smestaj. Uvek cemo doci! Veliki pozdrav iz Bavanista!', NULL),
+(21, 5, 5, 4, 5, 5, 'Sjajno', 'Porodica', 15, 16, 13, 'Opet cemo doci, sve je odlicno! Pozdrav!', NULL),
+(22, 5, 5, 5, 5, 5, 'Sjajno', 'Porodica', 14, 16, 13, 'Sjajan smestaj. Ponovo cemo doci! Pozdrav!\r\n', NULL),
+(23, 5, 5, 5, 4, 5, 'Dobro', 'Porodica', 14, 16, 13, 'Veoma dobar smestaj. Osoblje jako ljubazno. Svima preporucujemo.', NULL),
+(24, 5, 5, 5, 4, 5, 'Dobro', 'Porodica', 14, 16, 13, 'Veoma dobar smestaj. Osoblje jako ljubazno. Svima preporucujemo.', NULL),
+(25, 5, 5, 5, 4, 5, 'Dobro', 'Porodica', 14, 16, 13, 'Veoma dobar smestaj. Osoblje jako ljubazno. Svima preporucujemo.', NULL),
+(26, 5, 4, 5, 4, 5, 'Sjajno', 'Porodica', 14, 16, 13, 'Veoma dobar smestaj. Svima cu preporuciti. Veliki pozdrav!', NULL),
+(27, 5, 4, 4, 5, 5, 'Dobro', 'Grupa prijatelja', 14, 16, 13, 'Odlican smestaj svima cu preporuciti. Pozdrav od Acike programatora iz Bavanista!', NULL);
 
 -- --------------------------------------------------------
 
@@ -207,16 +255,18 @@ INSERT INTO `recenzija` (`id`, `cistoca`, `komfor`, `kvalitet`, `lokacija`, `lju
 -- Table structure for table `rezervacija`
 --
 
-CREATE TABLE `rezervacija` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `rezervacija`;
+CREATE TABLE IF NOT EXISTS `rezervacija` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `datumOd` date NOT NULL,
   `datumDo` date NOT NULL,
   `brojOsoba` int(11) NOT NULL,
   `napomena` varchar(500) NOT NULL,
   `status` varchar(20) NOT NULL,
   `idSmestaj` int(11) NOT NULL,
-  `idKorisnika` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idKorisnika` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rezervacija`
@@ -227,7 +277,16 @@ INSERT INTO `rezervacija` (`id`, `datumOd`, `datumDo`, `brojOsoba`, `napomena`, 
 (28, '2020-05-29', '2020-05-30', 2, 'Nista', 'potvrdjena', 14, 16),
 (30, '2020-05-31', '2020-06-01', 2, 'Nista', 'potvrdjena', 14, 16),
 (31, '2020-05-13', '2020-05-14', 2, 'Nista', 'potvrdjena', 15, 16),
-(32, '2020-05-29', '2020-05-30', 2, 'Nista', 'potvrdjena', 15, 16);
+(32, '2020-05-29', '2020-05-30', 2, 'Nista', 'potvrdjena', 15, 16),
+(33, '2020-04-26', '2020-04-27', 2, 'Nista', 'potvrdjena', 14, 16),
+(34, '2020-05-01', '2020-05-02', 2, 'Nista', 'potvrdjena', 14, 16),
+(35, '2020-05-06', '2020-05-07', 2, 'Nista', 'odbijena', 14, 16),
+(36, '2020-05-08', '2020-05-09', 2, 'Nista', 'potvrdjena', 14, 16),
+(37, '2020-05-09', '2020-05-10', 2, 'nista', 'potvrdjena', 14, 16),
+(38, '2020-04-26', '2020-04-27', 2, 'Nista', 'potvrdjena', 15, 16),
+(39, '2020-05-05', '2020-05-06', 2, 'nista', 'potvrdjena', 15, 16),
+(40, '2020-06-06', '2020-06-07', 2, 'Nista', 'potvrdjena', 15, 16),
+(41, '2020-06-02', '2020-06-03', 2, 'Nista', 'potvrdjena', 14, 16);
 
 -- --------------------------------------------------------
 
@@ -235,8 +294,9 @@ INSERT INTO `rezervacija` (`id`, `datumOd`, `datumDo`, `brojOsoba`, `napomena`, 
 -- Table structure for table `smestaj`
 --
 
-CREATE TABLE `smestaj` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `smestaj`;
+CREATE TABLE IF NOT EXISTS `smestaj` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `naziv` varchar(45) NOT NULL,
   `opis` varchar(1500) NOT NULL,
   `cena` int(11) NOT NULL,
@@ -252,8 +312,9 @@ CREATE TABLE `smestaj` (
   `terasa` tinyint(4) NOT NULL,
   `parking` tinyint(4) NOT NULL,
   `lat` varchar(20) NOT NULL,
-  `lon` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `lon` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `smestaj`
@@ -264,92 +325,9 @@ INSERT INTO `smestaj` (`id`, `naziv`, `opis`, `cena`, `idVlasnik`, `drzava`, `gr
 (15, 'Hotel Metropol', 'Fantastična lokacija hotela Metropol Palace pored veličanstvenog Tašmajdanskog parka poziva vas da istražite brojne znamenitosti, pozorišta i muzeje Beograda bogate domaćim i međunarodnim kulturnim sadržajima, sve na nekoliko minuta hoda of hotela.', 45, 13, 'Srbija', 'Beograd', 'Bulevar Kralja Aleksandra', '67', 'hotelskaSoba', 2, 23, 0, 1, 1, '44.806540', '20.473444'),
 (16, 'Vila Beograd', '﻿﻿﻿﻿﻿Vikendica na obali Dedinju, vikend ekolosko naselje se nalazi preko puta usca Save u Dunav.   Povrsine 180 kvadrata, zidana od pune cigle, utvdjena obala, novogradnja, voda, struja led rasveta, asvaltirani put do nasela, od Beograda udaljeno naselje oko 60 km . Moze zamena za stan u Beogradu, uz moju doplatu ili zamena za skuplji auto uz Vasu doplatu.', 120, 13, 'Srbija', 'Beograd', 'Neznanog junaka', '10', 'vikendica', 12, 150, 1, 1, 1, '44.774108', '20.461578'),
 (17, 'Kragujevac Apartment', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 35, 14, 'Srbija', 'Kragujevac', 'Karadjordjeva', '6', 'apartman', 4, 45, 1, 1, 1, '44.010062', '20.917019'),
-(19, 'Apartment Valjevo', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 25, 15, 'Srbija', 'Valjevo', 'Karadjordjeva', '15', 'soba', 3, 23, 0, 1, 1, '44.271023', '19.888030'),
-(24, 'Moma4', 'sdfsdfs', 100, 13, 'Srbija', 'Beograd', 'Niska', '20', 'soba', 50, 100, 1, 1, 1, '40.75637123', '-73.98545321'),
-(25, 'Moma5', 'dfghfgh', 100, 13, 'Srbija', 'Beograd', ' Теразије ', '20', 'soba', 50, 100, 1, 1, 1, '44.80142690', '20.48234110');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `brojrecenzija`
---
-ALTER TABLE `brojrecenzija`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `filepathdokumentacijesmestaja`
---
-ALTER TABLE `filepathdokumentacijesmestaja`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `korisnici`
---
-ALTER TABLE `korisnici`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `recenzija`
---
-ALTER TABLE `recenzija`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `rezervacija`
---
-ALTER TABLE `rezervacija`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `smestaj`
---
-ALTER TABLE `smestaj`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `brojrecenzija`
---
-ALTER TABLE `brojrecenzija`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `filepathdokumentacijesmestaja`
---
-ALTER TABLE `filepathdokumentacijesmestaja`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
-
---
--- AUTO_INCREMENT for table `korisnici`
---
-ALTER TABLE `korisnici`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `recenzija`
---
-ALTER TABLE `recenzija`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
---
--- AUTO_INCREMENT for table `rezervacija`
---
-ALTER TABLE `rezervacija`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
--- AUTO_INCREMENT for table `smestaj`
---
-ALTER TABLE `smestaj`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+(19, 'Apartment Valjevo', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.', 25, 15, 'Srbija', 'Valjevo', 'Karadjordjeva', '15', 'soba', 3, 23, 0, 1, 1, '44.271023', '19.888030');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-

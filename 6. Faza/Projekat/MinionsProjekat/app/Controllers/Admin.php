@@ -14,7 +14,7 @@ class Admin extends BaseController
         echo view('sablon/footer');
     }
     
-     public function index(){
+    public function index(){
         $this->prikaz('pocetna_admin',[]);
     }
     
@@ -22,7 +22,7 @@ class Admin extends BaseController
         $kljucPretrage = $this->request->getVar('kljucPretrage');
         $smestajModel = new SmestajModel();
         $smestaji = $smestajModel->pretrazi($kljucPretrage);
-        $this->prikaz('spisak_smestaja_admin',['smestaji'=>$smestaji,'trazeno'=>$kljucPretrage]);
+        $this->prikaz('pocetna',['smestaji'=>$smestaji,'trazeno'=>$kljucPretrage]);
     }
     
     public function pregledSvihSmestaja(){
@@ -55,7 +55,6 @@ class Admin extends BaseController
         $smestajModel = new SmestajModel();
         $smestajModel->obrisiSmestajeKorisnika($id);
         
-        
         return redirect()->to(site_url("Admin/pregledSvihKorisnika/"));
     }
     
@@ -68,7 +67,6 @@ class Admin extends BaseController
         $korisniciModel->odobriZahtev($id);
         return redirect()->to(site_url("Admin/pregledSvihZahteva/"));
     }
-    
     public function odbijZahtev($id){
         $korisniciModel = new KorisniciModel();
         $korisniciModel->odbijZahtev($id);
@@ -93,6 +91,12 @@ class Admin extends BaseController
     public function backToHome(){
         return redirect()->to(site_url('Admin')); 
     }
+
+    public function sveRecenzijeOglasa($id){
+        $smestajModel = new SmestajModel();
+        $smestaj = $smestajModel->dohvSmestaj($id)[0];
+        $this->prikaz('spisak_recenzija',['smestaj'=>$smestaj]);
+    }
     
     public function dohvUkupanBrojAdmin(){
         $recenzijaModel = new RecenzijaModel();
@@ -110,7 +114,7 @@ class Admin extends BaseController
             'recenzijeBroj' => $recenzijeBroj,
             'korisniciBroj' => $korisniciBroj,
         ];
-        header("Conent-Type: application/json" );
+        header("Content-Type: application/json" );
         echo json_encode($data);
     }
 }

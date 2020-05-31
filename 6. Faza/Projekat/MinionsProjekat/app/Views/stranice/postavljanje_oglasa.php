@@ -239,9 +239,8 @@
                         echo form_input('drzava', set_value('drzava'));
                         ?>
                     </td>
-                    <td>Slike smesvtaja:</td>
+                    <td>Slike smestaja:</td>
                     <td>
-
                         <input type="file" name="fileToUpload[]" id="fileToUpload" multiple accept='image/*'>
                         <!--<input type='file' name='slikeSmestaja[]' multiple='true' accept='image/png, image/jpeg' />-->
                     </td>

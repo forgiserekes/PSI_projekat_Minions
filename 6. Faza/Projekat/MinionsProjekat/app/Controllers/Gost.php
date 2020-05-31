@@ -95,7 +95,6 @@ class Gost extends BaseController
                 else{                   
                     unset($sviSmestaji[$k]);   
                 }
-                 
             }                
         }                         
         $this->prikaz('pocetna',['sviSmestaji'=>$sviSmestaji]);
@@ -155,19 +154,19 @@ class Gost extends BaseController
         }
         if($korisnik->password!=$this->request->getVar('login_password'))
             return $this->login('Pogresna lozinka');
+        
         if($korisnik->tip=='oglasavac'){
             if($korisnik->status=='cekanje') return $this->login('Zahtev na cekanju.');
             else if($korisnik->status=='odbijen') return $this->login('Zahtev je odbijen.');
-            $this->session->set('oglasavac',$korisnik);
+            
+            $this->session->set('oglasavac', $korisnik);
             return redirect()->to(site_url('Oglasavac'));
-        }
-        else if($korisnik->tip=='korisnik'){
-            $this->session->set('korisnik',$korisnik);
-            return redirect()->to(site_url('Korisnik'));
-        }
-        else{ 
-            $this->session->set('admin',$korisnik);
-            return redirect()->to(site_url('Admin'));
+        }else if($korisnik->tip=='korisnik'){
+              $this->session->set('korisnik',$korisnik);
+              return redirect()->to(site_url('Korisnik'));
+        }else{ 
+              $this->session->set('admin',$korisnik);
+              return redirect()->to(site_url('Admin'));
         } 
     }
     

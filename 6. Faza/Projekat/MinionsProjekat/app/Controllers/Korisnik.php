@@ -3,6 +3,7 @@
 use App\Models\SmestajModel;
 use App\Models\RezervacijaModel;
 use App\Models\RecenzijaModel;
+use App\Models\ObavestenjeModel;
 
 
 class Korisnik extends BaseController
@@ -216,13 +217,37 @@ class Korisnik extends BaseController
                 'tip'=>$this->request->getVar('tipPutnika'),
                 'komentar'=>$this->request->getVar('recenzijaKomentar'),
                 'idSmestaj'=>$id,
-                'idOglasavac'=>$smestaj->id,
+                'idOglasavac'=>$smestaj->idVlasnik,
                 'idKorisnik'=>$this->session->get('korisnik')->id,
             ]);
+
+            $obavestenjeModel = new ObavestenjeModel();
+            $smestajModel = new SmestajModel();
+            $smestaj = $smestajModel->dohvSmestaj($id)[0];
+            
+            $data = [
+                'idKorisnik'=>$smestaj->idVlasnik,
+                'naslov'=> 'Nova recenzija!',
+                'opis'=> "Korisnik " . $this->session->get('korisnik')->ime . " ". $this->session->get('korisnik')->prezime . " je ostavio recenziju za boravak u Vašem smeštaju ". $smestaj->naziv,
+                'tip' => 'success',
+            ];
+            $obavestenjeModel->save($data);
             
             $brojRecenzijaModel = new \App\Models\BrojRecenzijaModel();
             $brojRecenzijaModel->smanji($this->session->get('korisnik')->id,$id);
             return redirect()->to(site_url('Korisnik'));
+        }
+
+        public function obavestenja(){
+            $obavestenjeModel = new ObavestenjeModel();
+            $obavestenja = $obavestenjeModel->dohvObavestenjaKorisnika($this->session->get('korisnik')->id);
+            $this->prikaz('obavestenja',['obavestenja'=>$obavestenja]);
+        }
+
+        public function obrisiObavestenje($id){
+            $obavestenjeModel = new ObavestenjeModel();
+            $obavestenjeModel->obrisiObavestenje($id);
+            return redirect()->to(site_url('Korisnik/obavestenja'));
         }
         
         public function logout(){
@@ -232,6 +257,17 @@ class Korisnik extends BaseController
         
         public function backToHome(){
             return redirect()->to(site_url('Korisnik')); 
+        }
+
+        public function dohvBrojObavestenja(){
+            if($this->session->get('korisnik')){
+                $obavestenjeModel = new ObavestenjeModel();
+                $data = [
+                    'broj'=> $obavestenjeModel->dohvBrojObavestenja($this->session->get('korisnik')->id),
+                ];
+                header("Content-Type: application/json" );
+                echo json_encode($data);
+            }
         }
         
         public function date_range($first, $last, $step = '+1 day', $output_format = 'd/m/Y' ) {

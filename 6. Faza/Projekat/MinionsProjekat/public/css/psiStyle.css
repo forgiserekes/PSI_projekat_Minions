@@ -88,6 +88,21 @@ html,body{
     text-decoration: none;
 }
 
+.logRegOglasavac{
+    color:gold;
+    font-weight: bold;
+    font-size:12.5px;
+    text-align:right;
+    font-family: 'Montserrat';
+    text-decoration: none; 
+}
+
+.logRegOglasavac:hover{
+    font-size:13px;
+    text-align:right;
+    text-decoration: none;
+}
+
 #logRegStyle a:link, a:hover,a:visited,a:active{
     color:gold;
     text-align:right;
@@ -191,6 +206,7 @@ html,body{
     font-weight: bold;
     color:rgb(49, 49, 56);
 }
+
 .pocetnaTextNaslov{
   font-family: 'Montserrat';
   font-size:20px;
@@ -331,10 +347,22 @@ html,body{
     text-align:right;
 }
 
+/* za notifikaciju u headeru */
+.badge {
+    position: relative;
+    top: -1px;
+    right: -2px;
+    padding: 3px 3px;
+    border-radius: 100;
+    background: red;
+    color: white;
+}
+
 #map {
-    width: 100%;
-    height: 400px;
+    width: 80%;
+    height: 300px;
     padding: 0;
+    border:solid rgb(49, 49, 56);
     margin: 0 auto;
 }
 .address {

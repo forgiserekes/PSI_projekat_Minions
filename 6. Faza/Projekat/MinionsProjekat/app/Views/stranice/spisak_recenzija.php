@@ -35,7 +35,7 @@
                     echo "</div>";
                     if($controller=='Admin'){
                         echo "<div class='col-sm-6 textRight'>";
-                        echo anchor("{$controller}/obrisiRecenziju/{$recenzija->id}", "<p id='adminObrisiRecenziju'>Obriši recenziju</p>");
+                        echo anchor("{$controller}/obrisiRecenziju/{$recenzija->id}", "<p id='oglasOpcije'>Obriši recenziju</p>");
                         echo "</div>";
                     }
                 }

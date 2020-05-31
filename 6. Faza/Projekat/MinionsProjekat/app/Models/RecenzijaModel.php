@@ -11,6 +11,12 @@ class RecenzijaModel extends Model
     public function dohvSveRecenzijeOglasa($id){
         return $this->where('idSmestaj',$id)->findAll();
     }
+    public function dohvSmestajId($id){
+        return $this->where('id',$id)->first()->idSmestaj;
+    }
+    public function dohvKorisnikId($id){
+        return $this->where('id',$id)->first()->idKorisnik; 
+    }
     public function dohvSveRecenzijeOglasavaca($id){
         return $this->where('idOglasavac',$id)->findAll();
     }

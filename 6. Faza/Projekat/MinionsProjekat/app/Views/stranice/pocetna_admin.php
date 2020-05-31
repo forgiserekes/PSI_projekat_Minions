@@ -7,26 +7,24 @@
         </div>
     </div>
     <div class='row col-sm-12'>
-        <div class = 'col-sm-6' align='center'>
-            <img class='imgAvatar' src = "<?=base_url('slike/houseAvatar.jpg');?>" width="60%" height ="300" alt='Avatar'>
-            <?= anchor("Admin/pregledSvihSmestaja", "<p class='blackTextCenter'>Pregled svih smeštaja</p>") ?> 
+        <div class = 'col-sm-3' align='center'>
+            <?= anchor("Admin/pregledSvihSmestaja", "<img class='imgAvatar' src=" . base_url('slike/houseAvatar.jpg') . " width='70%' height='190' alt='Avatar'>") ?> 
+            <p class='pocetnaTextNaslov text-center'>Pregled svih smeštaja</p>
             <p class="pocetnaTextOpis">Ukupan broj smeštaja: <span id="ukBrSmestajaAdmin"></span></p>
         </div>
-        <div class ='col-sm-6' align='center'>
-            <img class='imgAvatar' src = "<?=base_url('slike/userAvatar.jpg');?>" width="60%" height ="300" alt="Avatar">
-            <?= anchor("Admin/pregledSvihKorisnika", "<p class='blackTextCenter'>Pregled svih korisnika</p>") ?> 
+        <div class ='col-sm-3' align='center'>
+            <?= anchor("Admin/pregledSvihKorisnika", "<img class='imgAvatar' src=" . base_url('slike/userAvatar.jpg') . " width='70%' height='190' alt='Avatar'>") ?> 
+            <p class='pocetnaTextNaslov text-center'>Pregled svih korisnika</p>
             <p class="pocetnaTextOpis">Ukupan broj korisnika: <span id="ukBrKorisnikaAdmin"></span></p>
         </div>
-    </div>
-    <div class='row col-sm-12'>
-        <div class='col-sm-6' align='center'>
-            <img class='imgAvatar' src = "<?=base_url('slike/recenzijeAvatar.jpg');?>" width="60%" height ="300" alt="Avatar">
-            <?= anchor("Admin/pregledSvihRecenzija", "<p class='blackTextCenter'>Pregled svih recenzija</p>") ?>
+        <div class='col-sm-3' align='center'>
+            <?= anchor("Admin/pregledSvihRecenzija", "<img class='imgAvatar' src=" . base_url('slike/recenzijeAvatar.jpg') . " width='70%' height='190' alt='Avatar'>") ?>
+            <p class='pocetnaTextNaslov text-center'>Pregled svih recenzija</p>
             <p class="pocetnaTextOpis">Ukupan broj recenzija: <span id="ukBrRecenzijaAdmin"></span></p>
         </div>
-        <div class='col-sm-6' align='center'>
-            <img class='imgAvatar' src = "<?=base_url('slike/member.jpg');?>" width="60%" height ="300" alt="Avatar">
-            <?= anchor("Admin/pregledSvihZahteva", "<p class='blackTextCenter'>Pregled svih zahteva oglašavača</p>") ?> 
+        <div class='col-sm-3' align='center'>
+            <?= anchor("Admin/pregledSvihZahteva", "<img class='imgAvatar' src=" . base_url('slike/member.jpg') . " width='70%' height='190' alt='Avatar'>") ?> 
+            <p class='pocetnaTextNaslov text-center'>Pregled svih zahteva oglašavača</p>
             <p class="pocetnaTextOpis">Ukupan broj zahteva: <span id="ukBrZahtevaAdmin"></span></p>
         </div>
     </div>

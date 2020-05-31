@@ -11,6 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--mapa-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
 </head>
@@ -29,57 +30,72 @@
             <span class="d-none d-lg-block" id="mainTitle">    
                 <?= anchor("{$controller}/backToHome", "<h1 id='mainTitle'>Smesti.se</h1>") ?>
             </span>
+            <span class='d-none d-lg-block' id='pocetnaTextNaslov'>
+            <?php
+                if(isSet($oglasavac)) echo "<h4 class='text-center logReg'>Oglašavač: " . $oglasavac->ime . " " . $oglasavac->prezime . "</h4>"; 
+                if(isSet($admin)) echo "<h4 class='text-center logReg'>Admin: " . $admin->ime . " " . $admin->prezime . "</h4>"; 
+                if(isSet($korisnik)) echo "<h4 class='text-center logReg'>Korisnik: " . $korisnik->ime . " " . $korisnik->prezime . "</h4>"; 
+                ?>
+            </span>
         </div>
         <div class="col-sm-4 collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav textRight">
               <?php if($controller == 'Gost'){
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/pretraga", "<p class='logReg px-1' id='logRegStyle'>Pretraži</p>");
+                        echo anchor("{$controller}/pretraga", "<span class='logReg px-1' id='logRegStyle'>Pretraži</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/login", "<p class='logReg px-1' id='logRegStyle'>Uloguj se</p>");
+                        echo anchor("{$controller}/login", "<span class='logReg px-1' id='logRegStyle'>Uloguj se</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/register", "<p class='logReg px-1' id='logRegStyle'>Registruj se</p>");
+                        echo anchor("{$controller}/register", "<span class='logReg px-1' id='logRegStyle'>Registruj se</span>");
                         echo "</li>";
                     }else if($controller=='Korisnik'){
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/pretraga", "<p class='logReg px-1' id='logRegStyle'>Pretraži</p>");
+                        echo anchor("{$controller}/pretraga", "<span class='logReg px-1' id='logRegStyle'>Pretraži</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/logout", "<p class='logReg px-1' id='logRegStyle'>Odjavi se</p>");
+                        $obavestenjaModel = new \App\Models\ObavestenjeModel();
+                        echo anchor("{$controller}/obavestenja","<span class='logReg notification'>Obaveštenja</span><span class='badge' id='brojObavestenjaKorisnik'>{$obavestenjaModel->dohvBrojObavestenja($korisnik->id)}</span>");
+                        echo "</li>";
+                        echo "<li class='nav-item'>";
+                        echo anchor("{$controller}/logout", "<span class='logReg px-1' id='logRegStyle'>Odjavi se</span>");
                         echo "</li>";
                     }else if($controller=='Oglasavac'){
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/smestajiOglasavaca", "<p class='logReg px-1' id='logRegStyle'>Vaši oglasi</p>");
+                        echo anchor("{$controller}/smestajiOglasavaca", "<span class='logReg px-1' id='logRegStyle'>Smeštaji</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/sveRecenzijeOglasavaca", "<p class='logReg px-1' id='logRegStyle'>Recenzije</p>");
+                        $obavestenjaModel = new \App\Models\ObavestenjeModel();
+                        echo anchor("{$controller}/obavestenja","<span class='logRegOglasavac notification'>Obaveštenja</span><span class='badge' id='brojObavestenjaOglasavac'>{$obavestenjaModel->dohvBrojObavestenja($oglasavac->id)}</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/postavljanjeOglasa", "<p class='logReg px-1' id='logRegStyle'>Nov oglas</p>");
+                        echo anchor("{$controller}/sveRecenzijeOglasavaca", "<span class='logRegOglasavac px-1' id='logRegStyle'>Recenzije</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/rezervacije", "<p class='logReg px-1' id='logRegStyle'>Rezervacije</p>");
+                        echo anchor("{$controller}/postavljanjeOglasa", "<span class='logRegOglasavac px-1' id='logRegStyle'>Nov oglas</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/logout", "<p class='logReg px-1' id='logRegStyle'>Odjavi se</p>");
+                        echo anchor("{$controller}/rezervacije", "<span class='logRegOglasavac px-1' id='logRegStyle'>Rezervacije</span>");
+                        echo "</li>";
+                        echo "<li class='nav-item'>";
+                        echo anchor("{$controller}/logout", "<span class='logRegOglasavac px-1' id='logRegStyle'>Odjavi se</span>");
                         echo "</li>";
                     }else {
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/pregledSvihSmestaja", "<p class='logReg px-1' id='logRegStyle'>Smeštaji</p>");
+                        echo anchor("{$controller}/pregledSvihSmestaja", "<span class='logReg px-1' id='logRegStyle'>Smeštaji</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/pregledSvihKorisnika", "<p class='logReg px-1' id='logRegStyle'>Korisnici</p>");
+                        echo anchor("{$controller}/pregledSvihKorisnika", "<span class='logReg px-1' id='logRegStyle'>Korisnici</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/pregledSvihRecenzija", "<p class='logReg px-1' id='logRegStyle'>Recenzije</p>");
+                        echo anchor("{$controller}/pregledSvihRecenzija", "<span class='logReg px-1' id='logRegStyle'>Recenzije</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/pregledSvihZahteva", "<p class='logReg px-1' id='logRegStyle'>Zahtevi</p>");
+                        echo anchor("{$controller}/pregledSvihZahteva", "<span class='logReg px-1' id='logRegStyle'>Zahtevi</span>");
                         echo "</li>";
                         echo "<li class='nav-item'>";
-                        echo anchor("{$controller}/logout", "<p class='logReg px-1' id='logRegStyle'>Odjavi se</p>");
+                        echo anchor("{$controller}/logout", "<span class='logReg px-1' id='logRegStyle'>Odjavi se</span>");
                         echo "</li>";
                     }
               ?>
@@ -88,4 +104,19 @@
     </nav>       
 </header>
 <body>
-    
+
+<script>
+    function update(){
+        $.ajax({
+            url: "<?= site_url("$controller/dohvBrojObavestenja"); ?>",
+            success:function(response){
+                let broj = JSON.parse(response);
+                $("#brojObavestenja<?php echo $controller;?>").text(broj['broj']);
+            }    
+        });
+    }
+    $(document).ready(function (){
+        update();
+        setInterval(update, 5000);
+    });
+</script>
