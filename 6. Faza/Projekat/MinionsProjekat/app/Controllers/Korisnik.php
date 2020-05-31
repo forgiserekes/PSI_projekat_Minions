@@ -24,7 +24,12 @@ class Korisnik extends BaseController
         public function pretraga(){
             $this->prikaz('pretraga',[]);
         }
-
+        /*
+            Ova funkcija se poziva kada korisnik pritisne dugme "Pretrazi"
+            na stranici pretraga postoji vise kriterijuma pretrage i korisnik
+            moze da bira po kojim kriterijumima ce da pretrazuje smestaje.
+            Funkcija vraca niz smestaja koje prosledjuje dalje na obradu
+        */ 
        public function pretragaSubmit(){
             $smestajModel = new SmestajModel();
             $rezervacijaModel = new RezervacijaModel();
@@ -32,24 +37,31 @@ class Korisnik extends BaseController
             if($this->request->getVar('naziv') == ''){
                 $sviSmestaji=$smestajModel->dohvSveOglase();
             }
-            
+             /*
+                Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i oatumDo.
+                Za svaki od mestaja provarava da li je slobodan u trazenom terminu i izbacuje
+                ga iz povratnog niza ako nije.
+            */
             if($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != ''){
                                
                 foreach($sviSmestaji as $smestaj => $valSmestaj) { 
                     $rezervacije = $rezervacijaModel->pretraziRezervacijeSmestaja($valSmestaj->id);
                         foreach($rezervacije as $rezervacija => $valRezervacija) { 
+                            //Pocetni datum trazene rezervacije se nalazi unutar vec recervisanog termina
                             if(strtotime($valRezervacija->datumOd)<= strtotime($this->request->getVar('datumOd')) &&
                                strtotime($valRezervacija->datumDo)> strtotime($this->request->getVar('datumOd'))){
                                 unset($sviSmestaji[$smestaj]); 
                                 
                                 break; 
                             }
+                             //Krajnji datum trazene rezervacije se nalazi unutar vec recervisanog termina
                             if(strtotime($valRezervacija->datumOd)< strtotime($this->request->getVar('datumDo')) &&
                                strtotime($valRezervacija->datumDo)>= strtotime($this->request->getVar('datumDo'))){
                                 unset($sviSmestaji[$smestaj]); 
                                 
                                 break; 
                             }
+                            //Trazeni termin obuhvata neki drugi termin
                             if(strtotime($valRezervacija->datumOd)>= strtotime($this->request->getVar('datumOd')) &&
                                strtotime($valRezervacija->datumDo)<= strtotime($this->request->getVar('datumDo'))){
                                 unset($sviSmestaji[$smestaj]); 
@@ -59,6 +71,12 @@ class Korisnik extends BaseController
                         } 
                 } 
             }
+            /*
+                Ovaj deo koda se izvrsava samo ako je popunjeno polje Kategorija.   
+                Za svaki do smestaja proverava da li se trazena kategorija podudara
+                sa kategorijom smestaja i izbacuje ga iz povratnog niza ako do 
+                poklapanja ne dodje.
+            */
             if($this->request->getVar('kategorija') != ''){
                 foreach($sviSmestaji as $k => $val) { 
                     if($val->tipSmestaja != $this->request->getVar('kategorija')) { 
@@ -67,6 +85,11 @@ class Korisnik extends BaseController
                     } 
                 } 
             }
+            /*
+                Ovaj deo koda se izvrsava samo ako je popunjeno polje Broj osoba.   
+                Za svaki do smestaja proverava da li je kapacitet smestaja veci od trazenog 
+                kapaciteta i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
+            */        
             if($this->request->getVar('brojOsoba') != ''){
                 foreach($sviSmestaji as $k => $val) { 
                     if($val->kapacitet <= $this->request->getVar('brojOsoba')) { 
@@ -74,15 +97,27 @@ class Korisnik extends BaseController
 
                     } 
                 } 
-            }  
+            } 
+            /*
+                Ovaj deo koda se izvrsava samo ako je popunjeno polje Cena.   
+                Za svaki do smestaja proverava da li je cena smestaja veca od trazenoge i 
+                izbacuje ga iz povratnog niza ako uslov nije ispunjen.
+            */ 
             if($this->request->getVar('cena') != ''){
                 foreach($sviSmestaji as $k => $val) { 
                     if($val->cena <= $this->request->getVar('cena')) { 
                         unset($sviSmestaji[$k]); 
-                        //echo 'cena';
                     } 
                 } 
             } 
+            /*
+                Ovaj deo koda se izvrsava samo ako je popunjeno polje Grad.   
+                U polje grad se ne mora uneti tacan naziv grada vec se moze
+                uneti i deo naziva grada, ako se uneti string poklapa sa nekim 
+                delom naziva gradova smestaja sa kojim se poredi taj smestaj 
+                ce biti prosledjen dalje na obradu, u suprotnom taj smestaj 
+                se izbacuje iz povratnog niza.
+            */            
             if($this->request->getVar('grad') != ''){
                 foreach($sviSmestaji as $k => $val) { 
 
@@ -107,14 +142,21 @@ class Korisnik extends BaseController
             
             $this->prikaz('smestaj',['smestaj'=>$smestaj,'smeDaOstaviRecenziju'=>$smeDaOstavi]);
         }
-        
+        /*
+            Prikazuje stranicu za ostavljenje rezervacije
+        */
         public function rezervisi($id){
             $smestajModel = new SmestajModel();
             $smestaj = $smestajModel->dohvatiSmestajSaId($id);
             $this->session->set('id',$id);
             $this->prikaz('rezervacija_smestaja',[]);
         }
-        
+        /*
+            Ova metoda se poziva nekon sto se popune sva polja na stranici
+            za ostavljanje rezervacije pritiskom na dugme "Rezervisi".
+            Ova metoda vrsi provere vezanu za rezervacije i 
+            ubacuje u bazu sve podatke o rezervaciji ako su sve provere prosle.
+        */
         public function rezervisiSubmit(){
             if(!$this->validate(['datumOd'=>'required',
                                  'datumDo'=>'required',
@@ -124,29 +166,32 @@ class Korisnik extends BaseController
                                     return $this->prikaz('rezervacija_smestaja', 
                                     ['errors'=>$this->validator->getErrors()]);
             }
+            //provera da li je pocetni datum manji od krajnjeg
+            if(strtotime($this->request->getVar('datumOd') >= strtotime($this->request->getVar('datumDo')))){
+                $greska = "Niste uneli validan datum.";
+                return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+            }
+
             //provera da li je zadati smesta razervisan u trazenom terminu
             $rezervacijaModel = new RezervacijaModel();
             $smestajModel = new SmestajModel();
             $rezervacije = $rezervacijaModel->pretraziRezervacijeSmestaja($this->session->get('id'));
-            $greska = "Termin koji ste odabrali nije dostupan.";
-           
+            $greska = "Termin koji ste odabrali nije dostupan.";     
             $smestaj = $smestajModel->find($this->session->get('id'));
-            // echo count($rezervacije). "<br>";
             foreach ($rezervacije as $value){
-                // echo $value->datumOd." ". strtotime($value->datumOd). "<br>";
-                //pocetni datum trazene rezervacije se nalazi unutar vec recervisanog termina
+                //Pocetni datum trazene rezervacije se nalazi unutar vec recervisanog termina
                 if(strtotime($value->datumOd)<=strtotime($this->request->getVar('datumOd')) &&
                    strtotime($value->datumDo)>strtotime($this->request->getVar('datumOd'))){
                   
                    return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
                 }
-                ////krajnji datum trazene rezervacije se nalazi unutar vec recervisanog termina
+                //Krajnji datum trazene rezervacije se nalazi unutar vec recervisanog termina
                 else if(strtotime($value->datumOd)<strtotime($this->request->getVar('datumDo')) &&
                         strtotime($value->datumDo)>=strtotime($this->request->getVar('datumDo'))){
                        
                         return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
                 }
-                //ako trazeni termin obuhvata neki drugi termin
+                //Trazeni termin obuhvata neki drugi termin
                 else if(strtotime($value->datumOd)>=strtotime($this->request->getVar('datumOd')) &&
                         strtotime($value->datumDo)<=strtotime($this->request->getVar('datumDo'))){
                         
@@ -154,16 +199,13 @@ class Korisnik extends BaseController
                 } 
 
             }
+
+            //proverava da li smestaj ima dovljan kapacitet
             if($smestaj->kapacitet < $this->request->getVar('brojOsoba')){
                 $greska = "Ovaj smestaj nema dovoljan kapacitet.";
                 return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
             }
             
-            if(strtotime($this->request->getVar('datumOd') >= strtotime($this->request->getVar('datumDo')))){
-                $greska = "Niste uneli validan datum.";
-                return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
-            }
-
             $rezervacijaModel->save([
                 'datumOd' => $this->request->getVar('datumOd'),
                 'datumDo' => $this->request->getVar('datumDo'),   

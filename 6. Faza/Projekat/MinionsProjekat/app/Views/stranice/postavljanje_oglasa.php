@@ -262,7 +262,7 @@
                 <div id="map"></div>
                 <br>
                 <div id="search">
-                    <button type="button" onclick="addr_search();">Lociraj</button>
+                    <button type="button" onclick="addr_pretraga();">Lociraj</button>
                     <div id="results"></div>
                 </div>
 
@@ -308,7 +308,7 @@
                         myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
                     }
 
-                    function myFunction(arr) {
+                    function parsirajAdrese(arr) {
                         var out = "<br />";
                         var i;
 
@@ -323,7 +323,7 @@
 
                     }
 
-                    function addr_search() {
+                    function addr_pretraga() {
                         var grad = document.getElementById("grad");
                         var ulica = document.getElementById("ulica");
                         var broj = document.getElementById("broj");
@@ -333,7 +333,7 @@
                         xmlhttp.onreadystatechange = function() {
                             if (this.readyState == 4 && this.status == 200) {
                                 var myArr = JSON.parse(this.responseText);
-                                myFunction(myArr);
+                                parsirajAdrese(myArr);
                             }
                         };
                         xmlhttp.open("GET", url, true);

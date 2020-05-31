@@ -364,6 +364,7 @@ html,body{
     padding: 0;
     border:solid rgb(49, 49, 56);
     margin: 0 auto;
+    
 }
 .address {
     cursor: pointer;

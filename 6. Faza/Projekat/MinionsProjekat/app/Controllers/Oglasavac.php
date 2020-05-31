@@ -26,6 +26,7 @@ class Oglasavac extends BaseController
     }
     
     public function postavljanje_oglasa_submit(){
+        //Validacija unetih oglasa
         if(!$this->validate([
                              'naziv'=>'required',
                              'room_type'=>'required',
@@ -45,10 +46,7 @@ class Oglasavac extends BaseController
             return $this->prikaz('postavljanje_oglasa',['errors'=>$this->validator->getErrors()]);
         }
         
-        //$this->session->set('oglasavac',$korisnik);
-        //$korisnik = $korisniciModel->where('username',$this->request->getVar('login_username'))->first();
-        
-       
+        //Odredjivanje tipa smestaja na osnovu unetih parametara
         $smestajModel = new SmestajModel();
         if($this->request->getVar('room_type')=='soba'){
             $room_type='Soba';
@@ -59,7 +57,9 @@ class Oglasavac extends BaseController
         }else {
             $room_type = 'Vikendica';
         }
-        
+        /*
+            Provera da li je smestaj sa ovakvim imenom vec psotoji
+        */
         $smestaji = $smestajModel->findAll();
         foreach ($smestaji as $smestaj) {
             if($this->request->getVar('naziv') == $smestaj->naziv){
@@ -92,15 +92,15 @@ class Oglasavac extends BaseController
         $slikeModel = new FilePathDokumentacijeSmestajaModel();
         //napravi nov direktorijum u public/slike koji se zove kao naziv smestaja
         $ime = $this->request->getVar('naziv');
-        mkdir("slike/".$ime."/");
-        
+        mkdir("slike/".$ime."/");   
+
         $count = count($_FILES["fileToUpload"]["name"]);
-      
         $target_dir = "slike/".$ime ."/";
         $uploadOk = 1;
-        //prevera da li je file odgovarajuceg tipa
-        
-        //echo $imageFileType;
+        /*
+            Provera da li je file odgovarajuceg tipa.
+            Fajlovi se smestaju na server samo ako su png/jpg/jpeg formata.
+        */
 
         for ($i=0; $i < $count; $i++) { 
             $target_dir = "slike/".$ime ."/";

@@ -26,6 +26,12 @@ class Gost extends BaseController
         $this->prikaz('pretraga',[]);
     }
 
+    /*
+        Ova funkcija se poziva kada gost pritisne dugme "Pretrazi"
+        na stranici pretraga postoji vise kriterijuma pretrage i korisnik
+        moze da bira po kojim kriterijumima ce da pretrazuje smestaje.
+        Funkcija vraca niz smestaja koje prosledjuje dalje na obradu
+    */ 
     public function pretragaSubmit(){
         $smestajModel = new SmestajModel();
         $rezervacijaModel = new RezervacijaModel();
@@ -33,7 +39,11 @@ class Gost extends BaseController
         if($this->request->getVar('naziv') == ''){
             $sviSmestaji=$smestajModel->dohvSveOglase();
         }
-        
+        /*
+            Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i oatumDo.
+            Za svaki od mestaja provarava da li je slobodan u trazenom terminu i izbacuje
+            ga iz povratnog niza ako nije.
+        */
         if($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != ''){
                            
             foreach($sviSmestaji as $smestaj => $valSmestaj) { 
@@ -60,14 +70,24 @@ class Gost extends BaseController
                     } 
             } 
         }
+        /*
+            Ovaj deo koda se izvrsava samo ako je popunjeno polje Kategorija.   
+            Za svaki do smestaja proverava da li se trazena kategorija podudara
+            sa kategorijom smestaja i izbacuje ga iz povratnog niza ako do 
+            poklapanja ne dodje.
+        */
         if($this->request->getVar('kategorija') != ''){
             foreach($sviSmestaji as $k => $val) { 
                 if($val->tipSmestaja != $this->request->getVar('kategorija')) { 
                     unset($sviSmestaji[$k]); 
-                    //echo 'kategorija';
                 } 
             } 
         }
+        /*
+            Ovaj deo koda se izvrsava samo ako je popunjeno polje Broj osoba.   
+            Za svaki do smestaja proverava da li je kapacitet smestaja veci od trazenog 
+            kapaciteta i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
+        */
         if($this->request->getVar('brojOsoba') != ''){
             foreach($sviSmestaji as $k => $val) { 
                 if($val->kapacitet < $this->request->getVar('brojOsoba')) { 
@@ -76,14 +96,26 @@ class Gost extends BaseController
                 } 
             } 
         }  
+        /*
+            Ovaj deo koda se izvrsava samo ako je popunjeno polje Cena.   
+            Za svaki do smestaja proverava da li je cena smestaja veca od trazenoge i 
+            izbacuje ga iz povratnog niza ako uslov nije ispunjen.
+        */
         if($this->request->getVar('cena') != ''){
             foreach($sviSmestaji as $k => $val) { 
-                if($val->cena <= $this->request->getVar('cena')) { 
+                if($val->cena >= $this->request->getVar('cena')) { 
                     unset($sviSmestaji[$k]); 
-                    //echo 'cena';
                 } 
             } 
         } 
+        /*
+            Ovaj deo koda se izvrsava samo ako je popunjeno polje Grad.   
+            U polje grad se ne mora uneti tacan naziv grada vec se moze
+            uneti i deo naziva grada, ako se uneti string poklapa sa nekim 
+            delom naziva gradova smestaja sa kojim se poredi taj smestaj 
+            ce biti prosledjen dalje na obradu, u suprotnom taj smestaj 
+            se izbacuje iz povratnog niza.
+        */
         if($this->request->getVar('grad') != ''){
             foreach($sviSmestaji as $k => $val) { 
 
@@ -101,9 +133,15 @@ class Gost extends BaseController
     }
 
     public function registerCommit(){
-        if(!$this->validate(['ime'=>'required|min_length[1]|max_length[45]', 'prezime'=>'required|min_length[5]|max_length[45]',
-            'registration_password'=>'required|min_length[8]|max_length[45]','registration_password_confirm' => 'required|min_length[8]|max_length[45]|matches[registration_password]',
-            'datum_rodjenja'=>'required','adresa'=>'required|max_length[70]','registration_type'=>'required'])){
+        /*Validacija unetih polja */
+        if(!$this->validate(['ime'=>'required|min_length[1]|max_length[45]', 
+                             'prezime'=>'required|min_length[5]|max_length[45]',
+                             'registration_password'=>'required|min_length[8]|max_length[45]',
+                             'registration_password_confirm' => 'required|min_length[8]|max_length[45]|matches[registration_password]',
+                             'datum_rodjenja'=>'required',
+                             'adresa'=>'required|max_length[70]',
+                             'registration_type'=>'required'
+                             ])){
             return $this->prikaz('register', 
                 ['errors'=>$this->validator->getErrors()]);
         }
