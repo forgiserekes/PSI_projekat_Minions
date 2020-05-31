@@ -179,15 +179,11 @@
                 <tr>
                     <td>Ulica:</td>
                     <td>
-                        <?php
-                        echo form_input('ulica', set_value('ulica'));
-                        ?>
+                        <input type="text" name="ulica" value="" id="ulica">
                     </td>
                     <td>Broj:</td>
                     <td>
-                        <?php
-                        echo form_input('broj', set_value('broj'));
-                        ?>
+                        <input type="number" name="broj" value="" id="broj">
                     </td>
                 </tr>
                 <tr>
@@ -207,9 +203,7 @@
                 <tr>
                     <td>Grad:</td>
                     <td>
-                        <?php
-                        echo form_input('grad', set_value('grad'));
-                        ?>
+                        <input type="text" name="grad" value="" id="grad">
                     </td>
                     <td>Postanski broj:</td>
                     <td>
@@ -268,19 +262,18 @@
                 <div id="map"></div>
                 <br>
                 <div id="search">
-                    <input type="text" name="addr" value="" id="addr" size="58" />
-                    <button type="button" onclick="addr_search();">Search</button>
+                    <button type="button" onclick="addr_search();">Lociraj</button>
                     <div id="results"></div>
                 </div>
 
                 <script type="text/javascript">
-                    // New York
-                    var startlat = 40.75637123;
-                    var startlon = -73.98545321;
+                    // Beograd
+                    var startlat = 44.818611;
+                    var startlon = 20.468056;
 
                     var options = {
                         center: [startlat, startlon],
-                        zoom: 9
+                        zoom: 7
                     }
 
                     document.getElementById('lat').value = startlat;
@@ -289,37 +282,24 @@
                     var map = L.map('map', options);
                     var nzoom = 12;
 
-                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                        attribution: 'OSM'
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                        maxZoom: 18,
+                        id: 'mapbox/streets-v11',
+                        tileSize: 512,
+                        zoomOffset: -1,
+                        accessToken: 'pk.eyJ1IjoibW9tY2lsbzk4IiwiYSI6ImNrYXN0bXdhNjB2dW4yc3BydDBoNW52NmYifQ.tHLATCsFxq1eRPKR0d0aBA'
                     }).addTo(map);
 
                     var myMarker = L.marker([startlat, startlon], {
                         title: "Coordinates",
                         alt: "Coordinates",
                         draggable: true
-                    }).addTo(map).on('dragend', function() {
-                        var lat = myMarker.getLatLng().lat.toFixed(8);
-                        var lon = myMarker.getLatLng().lng.toFixed(8);
-                        var czoom = map.getZoom();
-                        if (czoom < 18) {
-                            nzoom = czoom + 2;
-                        }
-                        if (nzoom > 18) {
-                            nzoom = 18;
-                        }
-                        if (czoom != 18) {
-                            map.setView([lat, lon], nzoom);
-                        } else {
-                            map.setView([lat, lon]);
-                        }
-                        document.getElementById('lat').value = lat;
-                        document.getElementById('lon').value = lon;
-                        myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
-                    });
+                    }).addTo(map);
 
                     function chooseAddr(lat1, lng1) {
                         myMarker.closePopup();
-                        map.setView([lat1, lng1], 18);
+                        map.setView([lat1, lng1], 7);
                         myMarker.setLatLng([lat1, lng1]);
                         lat = lat1.toFixed(8);
                         lon = lng1.toFixed(8);
@@ -338,15 +318,18 @@
                             }
                             document.getElementById('results').innerHTML = out;
                         } else {
-                            document.getElementById('results').innerHTML = "Sorry, no results...";
+                            document.getElementById('results').innerHTML = "Zao name je nema rezultata pretrage...";
                         }
 
                     }
 
                     function addr_search() {
-                        var inp = document.getElementById("addr");
+                        var grad = document.getElementById("grad");
+                        var ulica = document.getElementById("ulica");
+                        var broj = document.getElementById("broj");
+
                         var xmlhttp = new XMLHttpRequest();
-                        var url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + inp.value;
+                        var url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + grad.value + " " +ulica.value + " " + broj.value;
                         xmlhttp.onreadystatechange = function() {
                             if (this.readyState == 4 && this.status == 200) {
                                 var myArr = JSON.parse(this.responseText);
