@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2020 at 12:25 PM
+-- Generation Time: Jun 01, 2020 at 10:51 PM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.6
+-- PHP Version: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `brojrecenzija` (
   `idSmestaj` int(11) NOT NULL,
   `broj` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `brojrecenzija`
@@ -45,7 +45,10 @@ CREATE TABLE IF NOT EXISTS `brojrecenzija` (
 INSERT INTO `brojrecenzija` (`id`, `idKorisnik`, `idSmestaj`, `broj`) VALUES
 (7, 16, 14, 7),
 (8, 16, 18, 0),
-(9, 16, 15, 3);
+(9, 16, 15, 3),
+(10, 17, 17, 0),
+(11, 17, 16, 0),
+(12, 17, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -162,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `korisnici` (
   `adresa` varchar(70) NOT NULL,
   `status` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `korisnici`
@@ -173,7 +176,8 @@ INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `tip`, `username`, `password`, 
 (13, 'Nikola', 'Marovic', 'oglasavac', 'nidzulitza', 'qwerqwer', 'nmarovic998@gmail.com', '1998-05-23', 'Brace Velickovic 4', 'aktivan'),
 (14, 'Momcilo', 'Niketic', 'oglasavac', 'moma98', 'zxcvzxcv', 'moma98kg@gmail.com', '1998-08-06', 'Bresnica bb', 'aktivan'),
 (15, 'Mina', 'Urosevic', 'oglasavac', 'minka', 'asdfasdf', 'mina.urosevic12@gmail.com', '1999-01-31', 'Karadjordjeva 10', 'aktivan'),
-(16, 'Aleksandar', 'Nikolic', 'korisnik', 'coa98', 'sifra123', 'aleksandarnikolic@hotmail.rs', '1998-10-06', 'Bavaniste bb', 'aktivan');
+(16, 'Aleksandar', 'Nikolic', 'korisnik', 'coa98', 'sifra123', 'aleksandarnikolic@hotmail.rs', '1998-10-06', 'Bavaniste bb', 'aktivan'),
+(17, 'Drazen', 'Draskovic', 'korisnik', 'draza', 'asdfasdf', 'drazen.draskovic@etf.rs', '1990-07-01', 'Niska 37 beograd', 'aktivan');
 
 -- --------------------------------------------------------
 
@@ -189,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `obavestenja` (
   `opis` varchar(250) NOT NULL,
   `tip` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `obavestenja`
@@ -206,7 +210,15 @@ INSERT INTO `obavestenja` (`id`, `idKorisnik`, `naslov`, `opis`, `tip`) VALUES
 (13, 13, 'Nova recenzija!', 'Korisnik Aleksandar Nikolic je ostavio recenziju za boravak u Vašem smeštaju Aleksandar Apartments', 'success'),
 (14, 13, 'Nova recenzija!', 'Korisnik Aleksandar Nikolic je ostavio recenziju za boravak u Vašem smeštaju Aleksandar Apartments', 'success'),
 (15, 13, 'Nova recenzija!', 'Korisnik Aleksandar Nikolic je ostavio recenziju za boravak u Vašem smeštaju Aleksandar Apartments', 'success'),
-(16, 16, 'Odgovor na recenziju!', 'Vlasnik smeštaja Nikola Marovic je odgovorio na Vašu recenziju za smeštaj Aleksandar Apartments', 'success');
+(16, 16, 'Odgovor na recenziju!', 'Vlasnik smeštaja Nikola Marovic je odgovorio na Vašu recenziju za smeštaj Aleksandar Apartments', 'success'),
+(17, 17, 'Uspešna rezervacija!', 'Vlasnik smeštaja Mina Urosevic je potvrdio Vaš boravak u smeštaju Apartment Valjevo od 2020-06-18 do 2020-06-24. Molimo Vas da ostavite recenziju.', 'success'),
+(18, 17, 'Uspešna rezervacija!', 'Vlasnik smeštaja Mina Urosevic je potvrdio Vaš boravak u smeštaju Apartment Valjevo od 2020-06-05 do 2020-06-08. Molimo Vas da ostavite recenziju.', 'success'),
+(19, 15, 'Nova recenzija!', 'Korisnik Drazen Draskovic je ostavio recenziju za boravak u Vašem smeštaju Apartment Valjevo', 'success'),
+(20, 17, 'Uspešna rezervacija!', 'Vlasnik smeštaja Momcilo Niketic je potvrdio Vaš boravak u smeštaju Kragujevac Apartment od 2020-06-05 do 2020-06-01. Molimo Vas da ostavite recenziju.', 'success'),
+(21, 17, 'Neuspešna rezervacija!', 'Vlasnik smeštaja Momcilo Niketic nije potvrdio Vaš boravak u smeštaju Kragujevac Apartment od 2020-06-22 do 2020-06-24. Ne možete da ostavite recenziju.', 'danger'),
+(22, 17, 'Uspešna rezervacija!', 'Vlasnik smeštaja Momcilo Niketic je potvrdio Vaš boravak u smeštaju Kragujevac Apartment od 2020-06-18 do 2020-06-22. Molimo Vas da ostavite recenziju.', 'success'),
+(23, 14, 'Nova recenzija!', 'Korisnik Drazen Draskovic je ostavio recenziju za boravak u Vašem smeštaju Kragujevac Apartment', 'success'),
+(24, 17, 'Odgovor na recenziju!', 'Vlasnik smeštaja Momcilo Niketic je odgovorio na Vašu recenziju za smeštaj Kragujevac Apartment', 'success');
 
 -- --------------------------------------------------------
 
@@ -230,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `recenzija` (
   `komentar` varchar(500) DEFAULT NULL,
   `odgovor` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `recenzija`
@@ -247,7 +259,9 @@ INSERT INTO `recenzija` (`id`, `cistoca`, `komfor`, `kvalitet`, `lokacija`, `lju
 (24, 5, 5, 5, 4, 5, 'Dobro', 'Porodica', 14, 16, 13, 'Veoma dobar smestaj. Osoblje jako ljubazno. Svima preporucujemo.', NULL),
 (25, 5, 5, 5, 4, 5, 'Dobro', 'Porodica', 14, 16, 13, 'Veoma dobar smestaj. Osoblje jako ljubazno. Svima preporucujemo.', NULL),
 (26, 5, 4, 5, 4, 5, 'Sjajno', 'Porodica', 14, 16, 13, 'Veoma dobar smestaj. Svima cu preporuciti. Veliki pozdrav!', NULL),
-(27, 5, 4, 4, 5, 5, 'Dobro', 'Grupa prijatelja', 14, 16, 13, 'Odlican smestaj svima cu preporuciti. Pozdrav od Acike programatora iz Bavanista!', NULL);
+(27, 5, 4, 4, 5, 5, 'Dobro', 'Grupa prijatelja', 14, 16, 13, 'Odlican smestaj svima cu preporuciti. Pozdrav od Acike programatora iz Bavanista!', NULL),
+(28, 5, 5, 5, 5, 5, 'Sjajno', 'Par', 19, 17, 15, 'Hvala! Cast nam je bila ugostiti Vas! Veliki pozdrav!Veoma dobar smestaj. Svima cu preporuciti. Veliki pozdrav!', NULL),
+(29, 5, 5, 5, 5, 5, 'Dobro', 'Porodica', 17, 17, 14, 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic type', 'Hvala! Cast nam je bila ugostiti Vas! Veliki pozdrav!');
 
 -- --------------------------------------------------------
 
@@ -266,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `rezervacija` (
   `idSmestaj` int(11) NOT NULL,
   `idKorisnika` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rezervacija`
@@ -286,7 +300,14 @@ INSERT INTO `rezervacija` (`id`, `datumOd`, `datumDo`, `brojOsoba`, `napomena`, 
 (38, '2020-04-26', '2020-04-27', 2, 'Nista', 'potvrdjena', 15, 16),
 (39, '2020-05-05', '2020-05-06', 2, 'nista', 'potvrdjena', 15, 16),
 (40, '2020-06-06', '2020-06-07', 2, 'Nista', 'potvrdjena', 15, 16),
-(41, '2020-06-02', '2020-06-03', 2, 'Nista', 'potvrdjena', 14, 16);
+(41, '2020-06-02', '2020-06-03', 2, 'Nista', 'potvrdjena', 14, 16),
+(43, '2020-06-05', '2020-06-01', 3, 'nista', 'potvrdjena', 17, 17),
+(46, '2020-06-10', '2020-06-13', 2, 'Nista', 'nepotvrdjena', 16, 17),
+(47, '2020-07-07', '2020-07-10', 2, 'Nista', 'nepotvrdjena', 16, 17),
+(49, '2020-06-18', '2020-06-22', 3, 'Nista', 'potvrdjena', 17, 17),
+(50, '2020-06-22', '2020-06-24', 2, 'Nista', 'odbijena', 17, 17),
+(51, '2020-06-18', '2020-06-24', 2, 'Nista', 'potvrdjena', 19, 17),
+(52, '2020-06-05', '2020-06-08', 2, 'Nista', 'potvrdjena', 19, 17);
 
 -- --------------------------------------------------------
 

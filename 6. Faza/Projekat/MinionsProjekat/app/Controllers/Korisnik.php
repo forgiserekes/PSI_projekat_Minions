@@ -98,7 +98,7 @@ class Korisnik extends BaseController {
         //Za svaki do smestaja proverava da li je cena smestaja veca od trazenog i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
         if ($this->request->getVar('cena') != '') {
             foreach ($sviSmestaji as $k => $val) {
-                if ($val->cena <= $this->request->getVar('cena')) {
+                if ($val->cena >= $this->request->getVar('cena')) {
                     unset($sviSmestaji[$k]);
                 }
             }
@@ -161,12 +161,16 @@ class Korisnik extends BaseController {
         )) return $this->prikaz('rezervacija_smestaja',['errors' => $this->validator->getErrors()]);
         
         //provera da li je pocetni datum manji od krajnjeg
-        $od = strtotime($this->request->getVar('datumOd'));
-        $do = strtotime($this->request->getVar('datumDo'));
-        if ($do <= $od) {
-            $greska = "Niste uneli validan datum.";
-            return $this->prikaz('rezervacija_smestaja', ['greska' => $greska]);
+        if(strtotime($this->request->getVar('datumOd')) >= strtotime($this->request->getVar('datumDo'))){
+            $greska = "Pocetni datum mora biti veci od krajnjeg datuma.";
+            return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
         }
+        //provera da li je pocetni datum veci od trenutnog
+        if(strtotime($this->request->getVar('datumOd')) <= strtotime(date("Y-m-d"))){
+            $greska = "Pocetni datum mora biti veci od trenutnog.";
+            return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+        }
+
 
         //provera da li je zadati smestaj razervisan u trazenom terminu
         $rezervacijaModel = new RezervacijaModel();
