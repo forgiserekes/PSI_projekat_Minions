@@ -1,4 +1,3 @@
-<!--Aleksandar Nikolic-->
 <div class='bodyContent'>
     <div class = 'row'>
         <div class = 'registerDiv alignCenter'>

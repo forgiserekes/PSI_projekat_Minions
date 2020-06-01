@@ -2,6 +2,8 @@
 
 use CodeIgniter\Model;
 
+//ova klasa sluzi za rad sa tabelom BrojRecenzija iz baze podataka
+
 class BrojRecenzijaModel extends Model
 {
     protected $table      = 'brojrecenzija';
@@ -11,6 +13,7 @@ class BrojRecenzijaModel extends Model
                                 'idSmestaj',
                                 'broj'
                                 ];
+    //povecava broj recenzija koje moze ostaviti neki korisnik za neki smestaj(sa prosledjenim IDjevima)
     public function povecaj($idKorisnik,$idSmestaj){
         $db = \Config\Database::connect();
         $builder = $db->table('brojrecenzija');
@@ -22,7 +25,7 @@ class BrojRecenzijaModel extends Model
             ]);
         }
     }
-    
+    //smanjuje  broj recenzija koje moze ostaviti neki korisnik za neki smestaj(sa prosledjenim IDjevima)
     public function smanji($idKorisnik,$idSmestaj){
         $db = \Config\Database::connect();
         $builder = $db->table('brojrecenzija');
@@ -35,6 +38,8 @@ class BrojRecenzijaModel extends Model
         } 
     }
     
+    
+    //vraca bool da li je neki Korisnik odseo u nekom smestaju(sa prosledjenim IDjevima)
     public function daLiPostoji($idKorisnik, $idSmestaj){
         $db = \Config\Database::connect();
         $builder = $db->table('brojrecenzija');
@@ -43,7 +48,7 @@ class BrojRecenzijaModel extends Model
         if($result) return true;
         else return false;
     }
-    
+    //vraca bool da li je neki Korisnik moze da ostavi recenziju za neki smestaj(sa prosledjenim IDjevima)
     public function smeDaOstaviRecenziju($idKorisnik, $idSmestaj){
         $db = \Config\Database::connect();
         $builder = $db->table('brojrecenzija');

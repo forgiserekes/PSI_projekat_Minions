@@ -265,7 +265,7 @@ class Gost extends BaseController {
     
     //Ova metoda iz LogIn forme otvara stranicu sa formom za resetovanje sifre.
     //Klikom na dugme povrati poziva se metoda ispod.
-    public function password_recovery($poruka = null) { //Aleksandar Nikolic
+    public function password_recovery($poruka = null) { //
         $this->prikaz('password_recovery.php', ['poruka' => $poruka]);
     }
 
@@ -275,9 +275,9 @@ class Gost extends BaseController {
     //u slucaju da korisnik sa uneim korisnickim imenom ne postoji vraca se na formu uz prikladno obavestenje
     //ako korisnik postoji salje se automatski mail na email adresu tog korisnika a metoda autoatski
     //redirektuje na pocetnu stranu Gosta.
-    public function password_recoverySubmit() { //Aleksandar Nikolic
+    public function password_recoverySubmit() { //
         if (!$this->validate(['recovery_username' => 'required'],
-                        [//prikaz srpskih gresaka Aleksandar Nikolic
+                        [//prikaz srpskih gresaka 
                             //ovde se prave nase poruke koje se pokazuju ako neko polje ne prodje validaciju
                             'recovery_username' => [
                                 'required' => 'Korisničko ime ne sme biti prazno!'

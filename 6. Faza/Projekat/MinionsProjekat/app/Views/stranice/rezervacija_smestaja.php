@@ -76,8 +76,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <!--Aleksandar Nikolic:Sredjen ispis gresaka-->
-                        <!--Aca: ovo treba pre tabele(fali td)-->
                         <?php
                              if(isset($greska)){
                                  echo $greska;
