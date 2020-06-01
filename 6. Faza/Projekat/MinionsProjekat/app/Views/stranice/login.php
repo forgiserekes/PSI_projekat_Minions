@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td>
-                        
+                        <?= anchor("{$controller}/password_recovery", "<span class='pocetnaTextOpis text-center'>Zaboravili ste lozinku?</span>") ?>
                     </td>
                     <td >
                         <?php echo form_submit("loginSubmit", "Uloguj se"); ?>

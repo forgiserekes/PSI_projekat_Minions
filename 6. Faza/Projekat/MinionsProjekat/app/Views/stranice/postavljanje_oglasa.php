@@ -11,17 +11,18 @@
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['naziv'])) echo $errors['naziv']; ?>
-                            <?php if (isset($greska)) {
-                                echo $greska;
-                            }
-                            ?>
+                        <?php if (!empty($errors['naziv'])) echo $errors['naziv']; ?>
+                        <?php
+                        if (isset($greska)) {
+                            echo $greska;
+                        }
+                        ?>
                         </font>
                     </td>
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['room_type'])) echo $errors['room_type']; ?>
+                        <?php if (!empty($errors['room_type'])) echo $errors['room_type']; ?>
                         </font>
                     </td>
                 </tr>
@@ -49,13 +50,13 @@
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['kapacitet'])) echo $errors['kapacitet']; ?>
+                        <?php if (!empty($errors['kapacitet'])) echo $errors['kapacitet']; ?>
                         </font>
                     </td>
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['povrsina'])) echo $errors['povrsina']; ?>
+                        <?php if (!empty($errors['povrsina'])) echo $errors['povrsina']; ?>
                         </font>
                     </td>
                 </tr>
@@ -73,13 +74,13 @@
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['cena'])) echo $errors['cena']; ?>
+                        <?php if (!empty($errors['cena'])) echo $errors['cena']; ?>
                         </font>
                     </td>
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['kitchen_type'])) echo $errors['kitchen_type']; ?>
+                        <?php if (!empty($errors['kitchen_type'])) echo $errors['kitchen_type']; ?>
                         </font>
                     </td>
                 </tr>
@@ -92,15 +93,15 @@
                     <td>
                         <?php
                         $data1 = [
-                            'name'    => 'kitchen_type',
-                            'value'      => 'da',
+                            'name' => 'kitchen_type',
+                            'value' => 'da',
                             'checked' => FALSE,
                         ];
                         echo form_radio($data1);
                         echo "Da";
                         $data2 = [
-                            'name'    => 'kitchen_type',
-                            'value'   => 'ne',
+                            'name' => 'kitchen_type',
+                            'value' => 'ne',
                             'checked' => FALSE,
                         ];
                         echo form_radio($data2);
@@ -112,13 +113,13 @@
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['parking'])) echo $errors['parking']; ?>
+                        <?php if (!empty($errors['parking'])) echo $errors['parking']; ?>
                         </font>
                     </td>
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['terasa'])) echo $errors['terasa']; ?>
+                        <?php if (!empty($errors['terasa'])) echo $errors['terasa']; ?>
                         </font>
                     </td>
                 </tr>
@@ -127,15 +128,15 @@
                     <td>
                         <?php
                         $data1 = [
-                            'name'    => 'parking',
-                            'value'   => 'da',
+                            'name' => 'parking',
+                            'value' => 'da',
                             'checked' => FALSE,
                         ];
                         echo form_radio($data1);
                         echo "Da";
                         $data2 = [
-                            'name'    => 'parking',
-                            'value'   => 'ne',
+                            'name' => 'parking',
+                            'value' => 'ne',
                             'checked' => FALSE,
                         ];
                         echo form_radio($data2);
@@ -146,15 +147,15 @@
                     <td>
                         <?php
                         $data1 = [
-                            'name'    => 'terasa',
-                            'value'      => 'da',
+                            'name' => 'terasa',
+                            'value' => 'da',
                             'checked' => FALSE,
                         ];
                         echo form_radio($data1);
                         echo "Da";
                         $data2 = [
-                            'name'    => 'terasa',
-                            'value'   => 'ne',
+                            'name' => 'terasa',
+                            'value' => 'ne',
                             'checked' => FALSE,
                         ];
                         echo form_radio($data2);
@@ -163,16 +164,17 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr>                    <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['ulica'])) echo $errors['ulica']; ?>
+                        <?php if (!empty($errors['ulica'])) echo $errors['ulica']; ?>
                         </font>
                     </td>
+
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['broj'])) echo $errors['broj']; ?>
+                        <?php if (!empty($errors['broj'])) echo $errors['broj']; ?>
                         </font>
                     </td>
                 </tr>
@@ -190,13 +192,13 @@
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['grad'])) echo $errors['grad']; ?>
+                        <?php if (!empty($errors['grad'])) echo $errors['grad']; ?>
                         </font>
                     </td>
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['ptt'])) echo $errors['ptt']; ?>
+                        <?php if (!empty($errors['ptt'])) echo $errors['ptt']; ?>
                         </font>
                     </td>
                 </tr>
@@ -216,13 +218,13 @@
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['drzava'])) echo $errors['drzava']; ?>
+                        <?php if (!empty($errors['drzava'])) echo $errors['drzava']; ?>
                         </font>
                     </td>
                     <td></td>
                     <td>
                         <font color='red'>
-                            <?php if (!empty($errors['opis'])) echo $errors['opis']; ?>
+                        <?php if (!empty($errors['fileToUpload'])) echo $errors['fileToUpload']; ?>
                         </font>
                     </td>
                 </tr>
@@ -238,6 +240,19 @@
                         <input type="file" name="fileToUpload[]" id="fileToUpload" multiple accept='image/*'>
                         <!--<input type='file' name='slikeSmestaja[]' multiple='true' accept='image/png, image/jpeg' />-->
                     </td>
+                </tr>
+                <tr>
+
+                    <td></td>
+                    <td colspan='3'>
+                        <font color='red'>
+                        <?php if (!empty($errors['opis'])) echo $errors['opis']; ?>
+                        </font>
+                    </td>
+
+
+
+
                 </tr>
                 <tr>
                     <td>Opis:</td>
@@ -329,8 +344,8 @@
                         var broj = document.getElementById("broj");
 
                         var xmlhttp = new XMLHttpRequest();
-                        var url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + grad.value + " " +ulica.value + " " + broj.value;
-                        xmlhttp.onreadystatechange = function() {
+                        var url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + grad.value + " " + ulica.value + " " + broj.value;
+                        xmlhttp.onreadystatechange = function () {
                             if (this.readyState == 4 && this.status == 200) {
                                 var myArr = JSON.parse(this.responseText);
                                 parsirajAdrese(myArr);

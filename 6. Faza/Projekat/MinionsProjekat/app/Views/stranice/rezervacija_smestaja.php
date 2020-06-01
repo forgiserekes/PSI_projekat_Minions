@@ -20,7 +20,7 @@
                         <td>
                             <?php
                              if(!empty($errors['datumOd'])){
-                                 echo "Ovo polje je obavezno";
+                                 echo $errors['datumOd'];
                              }
                              ?>
                         </td>
@@ -33,7 +33,7 @@
                         <td>
                         <?php
                              if(!empty($errors['datumDo'])){
-                                 echo "Ovo polje je obavezno";
+                                 echo $errors['datumDo'];
                              }
                         ?>                              
                         </td>
@@ -47,7 +47,7 @@
                         <td>
                                                              <?php
                              if(!empty($errors['brojOsoba'])){
-                                 echo "Ovo polje je obavezno";
+                                echo $errors['brojOsoba'];
                              }
                              ?>
                         </td>
@@ -67,9 +67,17 @@
 
                              ?>
                         </td>
-                        <td></td>
+                        <td>
+                            <?php
+                             if(!empty($errors['napomena'])){
+                                echo $errors['napomena'];
+                             }
+                             ?>
+                        </td>
                     </tr>
                     <tr>
+                        <!--Aleksandar Nikolic:Sredjen ispis gresaka-->
+                        <!--Aca: ovo treba pre tabele(fali td)-->
                         <?php
                              if(isset($greska)){
                                  echo $greska;
