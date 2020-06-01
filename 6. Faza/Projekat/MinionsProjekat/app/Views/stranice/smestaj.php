@@ -9,7 +9,7 @@
                         $recenzijaModel = new App\Models\RecenzijaModel();
                         for($i=0;$i<floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id));$i++)
                             echo "<span class='fa fa-star'></span>";
-                        echo "<span class='fa fa-star-half-o'></span>";
+                        if(floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id))<5) echo "<span class='fa fa-star-half-o'></span>";
                         for($i=floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id)+1);$i<5;$i++)
                             echo "<span class='fa fa-star-o'></span>";
                     ?>
@@ -186,7 +186,7 @@
                         echo "<span class='pocetnaTextNaslov'>". round($recenzijaModel->dohvProsecnuOcenu($smestaj->id),1) . "</span>";
                         for($i=0;$i<floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id));$i++)
                             echo "<span class='fa fa-star'></span>";
-                        echo "<span class='fa fa-star-half-o'></span>";
+                            if(floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id))<5) echo "<span class='fa fa-star-half-o'></span>";
                         for($i=floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id)+1);$i<5;$i++)
                             echo "<span class='fa fa-star-o'></span>";
                         ?>
