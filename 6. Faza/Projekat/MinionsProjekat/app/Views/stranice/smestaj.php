@@ -180,17 +180,17 @@
         <div class='col-sm-6'>
             <div clas='row'>
                 <div class='col-sm-12'>
-                    <span class='pocetnaTextNaslov'>Prosecna ocena: <?php echo round($recenzijaModel->dohvProsecnuOcenu($smestaj->id),1);?>
-                    <div class='ratings1' style="margin-left: 30% margin-top:10%" '>    
+                    <span class='pocetnaTextNaslov'>Prosecna ocena:</span>
+                    <div class='ratings1'>    
                         <?php
+                        echo "<span class='pocetnaTextNaslov'>". round($recenzijaModel->dohvProsecnuOcenu($smestaj->id),1) . "</span>";
                         for($i=0;$i<floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id));$i++)
                             echo "<span class='fa fa-star'></span>";
                         echo "<span class='fa fa-star-half-o'></span>";
                         for($i=floor($recenzijaModel->dohvProsecnuOcenu($smestaj->id)+1);$i<5;$i++)
-                            echo "<span class='fa fa-star--o'></span>";
+                            echo "<span class='fa fa-star-o'></span>";
                         ?>
-                        </span>
-                        <p>na osnovu <?php echo (string)$recenzijaModel->dohvBrojRecenzija($smestaj->id); ?> recenzije</p>
+                        <p>na osnovu <?php echo (string)$recenzijaModel->dohvBrojRecenzija($smestaj->id); ?> recenzija</p>
                     </div>
                     <table class='table'>
                         <tr>
@@ -299,7 +299,6 @@
                         echo    "</div>";
                         echo "</div>";
                         echo "<div class='row' style='height:25px'></div>";
-                        
                         if($smeDaOstaviRecenziju){
                             echo "<div class='row'>";
                             echo    "<div class='col-sm-12'>";
