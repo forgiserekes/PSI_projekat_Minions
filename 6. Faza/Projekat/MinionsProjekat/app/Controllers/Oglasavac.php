@@ -9,8 +9,10 @@ use App\Models\RecenzijaModel;
 use App\Models\ObavestenjeModel;
 use App\Models\KorisniciModel;
 
+//Oglasavac - klasa za korisnika sajta koja je aktivna ako se gost uloguje kao oglasavac i ako je njegov zahtev odobren od strane admina
 class Oglasavac extends BaseController {
 
+    //funkcija koja sluzi za prikaz bilo koje stranice unutar ovog kontrolera
     protected function prikaz($page, $data) {
         $data['controller'] = 'Oglasavac';
         $data['oglasavac'] = $this->session->get('oglasavac');
@@ -19,90 +21,53 @@ class Oglasavac extends BaseController {
         echo view('sablon/footer');
     }
 
-    public function proveraPostavkeOglasa() {
-        $this->prikaz('provera', ['poruka' => 'provera']);
+    //inicijalna stranica kontrolera
+    public function index() {
+        $this->prikaz('pocetna_oglasavac', []);
     }
 
+    //funkcija koja otvara stranicu gde se postavlja oglas
     public function postavljanjeOglasa() {
         $this->prikaz('postavljanje_oglasa', []);
     }
-
+    //funkcija koja potvrdjuje postavljanje oglasa i prebacuje na stranicu za prikaz tog oglasa
     public function postavljanje_oglasa_submit() {
         //Validacija unetih oglasa
         if (!$this->validate(
-                        [//Aleksandar Nikolic: sredjena pravila i ispis validacije ove forme na srpskom
-                            'naziv' => 'required',
-                            'room_type' => 'required',
-                            'kapacitet' => 'required',
-                            'povrsina' => 'required',
-                            'cena' => 'required',
-                            'kitchen_type' => 'required',
-                            'parking' => 'required',
-                            'terasa' => 'required',
-                            'ulica' => 'required',
-                            'broj' => 'required',
-                            'grad' => 'required',
-                            'ptt' => 'required',
-                            'drzava' => 'required',
-                            'opis' => 'required|max_length[1500]', //aca: ovde je bila problem obla zagrada 
-                        ], [
-                    'naziv' => [
-                        'required' => 'Naziv je obavezan!'
-                    ]
-                    ,
-                    'room_type' => [
-                        'required' => 'Tip sobe je obavezan!'
-                    ]
-                    ,
-                    'kapacitet' => [
-                        'required' => 'Kapacitet je obavezan!'
-                    ]
-                    ,
-                    'povrsina' => [
-                        'required' => 'Povrsina je obavezna!'
-                    ]
-                    ,
-                    'cena' => [
-                        'required' => 'Cena je obavezna!'
-                    ]
-                    ,
-                    'kitchen_type' => [
-                        'required' => 'Kuhinja je obavezna!'
-                    ]
-                    ,
-                    'parking' => [
-                        'required' => 'Parking je obavezan!'
-                    ]
-                    ,
-                    'terasa' => [
-                        'required' => 'Terasa je obavezna!'
-                    ]
-                    ,
-                    'ulica' => [
-                        'required' => 'Ulica je obavezna!'
-                    ]
-                    ,
-                    'broj' => [
-                        'required' => 'Broj je obavezan!'
-                    ]
-                    ,
-                    'grad' => [
-                        'required' => 'Grad je obavezan!'
-                    ]
-                    , 'ptt' => [
-                        'required' => 'Postanski broj je obavezan!'
-                    ],
-                    'drzava' => [
-                        'required' => 'Drzava je obavezna!'
-                    ]
-                    ,
-                    'opis' => [
-                        'required' => 'Opis je obavezan!'
-                    ]
-                        ]
-                )) {
-            return $this->prikaz('postavljanje_oglasa', ['errors' => $this->validator->getErrors()]);
-        }
+            [
+            'naziv' => 'required',
+            'room_type' => 'required',
+            'kapacitet' => 'required',
+            'povrsina' => 'required',
+            'cena' => 'required',
+            'kitchen_type' => 'required',
+            'parking' => 'required',
+            'terasa' => 'required',
+            'ulica' => 'required',
+            'broj' => 'required',
+            'grad' => 'required',
+            'ptt' => 'required',
+            'drzava' => 'required',
+            'opis' => 'required|max_length[1500]',
+            ],
+            [
+            'naziv' => ['required' => 'Naziv je obavezan!'],
+            'room_type' => ['required' => 'Tip sobe je obavezan!'],
+            'kapacitet' => ['required' => 'Kapacitet je obavezan!'],
+            'povrsina' => ['required' => 'Povrsina je obavezna!'],
+            'cena' => ['required' => 'Cena je obavezna!'],
+            'kitchen_type' => ['required' => 'Kuhinja je obavezna!'],
+            'parking' => ['required' => 'Parking je obavezan!'],
+            'terasa' => ['required' => 'Terasa je obavezna!'],
+            'ulica' => ['required' => 'Ulica je obavezna!'],
+            'broj' => ['required' => 'Broj je obavezan!'],
+            'grad' => ['required' => 'Grad je obavezan!'], 
+            'ptt' => ['required' => 'Postanski broj je obavezan!'],
+            'drzava' => ['required' => 'Drzava je obavezna!'],
+            'opis' => ['required' => 'Opis je obavezan!','max_length'=>'Opis je predugacak!']
+            ]
+        )) return $this->prikaz('postavljanje_oglasa', ['errors' => $this->validator->getErrors()]);
+    
 
         //Odredjivanje tipa smestaja na osnovu unetih parametara
         $smestajModel = new SmestajModel();
@@ -115,9 +80,8 @@ class Oglasavac extends BaseController {
         } else {
             $room_type = 'Vikendica';
         }
-        /*
-          Provera da li je smestaj sa ovakvim imenom vec psotoji
-         */
+        
+        //Provera da li je smestaj sa ovakvim imenom vec psotoji
         $smestaji = $smestajModel->findAll();
         foreach ($smestaji as $smestaj) {
             if ($this->request->getVar('naziv') == $smestaj->naziv) {
@@ -155,11 +119,9 @@ class Oglasavac extends BaseController {
         $count = count($_FILES["fileToUpload"]["name"]);
         $target_dir = "slike/" . $ime . "/";
         $uploadOk = 1;
-        /*
-          Provera da li je file odgovarajuceg tipa.
-          Fajlovi se smestaju na server samo ako su png/jpg/jpeg formata.
-         */
-
+        
+        //Provera da li je file odgovarajuceg tipa.
+        //Fajlovi se smestaju na server samo ako su png/jpg/jpeg formata.
         for ($i = 0; $i < $count; $i++) {
             $target_dir = "slike/" . $ime . "/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"][$i]);
@@ -174,36 +136,35 @@ class Oglasavac extends BaseController {
                 move_uploaded_file($_FILES["fileToUpload"]["tmp_name"][$i], $target_file);
             }
         }
-
         return redirect()->to(site_url("Oglasavac/smestajPrikaz/{$smestajModel->getInsertId()}"));
     }
-
+    //funkcija koja prikazuje trazeni smestaj
     public function smestajPrikaz($id) {
         $smestajModel = new SmestajModel();
         $smestaj = $smestajModel->find($id);
         $this->prikaz('smestaj', ['smestaj' => $smestaj]);
     }
 
-    public function obrisiOglas($id) {
+    //funkcija koja brise smestaj, samim tim i rezervacije i recenzije za taj smestaj
+    public function obrisiSmestaj($id) {
         $smestajModel = new SmestajModel();
         $smestajModel->obrisiSmestaj($id);
-        $recenzijaModel = new \App\Models\RecenzijaModel();
-        $recenzijaModel->obrisiRecenzijeZaOglas($id);
-        $rezervacijaModel = new \App\Models\RezervacijaModel();
-        $rezervacijaModel->obrisiRezervacijeZaOglas($id);
         return redirect()->to(site_url("Oglasavac/smestajiOglasavaca/"));
     }
 
+    //prikazuje sve recenzije za trazeni oglas
     public function sveRecenzijeOglasa($id) {
         $smestajModel = new SmestajModel();
         $smestaj = $smestajModel->dohvSmestaj($id)[0];
         $this->prikaz('spisak_recenzija', ['smestaj' => $smestaj]);
     }
 
+    //prikazuje stranicu sa svim recenzijama za oglasavaca
     public function sveRecenzijeOglasavaca() {
         $this->prikaz('spisak_recenzija', ['idOglasavaca' => $this->session->get('oglasavac')->id]);
     }
 
+    //prikazuje stranicu pretraga
     public function pretraga() {
         $kljucPretrage = $this->request->getVar('kljucPretrage');
         $smestajModel = new SmestajModel();
@@ -211,12 +172,14 @@ class Oglasavac extends BaseController {
         $this->prikaz('pocetna', ['smestaji' => $smestaji, 'trazeno' => $kljucPretrage]);
     }
 
+    //prikazuje stranicu sa nepotvrdjenim rezervacijama oglasavaca
     public function rezervacije() {
         $rezervacijaModel = new \App\Models\RezervacijaModel();
         $nepotvrdjeneRezervacije = $rezervacijaModel->dohvSveNepotrvrdjene($this->session->get('oglasavac')->id);
         $this->prikaz('nepotvrdjene_rezervacije_oglasavac', ['nepotvrdjeneRezervacije' => $nepotvrdjeneRezervacije]);
     }
 
+    //potvrdjuje da se korisnik koji je rezervisao smestaj pojavio i samim tim uvecava broj u tabli brojRecenzija
     public function potvrdiRezervaciju($idRezervacija) {
         $brojRecenzijaModel = new \App\Models\BrojRecenzijaModel();
         $brojRecenzijaModel->povecaj($_SESSION['idKorisnikRezervacija'], $_SESSION['idSmestajRezervacija']);
@@ -239,6 +202,8 @@ class Oglasavac extends BaseController {
         return redirect()->to(site_url('Oglasavac/rezervacije'));
     }
 
+    //odbija rezervaciju zato sto se korisnik nije pojavio u smestaju u rezervisanom terminu i samim tim
+    //smanjuje broj u tabeli brojRecenzija
     public function odbijRezervaciju($idRezervacija) {
         $brojRecenzijaModel = new \App\Models\BrojRecenzijaModel();
         $brojRecenzijaModel->smanji($_SESSION['idKorisnikRezervacija'], $_SESSION['idSmestajRezervacija']);
@@ -263,10 +228,12 @@ class Oglasavac extends BaseController {
         return redirect()->to(site_url('Oglasavac/rezervacije'));
     }
 
+    //prikazuje stranicu za odgovor na recenziju
     public function odgovorNaRecenziju($idRecenzije) {
         $this->prikaz('odgovor_na_recenziju', ['idRecenzije' => $idRecenzije]);
     }
 
+    //potvrdjuje odgovor na recenziju
     public function odgovorNaRecenzijuSubmit($idRecenzije) {
         $odgovor = $this->request->getVar('recenzijaOdgovor');
         $recenzijaModel = new RecenzijaModel();
@@ -289,37 +256,39 @@ class Oglasavac extends BaseController {
         return redirect()->to(site_url('Oglasavac/sveRecenzijeOglasavaca'));
     }
 
+    //prikazuje sve smestaje oglasavaca 
     public function smestajiOglasavaca() {
         $smestajModel = new SmestajModel();
         $smestaji = $smestajModel->dohvOglaseOglasavaca($this->session->get('oglasavac')->id);
         $this->prikaz('pocetna', ['sviSmestaji' => $smestaji]);
     }
 
-    public function index() {
-        $this->prikaz('pocetna_oglasavac', []);
-    }
-
+    //prikazuje stranicu sa obavestenjima oglasavaca
     public function obavestenja() {
         $obavestenjeModel = new ObavestenjeModel();
         $obavestenja = $obavestenjeModel->dohvObavestenjaKorisnika($this->session->get('oglasavac')->id);
         $this->prikaz('obavestenja', ['obavestenja' => $obavestenja]);
     }
 
+    //brise obavestenje
     public function obrisiObavestenje($id) {
         $obavestenjeModel = new ObavestenjeModel();
         $obavestenjeModel->obrisiObavestenje($id);
         return redirect()->to(site_url('Oglasavac/obavestenja'));
     }
-
+    //odjavljuje oglasavaca i vraca na pocetnu stranu gosta
     public function logout() {
         $this->session->destroy();
         return redirect()->to(site_url('/'));
     }
 
+    //funkcija koja se aktivira klikom na naziv sajta na vrhu ekrana ili na logo u gornjem levom uglu
+    //vraca trenutnog kontrolera na njegovu pocetnu stranicu
     public function backToHome() {
         return redirect()->to(site_url('Oglasavac'));
     }
 
+    //funkcija koja se poziva putem ajaksa i koja prikazuje broj obavestenja koje ima oglasavac
     public function dohvBrojObavestenja() {
         if ($this->session->get('oglasavac')) {
             $obavestenjeModel = new ObavestenjeModel();
@@ -331,6 +300,7 @@ class Oglasavac extends BaseController {
         }
     }
 
+    //funkcija koja se poziva putem ajaksa i koja dohvata broj rezervacija koje ima korisnik
     public function dohvNepotvrdjeneRezervacijeOglasavac() {
         $rezervacijaModel = new \App\Models\RezervacijaModel();
         $nepotvrdjeneRezervacije = $rezervacijaModel->dohvSveNepotrvrdjene($this->session->get('oglasavac')->id);
@@ -343,4 +313,23 @@ class Oglasavac extends BaseController {
         echo json_encode($data);
     }
 
+    //poziva se takodje putem ajaksa i dohvata ukupan broj smestaja, recenzija i rezervacija oglasavaca
+    public function dohvUkupanBrojOglasavac(){
+        $recenzijaModel = new RecenzijaModel();
+        $smestajModel = new SmestajModel();
+        $rezervacijaModel = new \App\Models\RezervacijaModel();
+        
+        $smestajBroj = $smestajModel->dohvBrojSmestajaOglasavaca($this->session->get('oglasavac')->id);
+        $recenzijeBroj = $recenzijaModel->dohvBrojRecenzijaOglasavaca($this->session->get('oglasavac')->id);
+        $rezervacijeBroj = $rezervacijaModel->dohvBrojRezervacijaOglasavaca($this->session->get('oglasavac')->id);
+        
+        $data = [
+            'smestajBroj' => $smestajBroj,
+            'recenzijeBroj' => $recenzijeBroj,
+            'rezervacijeBroj' => $rezervacijeBroj,
+        ];
+
+        header("Content-Type: application/json" );
+        echo json_encode($data);
+    }
 }

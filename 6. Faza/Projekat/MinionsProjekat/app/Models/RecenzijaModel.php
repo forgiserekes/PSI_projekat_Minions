@@ -20,6 +20,9 @@ class RecenzijaModel extends Model
     public function dohvSveRecenzijeOglasavaca($id){
         return $this->where('idOglasavac',$id)->findAll();
     }
+    public function dohvBrojRecenzijaOglasavaca($id){
+        return count($this->where('idOglasavac',$id)->findAll()); 
+    }
     public function dohvSveRecenzije(){
         return $this->findAll();
     }

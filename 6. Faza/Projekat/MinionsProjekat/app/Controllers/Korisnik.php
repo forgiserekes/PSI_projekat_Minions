@@ -7,8 +7,10 @@ use App\Models\RezervacijaModel;
 use App\Models\RecenzijaModel;
 use App\Models\ObavestenjeModel;
 
+//Korisnik - klasa za korisnika sajta koja je aktivna ako se gost uloguje kao korisnik
 class Korisnik extends BaseController {
 
+    //funkcija koja sluzi za prikaz bilo koje stranice unutar ovog kontrolera
     protected function prikaz($page, $data) {
         $data['controller'] = 'Korisnik';
         $data['korisnik'] = $this->session->get('korisnik');
@@ -17,22 +19,21 @@ class Korisnik extends BaseController {
         echo view('sablon/footer');
     }
 
+    //inicijalna stranica kontrolera
     public function index() {
         $smestajModel = new \App\Models\SmestajModel();
         $this->prikaz('pocetna', ['sviSmestaji' => $smestajModel->dohvSveOglase()]);
     }
 
+    //funkcija koja prikazuje stranicu za pretragu
     public function pretraga() {
         $this->prikaz('pretraga', []);
     }
 
-    /*
-      Ova funkcija se poziva kada korisnik pritisne dugme "Pretrazi"
-      na stranici pretraga postoji vise kriterijuma pretrage i korisnik
-      moze da bira po kojim kriterijumima ce da pretrazuje smestaje.
-      Funkcija vraca niz smestaja koje prosledjuje dalje na obradu
-     */
-
+    //Ova funkcija se poziva kada korisnik pritisne dugme "Pretrazi"
+    //na stranici pretraga postoji vise kriterijuma pretrage i korisnik
+    //moze da bira po kojim kriterijumima ce da pretrazuje smestaje.
+    //Funkcija vraca niz smestaja koje prosledjuje dalje na obradu    
     public function pretragaSubmit() {
         $smestajModel = new SmestajModel();
         $rezervacijaModel = new RezervacijaModel();
@@ -40,11 +41,9 @@ class Korisnik extends BaseController {
         if ($this->request->getVar('naziv') == '') {
             $sviSmestaji = $smestajModel->dohvSveOglase();
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i oatumDo.
-          Za svaki od mestaja provarava da li je slobodan u trazenom terminu i izbacuje
-          ga iz povratnog niza ako nije.
-         */
+        
+        //Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i datumDo.
+        //Za svaki od mestaja proverava da li je slobodan u trazenom terminu i izbacuje ga iz povratnog niza ako nije.
         if ($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != '') {
 
             foreach ($sviSmestaji as $smestaj => $valSmestaj) {
@@ -74,25 +73,19 @@ class Korisnik extends BaseController {
                 }
             }
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako je popunjeno polje Kategorija.
-          Za svaki do smestaja proverava da li se trazena kategorija podudara
-          sa kategorijom smestaja i izbacuje ga iz povratnog niza ako do
-          poklapanja ne dodje.
-         */
+        
+        //Ovaj deo koda se izvrsava samo ako je popunjeno polje Kategorija. Za svaki od smestaja proverava da li se trazena kategorija
+        //podudara sa kategorijom smestaja i izbacuje ga iz povratnog niza ako do poklapanja ne dodje.
         if ($this->request->getVar('kategorija') != '') {
             foreach ($sviSmestaji as $k => $val) {
                 if ($val->tipSmestaja != $this->request->getVar('kategorija')) {
                     unset($sviSmestaji[$k]);
-                    //echo 'kategorija';
                 }
             }
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako je popunjeno polje Broj osoba.
-          Za svaki do smestaja proverava da li je kapacitet smestaja veci od trazenog
-          kapaciteta i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
-         */
+        //Ovaj deo koda se izvrsava samo ako je popunjeno polje Broj osoba.
+        //Za svaki do smestaja proverava da li je kapacitet smestaja veci od trazenog
+        //kapaciteta i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
         if ($this->request->getVar('brojOsoba') != '') {
             foreach ($sviSmestaji as $k => $val) {
                 if ($val->kapacitet <= $this->request->getVar('brojOsoba')) {
@@ -100,11 +93,9 @@ class Korisnik extends BaseController {
                 }
             }
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako je popunjeno polje Cena.
-          Za svaki do smestaja proverava da li je cena smestaja veca od trazenoge i
-          izbacuje ga iz povratnog niza ako uslov nije ispunjen.
-         */
+
+        //Ovaj deo koda se izvrsava samo ako je popunjeno polje Cena.
+        //Za svaki do smestaja proverava da li je cena smestaja veca od trazenog i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
         if ($this->request->getVar('cena') != '') {
             foreach ($sviSmestaji as $k => $val) {
                 if ($val->cena <= $this->request->getVar('cena')) {
@@ -112,14 +103,12 @@ class Korisnik extends BaseController {
                 }
             }
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako je popunjeno polje Grad.
-          U polje grad se ne mora uneti tacan naziv grada vec se moze
-          uneti i deo naziva grada, ako se uneti string poklapa sa nekim
-          delom naziva gradova smestaja sa kojim se poredi taj smestaj
-          ce biti prosledjen dalje na obradu, u suprotnom taj smestaj
-          se izbacuje iz povratnog niza.
-         */
+        //Ovaj deo koda se izvrsava samo ako je popunjeno polje Grad.
+        //U polje grad se ne mora uneti tacan naziv grada vec se moze
+        //uneti i deo naziva grada, ako se uneti string poklapa sa nekim
+        //delom naziva gradova smestaja sa kojim se poredi taj smestaj
+        //ce biti prosledjen dalje na obradu, u suprotnom taj smestaj
+        //se izbacuje iz povratnog niza.
         if ($this->request->getVar('grad') != '') {
             foreach ($sviSmestaji as $k => $val) {
 
@@ -136,6 +125,7 @@ class Korisnik extends BaseController {
         $this->prikaz('pocetna', ['sviSmestaji' => $sviSmestaji]);
     }
 
+    //funkcija koja prikazuje trazeni smestaj
     public function smestajPrikaz($id) {
         $smestajModel = new SmestajModel();
         $smestaj = $smestajModel->find($id);
@@ -144,10 +134,7 @@ class Korisnik extends BaseController {
         $this->prikaz('smestaj', ['smestaj' => $smestaj, 'smeDaOstaviRecenziju' => $smeDaOstavi]);
     }
 
-    /*
-      Prikazuje stranicu za ostavljenje rezervacije
-     */
-
+    //Prikazuje stranicu za ostavljenje rezervacije
     public function rezervisi($id) {
         $smestajModel = new SmestajModel();
         $smestaj = $smestajModel->dohvatiSmestajSaId($id);
@@ -155,44 +142,33 @@ class Korisnik extends BaseController {
         $this->prikaz('rezervacija_smestaja', []);
     }
 
-    /*
-      Ova metoda se poziva nekon sto se popune sva polja na stranici
-      za ostavljanje rezervacije pritiskom na dugme "Rezervisi".
-      Ova metoda vrsi provere vezanu za rezervacije i
-      ubacuje u bazu sve podatke o rezervaciji ako su sve provere prosle.
-     */
-
+    //Ova metoda se poziva nekon sto se popune sva polja na stranici
+    //za ostavljanje rezervacije pritiskom na dugme "Rezervisi".
+    //Ova metoda vrsi provere vezanu za rezervacije i
+    //ubacuje u bazu sve podatke o rezervaciji ako su sve provere prosle.    
     public function rezervisiSubmit() {
-        if (!$this->validate(['datumOd' => 'required',
-                    'datumDo' => 'required',
-                    'brojOsoba' => 'required',
-                    'napomena' => 'required'],
-                        [
-                            'datumOd' => [
-                                'required' => "Morate uneti Datum Od!",
-                            ],
-                            'datumDo' => [
-                                'required' => "Morate uneti Datum Do!",
-                            ], 'brojOsoba' => [
-                                'required' => "Morate uneti broj osoba!",
-                            ]
-                            , 'napomena' => [
-                                'required' => "Morate uneti napomenu!",
-                            ]
-                        ]
-                )) {
-            return $this->prikaz('rezervacija_smestaja',
-                            ['errors' => $this->validator->getErrors()]);
-        }
-        //provera da li je pocetni datum manji od krajnjeg //Aca popravio
-        $Od = strtotime($this->request->getVar('datumOd'));
-        $Do = strtotime($this->request->getVar('datumDo'));
-        if ($Do <= $Od) {
+        if (!$this->validate(
+            [
+            'datumOd' => 'required',
+            'datumDo' => 'required',
+            'brojOsoba' => 'required',
+            'napomena' => 'required'
+            ],
+            [
+            'datumOd' => ['required' => "Morate uneti Datum Od!",],
+            'datumDo' => ['required' => "Morate uneti Datum Do!",], 'brojOsoba' => ['required' => "Morate uneti broj osoba!",], 'napomena' => ['required' => "Morate uneti napomenu!",]
+            ]
+        )) return $this->prikaz('rezervacija_smestaja',['errors' => $this->validator->getErrors()]);
+        
+        //provera da li je pocetni datum manji od krajnjeg
+        $od = strtotime($this->request->getVar('datumOd'));
+        $do = strtotime($this->request->getVar('datumDo'));
+        if ($do <= $od) {
             $greska = "Niste uneli validan datum.";
             return $this->prikaz('rezervacija_smestaja', ['greska' => $greska]);
         }
 
-        //provera da li je zadati smesta razervisan u trazenom terminu
+        //provera da li je zadati smestaj razervisan u trazenom terminu
         $rezervacijaModel = new RezervacijaModel();
         $smestajModel = new SmestajModel();
         $rezervacije = $rezervacijaModel->pretraziRezervacijeSmestaja($this->session->get('id'));
@@ -247,24 +223,29 @@ class Korisnik extends BaseController {
         return redirect()->to(site_url('Korisnik'));
     }
 
+    //funkcija koja prikazuje sve recenzije za trazeni oglas
     public function sveRecenzijeOglasa($id) {
         $smestajModel = new SmestajModel();
         $smestaj = $smestajModel->dohvSmestaj($id)[0];
         $this->prikaz('spisak_recenzija', ['smestaj' => $smestaj]);
     }
 
+    //funkcija koja provera da li korisnik koji je poziva sme da ostavi recenziju za dati smestaj
+    //uslov za ostavljanje recenzije je da je oglasavac smestaja potvrdio boravak korisnika u smestaju koji je rezervisao
+    //implementirano je pomocu dodatne tabele koja se zove brojRecenzija i koja simulira semafora, povecava vrednost kada oglasavac potvrdi rezervaciju, a smanjuje kada ne potvrdi
+    //dokle god je vrednost za tog korisnika i taj oglas veca od nule korisnik ce imati mogucnost ostavljanja recenzije za taj oglas
     public function smeDaOstaviRecenziju($idSmestaj) {
         $brojRecenzijaModel = new \App\Models\BrojRecenzijaModel();
-        if ($brojRecenzijaModel->smeDaOstaviRecenziju($this->session->get('korisnik')->id, $idSmestaj))
-            return true;
-        else
-            false;
+        if ($brojRecenzijaModel->smeDaOstaviRecenziju($this->session->get('korisnik')->id, $idSmestaj))return true;
+        else false;
     }
 
+    //prikazuje se stranica gde se ostavlja recenzija za smestaj
     public function ostaviRecenziju($id) {
         $this->prikaz('postavljanje_recenzije', ['idSmestajRecenzija' => $id]);
     }
 
+    //potvrda ostavljanja recenzije
     public function ostaviRecenzijuSubmit($id) {
         $smestajModel = new SmestajModel();
         $smestaj = $smestajModel->dohvSmestaj($id)[0];
@@ -301,27 +282,33 @@ class Korisnik extends BaseController {
         return redirect()->to(site_url('Korisnik'));
     }
 
+    //funkcija koja prikazuje obavestenja koja je korisnik dobio
     public function obavestenja() {
         $obavestenjeModel = new ObavestenjeModel();
         $obavestenja = $obavestenjeModel->dohvObavestenjaKorisnika($this->session->get('korisnik')->id);
         $this->prikaz('obavestenja', ['obavestenja' => $obavestenja]);
     }
 
+    //brise trazeno obavestenje
     public function obrisiObavestenje($id) {
         $obavestenjeModel = new ObavestenjeModel();
         $obavestenjeModel->obrisiObavestenje($id);
         return redirect()->to(site_url('Korisnik/obavestenja'));
     }
 
+    //odjavljuje korisnika i vraca na pocetnu stranu gosta
     public function logout() {
         $this->session->destroy();
         return redirect()->to(site_url('/'));
     }
 
+    //funkcija koja se aktivira klikom na naziv sajta na vrhu ekrana ili na logo u gornjem levom uglu
+    //vraca trenutnog kontrolera na njegovu pocetnu stranicu
     public function backToHome() {
         return redirect()->to(site_url('Korisnik'));
     }
 
+    //funkcija koja se poziva putem ajaksa i koja prikazuje broj obavestenja koje ima korisnik
     public function dohvBrojObavestenja() {
         if ($this->session->get('korisnik')) {
             $obavestenjeModel = new ObavestenjeModel();
@@ -332,20 +319,4 @@ class Korisnik extends BaseController {
             echo json_encode($data);
         }
     }
-
-    public function date_range($first, $last, $step = '+1 day', $output_format = 'd/m/Y') {
-
-        $dates = array();
-        $current = strtotime($first);
-        $last = strtotime($last);
-
-        while ($current <= $last) {
-
-            $dates[] = date($output_format, $current);
-            $current = strtotime($step, $current);
-        }
-
-        return $dates;
-    }
-
 }

@@ -61,8 +61,19 @@ class RezervacijaModel extends Model
             }
             return $rezervacijaFinal;
         }
-        
         return $rezervacije;
+    }
+
+    public function dohvBrojRezervacijaOglasavaca($id){
+        $smestajModel = new SmestajModel();
+        $sviSmestajiOglasavaca = $smestajModel->dohvOglaseOglasavaca($id);
+        $cnt = 0;
+        foreach($sviSmestajiOglasavaca as $smestaj){
+            if(count($this->where('idSmestaj',$smestaj->id)->findAll())>0){
+                $cnt++;
+            }
+        }
+        return $cnt;
     }
 
     public function dohvIdKorisnika($id){

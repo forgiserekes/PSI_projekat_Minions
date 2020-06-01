@@ -27,7 +27,7 @@
             echo            "<h3 class='pocetnaTextNaslov'>{$smestaj->naziv}</h3>";
             echo        "</div>";
             echo        "<div class='col-sm-6 textRight' id='oglasOpcije'>";
-            echo            "<h5>{$smestaj->cena}e | ". anchor("{$controller}/smestajPrikaz/{$smestaj->id}", "Pregledaj oglas") . ($controller=='Admin'? " | " .anchor("Admin/obrisiOglas/{$smestaj->id}","Obriši") : "" ) . ($controller=='Oglasavac'? " | " .anchor("Oglasavac/obrisiOglas/{$smestaj->id}","Obriši") : "" ) . "</h5>";
+            echo            "<h5>{$smestaj->cena}e | ". anchor("{$controller}/smestajPrikaz/{$smestaj->id}", "Pregledaj oglas") . ($controller=='Admin'? " | " .anchor("Admin/obrisiSmestaj/{$smestaj->id}","Obriši") : "" ) . ($controller=='Oglasavac'? " | " .anchor("Oglasavac/obrisiSmestaj/{$smestaj->id}","Obriši") : "" ) . "</h5>";
             echo        "</div>";
             echo    "</div>";  
             echo    "<div class='row col-sm-12 textLeft'>";  

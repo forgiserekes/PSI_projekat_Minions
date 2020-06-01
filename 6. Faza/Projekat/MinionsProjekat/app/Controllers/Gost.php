@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
+//include za modele koji komuniciraju sa bazom
 use App\Models\KorisniciModel;
 use App\Models\SmestajModel;
 use App\Models\RezervacijaModel;
-//Includovi biblioteke za slanje mailova
+
+//include biblioteka potrebnih za slanje mejla
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -14,8 +16,10 @@ require APPPATH . 'ThirdParty/PHPMailer/src/Exception.php';
 require APPPATH . 'ThirdParty/PHPMailer/src/PHPMailer.php';
 require APPPATH . 'ThirdParty/PHPMailer/src/SMTP.php';
 
+//Gost - klasa za korisnika sajta koji se ponasa kao gost (nije potrebno logovanje/registracija)
 class Gost extends BaseController {
 
+    //za prikaz bilo koje stranice unutar ovog kontrolera
     protected function prikaz($page, $data) {
         $data['controller'] = 'Gost';
         echo view('sablon/header', $data);
@@ -23,26 +27,21 @@ class Gost extends BaseController {
         echo view('sablon/footer');
     }
 
+    //inicijalna stranica kontrolera
     public function index() {
         $smestajModel = new SmestajModel();
         $this->prikaz('pocetna', ['sviSmestaji' => $smestajModel->dohvSveOglase()]);
     }
-
-    public function register($poruka = null) {
-        $this->prikaz('register', ['poruka' => $poruka]);
-    }
-
+    
+    //funkcija koja prikazuje stranicu za pretragu smestaja
     public function pretraga() {
         $this->prikaz('pretraga', []);
     }
 
-    /*
-      Ova funkcija se poziva kada gost pritisne dugme "Pretrazi"
-      na stranici pretraga postoji vise kriterijuma pretrage i korisnik
-      moze da bira po kojim kriterijumima ce da pretrazuje smestaje.
-      Funkcija vraca niz smestaja koje prosledjuje dalje na obradu
-     */
-
+    //Ova funkcija se poziva kada korisnik pritisne dugme "Pretrazi"
+    //na stranici pretraga postoji vise kriterijuma pretrage i korisnik
+    //moze da bira po kojim kriterijumima ce da pretrazuje smestaje.
+    //Funkcija vraca niz smestaja koje prosledjuje dalje na obradu 
     public function pretragaSubmit() {
         $smestajModel = new SmestajModel();
         $rezervacijaModel = new RezervacijaModel();
@@ -50,13 +49,9 @@ class Gost extends BaseController {
         if ($this->request->getVar('naziv') == '') {
             $sviSmestaji = $smestajModel->dohvSveOglase();
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i oatumDo.
-          Za svaki od mestaja provarava da li je slobodan u trazenom terminu i izbacuje
-          ga iz povratnog niza ako nije.
-         */
+        //Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i datumDo.
+        //Za svaki od mestaja proverava da li je slobodan u trazenom terminu i izbacuje ga iz povratnog niza ako nije.
         if ($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != '') {
-
             foreach ($sviSmestaji as $smestaj => $valSmestaj) {
                 $rezervacije = $rezervacijaModel->pretraziRezervacijeSmestaja($valSmestaj->id);
                 foreach ($rezervacije as $rezervacija => $valRezervacija) {
@@ -81,12 +76,11 @@ class Gost extends BaseController {
                 }
             }
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako je popunjeno polje Kategorija.
-          Za svaki do smestaja proverava da li se trazena kategorija podudara
-          sa kategorijom smestaja i izbacuje ga iz povratnog niza ako do
-          poklapanja ne dodje.
-         */
+        
+        //Ovaj deo koda se izvrsava samo ako je popunjeno polje Kategorija.
+        //Za svaki do smestaja proverava da li se trazena kategorija podudara
+        //sa kategorijom smestaja i izbacuje ga iz povratnog niza ako do
+        //poklapanja ne dodje.
         if ($this->request->getVar('kategorija') != '') {
             foreach ($sviSmestaji as $k => $val) {
                 if ($val->tipSmestaja != $this->request->getVar('kategorija')) {
@@ -94,11 +88,11 @@ class Gost extends BaseController {
                 }
             }
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako je popunjeno polje Broj osoba.
-          Za svaki do smestaja proverava da li je kapacitet smestaja veci od trazenog
-          kapaciteta i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
-         */
+        
+        //Ovaj deo koda se izvrsava samo ako je popunjeno polje Broj osoba.
+        //Za svaki do smestaja proverava da li je kapacitet smestaja veci od trazenog
+        //kapaciteta i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
+        
         if ($this->request->getVar('brojOsoba') != '') {
             foreach ($sviSmestaji as $k => $val) {
                 if ($val->kapacitet < $this->request->getVar('brojOsoba')) {
@@ -106,11 +100,10 @@ class Gost extends BaseController {
                 }
             }
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako je popunjeno polje Cena.
-          Za svaki do smestaja proverava da li je cena smestaja veca od trazenoge i
-          izbacuje ga iz povratnog niza ako uslov nije ispunjen.
-         */
+        
+        //Ovaj deo koda se izvrsava samo ako je popunjeno polje Cena.
+        //Za svaki do smestaja proverava da li je cena smestaja veca od trazenoge i
+        //izbacuje ga iz povratnog niza ako uslov nije ispunjen.
         if ($this->request->getVar('cena') != '') {
             foreach ($sviSmestaji as $k => $val) {
                 if ($val->cena >= $this->request->getVar('cena')) {
@@ -118,104 +111,51 @@ class Gost extends BaseController {
                 }
             }
         }
-        /*
-          Ovaj deo koda se izvrsava samo ako je popunjeno polje Grad.
-          U polje grad se ne mora uneti tacan naziv grada vec se moze
-          uneti i deo naziva grada, ako se uneti string poklapa sa nekim
-          delom naziva gradova smestaja sa kojim se poredi taj smestaj
-          ce biti prosledjen dalje na obradu, u suprotnom taj smestaj
-          se izbacuje iz povratnog niza.
-         */
+        
+        //Ovaj deo koda se izvrsava samo ako je popunjeno polje Grad.
+        //U polje grad se ne mora uneti tacan naziv grada vec se moze
+        //uneti i deo naziva grada, ako se uneti string poklapa sa nekim
+        //delom naziva gradova smestaja sa kojim se poredi taj smestaj
+        //ce biti prosledjen dalje na obradu, u suprotnom taj smestaj
+        //se izbacuje iz povratnog niza.
         if ($this->request->getVar('grad') != '') {
             foreach ($sviSmestaji as $k => $val) {
-
-
                 $a = $val->grad;
                 $search = $this->request->getVar('grad');
-                if (preg_match("/{$search}/i", $a)) {
-                    
-                } else {
-                    unset($sviSmestaji[$k]);
-                }
+                if (!preg_match("/{$search}/i", $a)) unset($sviSmestaji[$k]);
             }
         }
         $this->prikaz('pocetna', ['sviSmestaji' => $sviSmestaji]);
     }
 
-    public function registerCommit() {//Nikola Marovic
+    //funkcija koja prikazuje stranicu za registraciju korisnika
+    public function register($poruka = null) {
+        $this->prikaz('register', ['poruka' => $poruka]);
+    }
+
+    //funkcija koja potvrdjuje registraciju korisnika
+    public function registerCommit() {
         /* Validacija unetih polja */
         if (!$this->validate(
-                [//Aleksandar Nikolic dodato po neko pravilo
-                    'ime' => 'required|min_length[2]|max_length[45]',
-                    'prezime' => 'required|min_length[5]|max_length[45]',
-                    'username'=> 'required|min_length[2]|max_length[12]',
-                    'email' =>'required', 
-                    'registration_password' => 'required|min_length[8]|max_length[45]',
-                    'registration_password_confirm' => 'required|min_length[8]|max_length[45]|matches[registration_password]',
-                    'datum_rodjenja' => 'required',
-                    'adresa' => 'required|max_length[70]',
-                    'registration_type' => 'required'
-                ],
-                
-                [       //prikaz srpskih gresaka Aleksandar Nikolic
-
-                            'ime' => [
-                                'required' => 'Ime ne sme biti prazno!',
-                                'min_length' => 'Ime mora biti duze od 1 karaktera!',
-                                'max_length'=>'Ime mora biti krace od 46 karaktera!'
-                            ] ,
-                            'prezime' => [
-                                'required' => 'Prezime ne sme biti prazno!',
-                                'min_length' => 'Prezime mora biti duze od 4 karaktera!',
-                                'max_length'=>'Prezime mora biti krace od 46 karaktera!'
-                            ] ,
-                     'username' => [
-                                'required' => 'Korisnicko ime ne sme biti prazno!',
-                                'min_length' => 'Korisnicko mora biti duze od 1 karaktera!',
-                                'max_length'=>'Korisnicko mora biti krace od 13 karaktera!'
-                            ] ,
-                     'email' => [
-                                'required' => 'Email je obavezan!'
-                            ] ,
-                    
-                    
-                     'registration_password' => [
-                                'required' => 'Lozinka ne sme biti prazna!',
-                                'min_length' => 'Lozinka mora biti duza od 7 karaktera!',
-                                'max_length'=>'Lozinka mora biti kraca od 46 karaktera!',
-                               
-                            ] ,
-                     'registration_password_confirm' => [
-                                'required' => 'Lozinka ne sme biti prazna!',
-                                'min_length' => 'Lozinka mora biti duza od 7 karaktera!',
-                                'max_length'=>'Lozinka mora biti kraca od 46 karaktera!',
-                            'matches'=>'Lozinke se moraju poklapati!'
-                            ] ,
-                    
-                    
-                    'datum_rodjenja' => [
-                                'required' => 'Datum rodjenja je obavezan!'
-                            ] 
-                        ,
-                 'adresa' => [
-                                'required' => 'Adresa ne sme biti prazna!',
-                                 'max_length'=>'Adresa mora biti kraca od 70 karaktera!',
-                            ] 
-                        
-                ,
-                'registration_type' =>[
-                    'required'=>'Morate odabrati tip korisnika pre registracije!'
-                    
-                ] 
-                ]
-                
-                
-                
-                
-                )) {
-            return $this->prikaz('register',
-                            ['errors' => $this->validator->getErrors()]);
-        }
+                ['ime' => 'required|min_length[2]|max_length[45]',
+                'prezime' => 'required|min_length[5]|max_length[45]',
+                'username'=> 'required|min_length[2]|max_length[12]',
+                'email' =>'required', 
+                'registration_password' => 'required|min_length[8]|max_length[45]',
+                'registration_password_confirm' => 'required|min_length[8]|max_length[45]|matches[registration_password]',
+                'datum_rodjenja' => 'required',
+                'adresa' => 'required|max_length[70]',
+                'registration_type' => 'required'],
+                ['ime' => ['required' => 'Ime ne sme biti prazno!','min_length' => 'Ime mora biti duze od 1 karaktera!','max_length'=>'Ime mora biti krace od 46 karaktera!'],
+                'prezime' => ['required' => 'Prezime ne sme biti prazno!','min_length' => 'Prezime mora biti duze od 4 karaktera!','max_length'=>'Prezime mora biti krace od 46 karaktera!'],
+                'username' => ['required' => 'Korisnicko ime ne sme biti prazno!','min_length' => 'Korisnicko mora biti duze od 1 karaktera!','max_length'=>'Korisnicko mora biti krace od 13 karaktera!'],
+                'email' => ['required' => 'Email je obavezan!'],
+                'registration_password' => ['required' => 'Lozinka ne sme biti prazna!','min_length' => 'Lozinka mora biti duza od 7 karaktera!','max_length'=>'Lozinka mora biti kraca od 46 karaktera!',],
+                'registration_password_confirm' => ['required' => 'Lozinka ne sme biti prazna!','min_length' => 'Lozinka mora biti duza od 7 karaktera!','max_length'=>'Lozinka mora biti kraca od 46 karaktera!','matches'=>'Lozinke se moraju poklapati!'],
+                'datum_rodjenja' => ['required' => 'Datum rodjenja je obavezan!'],
+                'adresa' => ['required' => 'Adresa ne sme biti prazna!','max_length'=>'Adresa mora biti kraca od 70 karaktera!',] ,
+                'registration_type' =>['required'=>'Morate odabrati tip korisnika pre registracije!'   ] ] 
+            )) return $this->prikaz('register',['errors' => $this->validator->getErrors()]);
 
         $korisniciModel = new KorisniciModel();
         if ($this->request->getVar('registration_type') == 'oglasavacReg') {
@@ -237,33 +177,43 @@ class Gost extends BaseController {
             'adresa' => $this->request->getVar('adresa'),
             'status' => $status
         ]);
+        if($tip == 'korisnik'){
+            $telo_poruke = "    
+                  <html>
+                  <body>
+                  <h1 style=\"color:blue;\">Podaci o korisniku</h1>
+                  <p>Ime: {$this->request->getVar('ime')}</p>     
+                  <p>Prezime: {$this->request->getVar('prezime')}</p>
+                  <p style=\"color:red;\">Korisnicko ime: {$this->request->getVar('username')}</p>
+                  <p style=\"color:red;\"><b><u>Sifra: {$this->request->getVar('registration_password')}</u></b></p>
+                  <p>E-mail adresa: {$this->request->getVar('email')}</p>
+                  <p>Adresa: {$this->request->getVar('adresa')}</p>
+                  <p>Tip korisnika: {$tip}</p>
+                  <p>Datum Rodjenja: {$this->request->getVar('datum_rodjenja')}</p>
+                  <p>Status: {$status}</p>
+                  </html> ";
+             
+            $promenljiva = $this->request->getVar('ime') . " " . $this->request->getVar('prezime');
+            Gost::mail($promenljiva, $this->request->getVar('email'), "Podaci o registrovanom korisniku na sajtu \"Smesti.se\"", $telo_poruke);
+        }
+
         return redirect()->to(site_url("Gost/login/"));
     }
 
+    //funkcija koja prikazuje stranicu za logovanje korisnika
     public function login($poruka = null) {
         $this->prikaz('login', ['poruka' => $poruka]);
     }
 
-    public function smestajPrikaz($id) {
-        $smestajModel = new SmestajModel();
-        $smestaj = $smestajModel->find($id);
-        $this->prikaz('smestaj', ['smestaj' => $smestaj]);
-    }
-
-    public function loginSubmit() { //Nikola Marovic
+    //funkcija koja potvrdjuje logovanje korisnika
+    public function loginSubmit() { 
         if (!$this->validate(['login_username' => 'required|min_length[2]', 'login_password' => 'required'],
-                
-                [//prikaz srpskih gresaka Aleksandar Nikolic
-
-                            'login_username' => [
-                                'required' => 'Korisničko ime ne sme biti prazno!',
-                                'min_length'=>'Korisničko ime mora imati vise od jednog karaktera!'
-                            ],
-                            'login_password' => [
-                                'required' => 'Lozinka ne sme biti prazna!'
-                            ],
-                        ]
-                )) {
+            ['login_username' => ['required' => 'Korisničko ime ne sme biti prazno!','min_length'=>'Korisničko ime mora imati vise od jednog karaktera!'],
+                        'login_password' => [
+                            'required' => 'Lozinka ne sme biti prazna!'
+                        ],
+                    ]
+            )) {
             return $this->prikaz('login',
                             ['errors' => $this->validator->getErrors()]);
         }
@@ -293,18 +243,25 @@ class Gost extends BaseController {
         }
     }
 
+    //funkcija koja prikazuje trazeni smestaj
+    public function smestajPrikaz($id) {
+        $smestajModel = new SmestajModel();
+        $smestaj = $smestajModel->find($id);
+        $this->prikaz('smestaj', ['smestaj' => $smestaj]);
+    }
+
+    //funkcija koja prikazuje sve recenzije za neki smestaj
     public function sveRecenzijeOglasa($id) {
         $smestajModel = new SmestajModel();
         $smestaj = $smestajModel->dohvSmestaj($id)[0];
         $this->prikaz('spisak_recenzija', ['smestaj' => $smestaj]);
     }
 
+    //funkcija koja se aktivira klikom na naziv sajta na vrhu ekrana ili na logo u gornjem levom uglu
+    //vraca trenutnog kontrolera na njegovu pocetnu stranicu
     public function backToHome() {
         return redirect()->to(site_url('Gost/index'));
     }
-
-    
-    
     
     //Ova metoda iz LogIn forme otvara stranicu sa formom za resetovanje sifre.
     //Klikom na dugme povrati poziva se metoda ispod.
@@ -334,7 +291,6 @@ class Gost extends BaseController {
         $korisniciModel = new KorisniciModel();
         $korisnik = $korisniciModel->where('username', $this->request->getVar('recovery_username'))->first();
         if ($korisnik != NULL) {//postoji korisnik sa tim imenom
-            
             //ovde se pravi sadrzaj Emaila
             $telo_poruke = "    
                   <html>
@@ -352,24 +308,17 @@ class Gost extends BaseController {
                   </html> ";
              
             $promenljiva = $korisnik->ime . " " . $korisnik->prezime;
-            $this->mail($promenljiva, $korisnik->email, "Podaci za prijavu na sajt \"Smesti.se\"", $telo_poruke);
-
-
+            Gost::mail($promenljiva, $korisnik->email, "Podaci za prijavu na sajt \"Smesti.se\"", $telo_poruke);
             return redirect()->to(site_url('Gost/index'));
         } else {//postoji korisnik sa tim imenom
-            return $this->prikaz('password_recovery',
-                            ['poruka' => "Greska: Još ne postoji korisnik sa unetim korisničkim imenom!"]);
+            return $this->prikaz('password_recovery',['poruka' => "Greska: Još ne postoji korisnik sa unetim korisničkim imenom!"]);
         }
     }
 
     //Ova metoda koristi PHPMailer biblioteku skinutu sa zvanicnog gihuba
     //prima podatke(ime i prezime primaoca,adresu,naslov i sadrzinu emaila)
-    public function mail($imeprezime, $eadresa, $subject, $body) {//Aleksandar Nikolic
- 
-        
+    public static function mail($imeprezime, $eadresa, $subject, $body) {
         $mail = new PHPMailer(false);
-
-
         //Server settings
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output    -> !!!!ovo je pravilo veliki problem
         $mail->isSMTP();                                            // Send using SMTP
@@ -391,29 +340,24 @@ class Gost extends BaseController {
         //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
         // sadrzina emaila
         $mail->isHTML(true);                                  // Set email format to HTML
-        //$mail->Subject = 'TEST';
         $mail->Subject = $subject;
-
-        //$mail->Body = '    
-        //    <html>
-        //    <body>
-        //    <h1>Account Details</h1>
-        //    <p>TEST<p>                
-        //    <p>Thank you for registering on our site, your account details are as follows:<br>
-        //    <p>TEST<p>
-        //    </body>
-        //    </html> ';
         $mail->Body = $body;
 
-        //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
         $mail->AltBody = 'Vas email sistem ne podrzava prikaz HTML sadrzaja ovog emaila.';
 
         if (!$mail->send()) {
             //echo 'Message could not be sent.';
-            // echo 'Mailer Error: ' . $mail->ErrorInfo;
+            //echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
-            // echo 'Message has been sent';
+            //echo 'Message has been sent';
         }
     }
 
+    //funkcija koja se koristi u ajax metodi za dohvatanje broja obavestenja
+    //s obzirom da je ovo kontroler koji nema funkcionalnost za primanje obavestenja, ova funkcija nema efekta
+    public function dohvBrojObavestenja(){
+        $data = ["broj"=>0];
+        header("Content-Type: application/json");
+        echo json_encode($data);
+    }
 }

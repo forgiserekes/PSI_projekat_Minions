@@ -1,7 +1,7 @@
 <div class='bodyContent'>
     <div class='row'>
-        <div class='col-sm-12 myTextCenter'>
-            <h2 class='blackTextTitleCenter'>Postavite vas oglas:</h2>
+        <div class='col-sm-12 text-center'>
+            <h2 class='pocetnaTextNaslov'>Postavite Vaš oglas:</h2>
         </div>
     </div>
     <div class='adPlacingDiv'>
@@ -238,21 +238,15 @@
                     <td>Slike smestaja:</td>
                     <td>
                         <input type="file" name="fileToUpload[]" id="fileToUpload" multiple accept='image/*'>
-                        <!--<input type='file' name='slikeSmestaja[]' multiple='true' accept='image/png, image/jpeg' />-->
                     </td>
                 </tr>
                 <tr>
-
                     <td></td>
                     <td colspan='3'>
                         <font color='red'>
                         <?php if (!empty($errors['opis'])) echo $errors['opis']; ?>
                         </font>
                     </td>
-
-
-
-
                 </tr>
                 <tr>
                     <td>Opis:</td>
@@ -274,13 +268,13 @@
                 <input type="hidden" name="lat" id="lat" size=12 value="">
                 <input type="hidden" name="lon" id="lon" size=12 value="">
 
-                <div id="map"></div>
-                <br>
-                <div id="search">
-                    <button type="button" onclick="addr_pretraga();">Lociraj</button>
+                <div id="search" class='text-center'>
+                    <button type="button" class='btn btn-success' onclick="addr_pretraga();">Lociraj</button>
                     <div id="results"></div>
                 </div>
 
+                <div id="map"></div>
+                <br>
                 <script type="text/javascript">
                     // Beograd
                     var startlat = 44.818611;
@@ -326,7 +320,6 @@
                     function parsirajAdrese(arr) {
                         var out = "<br />";
                         var i;
-
                         if (arr.length > 0) {
                             for (i = 0; i < arr.length; i++) {
                                 out += "<div class='address' title='Show Location and Coordinates' onclick='chooseAddr(" + arr[i].lat + ", " + arr[i].lon + ");return false;'>" + arr[i].display_name + "</div>";
@@ -335,7 +328,6 @@
                         } else {
                             document.getElementById('results').innerHTML = "Zao name je nema rezultata pretrage...";
                         }
-
                     }
 
                     function addr_pretraga() {
@@ -355,13 +347,10 @@
                         xmlhttp.send();
                     }
                 </script>
-
             </div>
-            <br>
-            <div>
-                <input type="submit" value="Postavi oglas" name="submit">
+            <div class='text-center'>
+                <input type="submit" class='btn btn-dark col-6' value="Postavi oglas" name="submit">
             </div>
         </form>
-
     </div>
 </div>

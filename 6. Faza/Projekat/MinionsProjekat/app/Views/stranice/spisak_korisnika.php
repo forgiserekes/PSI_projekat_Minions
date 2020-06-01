@@ -1,7 +1,7 @@
 <div class='bodyContent'>
     <div class='row '>
         <div class='col-sm-12'>
-            <h1 class='blackTextCenter'>Spisak svih zahteva za clanstvo oglašavača:</h1>
+            <h1 class='pocetnaTextNaslov text-center'>Spisak svih korisnika na sajtu:</h1>
         </div>
     </div>
     &nbsp;
