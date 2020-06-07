@@ -33,7 +33,7 @@ class Korisnik extends BaseController {
     //Ova funkcija se poziva kada korisnik pritisne dugme "Pretrazi"
     //na stranici pretraga postoji vise kriterijuma pretrage i korisnik
     //moze da bira po kojim kriterijumima ce da pretrazuje smestaje.
-    //Funkcija vraca niz smestaja koje prosledjuje dalje na obradu    
+    //Funkcija vraca niz smestaja koje prosledjuje dalje na obradu
     public function pretragaSubmit() {
         $smestajModel = new SmestajModel();
         $rezervacijaModel = new RezervacijaModel();
@@ -41,7 +41,17 @@ class Korisnik extends BaseController {
         if ($this->request->getVar('naziv') == '') {
             $sviSmestaji = $smestajModel->dohvSveOglase();
         }
-        
+        if($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != ''){
+          if(strtotime($this->request->getVar('datumOd')) >= strtotime($this->request->getVar('datumDo'))){
+              $greska = "Pocetni datum mora biti veci od krajnjeg datuma.";
+              return $this->prikaz('pretraga',['greska'=>$greska]);
+          }
+          //provera da li je pocetni datum veci od trenutnog
+          if(strtotime($this->request->getVar('datumOd')) <= strtotime(date("Y-m-d"))){
+              $greska = "Pocetni datum mora biti veci od trenutnog.";
+              return $this->prikaz('pretraga',['greska'=>$greska]);
+          }
+        }
         //Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i datumDo.
         //Za svaki od mestaja proverava da li je slobodan u trazenom terminu i izbacuje ga iz povratnog niza ako nije.
         if ($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != '') {
@@ -73,7 +83,7 @@ class Korisnik extends BaseController {
                 }
             }
         }
-        
+
         //Ovaj deo koda se izvrsava samo ako je popunjeno polje Kategorija. Za svaki od smestaja proverava da li se trazena kategorija
         //podudara sa kategorijom smestaja i izbacuje ga iz povratnog niza ako do poklapanja ne dodje.
         if ($this->request->getVar('kategorija') != '') {
@@ -91,6 +101,10 @@ class Korisnik extends BaseController {
                 if ($val->kapacitet <= $this->request->getVar('brojOsoba')) {
                     unset($sviSmestaji[$k]);
                 }
+            }
+            if(intval ($this->request->getVar('brojOsoba'))<0){
+              $greska = "Broj gostiju ne moze biti negativan.";
+              return $this->prikaz('pretraga',['greska'=>$greska]);
             }
         }
 
@@ -116,7 +130,7 @@ class Korisnik extends BaseController {
                 $a = $val->grad;
                 $search = $this->request->getVar('grad');
                 if (preg_match("/{$search}/i", $a)) {
-                    
+
                 } else {
                     unset($sviSmestaji[$k]);
                 }
@@ -145,7 +159,7 @@ class Korisnik extends BaseController {
     //Ova metoda se poziva nekon sto se popune sva polja na stranici
     //za ostavljanje rezervacije pritiskom na dugme "Rezervisi".
     //Ova metoda vrsi provere vezanu za rezervacije i
-    //ubacuje u bazu sve podatke o rezervaciji ako su sve provere prosle.    
+    //ubacuje u bazu sve podatke o rezervaciji ako su sve provere prosle.
     public function rezervisiSubmit() {
         if (!$this->validate(
             [
@@ -159,7 +173,7 @@ class Korisnik extends BaseController {
             'datumDo' => ['required' => "Morate uneti Datum Do!",], 'brojOsoba' => ['required' => "Morate uneti broj osoba!",], 'napomena' => ['required' => "Morate uneti napomenu!",]
             ]
         )) return $this->prikaz('rezervacija_smestaja',['errors' => $this->validator->getErrors()]);
-        
+
         //provera da li je pocetni datum manji od krajnjeg
         if(strtotime($this->request->getVar('datumOd')) >= strtotime($this->request->getVar('datumDo'))){
             $greska = "Pocetni datum mora biti veci od krajnjeg datuma.";

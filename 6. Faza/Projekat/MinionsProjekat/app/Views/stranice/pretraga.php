@@ -7,6 +7,11 @@
             </div>
             <div class='col-sm-12 blackTextCenter'>
                 <p>Izaberite kriterijume pretrage:</p>
+                <?php
+                  if(isset($greska)){
+                      echo "<span> <font color='red'>$greska</font><br> </span>";
+                  }
+                ?>
             </div>
         </div>
         <div class = 'row'>
@@ -18,31 +23,31 @@
                             <?php echo "Naziv:"; ?>
                         </td>
                         <td >
-                            <input type="text" name="naziv">   
+                            <input type="text" name="naziv">
                         </td>
                     </tr>
                     <tr >
-                        <td>  
+                        <td>
                             <?php echo "Datum od:"; ?>
                         </td>
                         <td >
-                             <input type="date" name="datumOd">                        
+                             <input type="date" name="datumOd">
                         </td>
                     </tr>
                     <tr >
-                        <td>  
+                        <td>
                             <?php echo "Datum do:"; ?>
                         </td>
                         <td>
-                            <input type="date" name="datumDo">                       
+                            <input type="date" name="datumDo">
                         </td>
                     </tr>
                     <tr>
-                        <td> 
+                        <td>
                             <?php echo "Kategorija:"; ?>
                         </td>
-                        <td>                
-                            <?php 
+                        <td>
+                            <?php
                             $options = [
                                 ''=>'',
                                 'soba' => 'Soba',
@@ -55,35 +60,35 @@
                         </td>
                     </tr>
                     <tr>
-                        <td> 
-                             Broj soba:
+                        <td>
+                             Broj osoba:
                         </td>
                         <td>
                             <input type="number" name="brojOsoba">
                         </td>
                     </tr>
                     <tr>
-                        <td> 
+                        <td>
                             <?php echo "Cena do"; ?>
                         </td>
                         <td>
-                            <input type="number" name="cena"> 
+                            <input type="number" name="cena">
                         </td>
                     </tr>
                     <tr>
-                        <td> 
+                        <td>
                             <?php echo "Grad"; ?>
                         </td>
                         <td>
-                            <input type="text" name="grad">   
+                            <input type="text" name="grad">
                         </td>
-                    </tr>                   
+                    </tr>
                     <tr>
                         <td colspan='2' class='text-center'>
                             <div class='myTextCenter'>
                                 <?php echo form_submit("pretragaSubmit", "Pretrazi"); ?>
                                 <?php form_close(); ?>
-                            </div>                           
+                            </div>
                         </td>
                     </tr>
                 </table>

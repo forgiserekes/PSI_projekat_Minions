@@ -32,7 +32,7 @@ class Gost extends BaseController {
         $smestajModel = new SmestajModel();
         $this->prikaz('pocetna', ['sviSmestaji' => $smestajModel->dohvSveOglase()]);
     }
-    
+
     //funkcija koja prikazuje stranicu za pretragu smestaja
     public function pretraga() {
         $this->prikaz('pretraga', []);
@@ -41,13 +41,24 @@ class Gost extends BaseController {
     //Ova funkcija se poziva kada korisnik pritisne dugme "Pretrazi"
     //na stranici pretraga postoji vise kriterijuma pretrage i korisnik
     //moze da bira po kojim kriterijumima ce da pretrazuje smestaje.
-    //Funkcija vraca niz smestaja koje prosledjuje dalje na obradu 
+    //Funkcija vraca niz smestaja koje prosledjuje dalje na obradu
     public function pretragaSubmit() {
         $smestajModel = new SmestajModel();
         $rezervacijaModel = new RezervacijaModel();
         $sviSmestaji = $smestajModel->dohvOglasPoNazivu($this->request->getVar('naziv'));
         if ($this->request->getVar('naziv') == '') {
             $sviSmestaji = $smestajModel->dohvSveOglase();
+        }
+        if ($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != ''){
+            if(strtotime($this->request->getVar('datumOd')) >= strtotime($this->request->getVar('datumDo'))){
+                $greska = "Pocetni datum mora biti veci od krajnjeg datuma.";
+                return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+            }
+            //provera da li je pocetni datum veci od trenutnog
+            if(strtotime($this->request->getVar('datumOd')) <= strtotime(date("Y-m-d"))){
+                $greska = "Pocetni datum mora biti veci od trenutnog.";
+                return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+            }
         }
         //Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i datumDo.
         //Za svaki od mestaja proverava da li je slobodan u trazenom terminu i izbacuje ga iz povratnog niza ako nije.
@@ -76,7 +87,7 @@ class Gost extends BaseController {
                 }
             }
         }
-        
+
         //Ovaj deo koda se izvrsava samo ako je popunjeno polje Kategorija.
         //Za svaki do smestaja proverava da li se trazena kategorija podudara
         //sa kategorijom smestaja i izbacuje ga iz povratnog niza ako do
@@ -88,19 +99,23 @@ class Gost extends BaseController {
                 }
             }
         }
-        
+
         //Ovaj deo koda se izvrsava samo ako je popunjeno polje Broj osoba.
         //Za svaki do smestaja proverava da li je kapacitet smestaja veci od trazenog
         //kapaciteta i izbacuje ga iz povratnog niza ako uslov nije ispunjen.
-        
+
         if ($this->request->getVar('brojOsoba') != '') {
             foreach ($sviSmestaji as $k => $val) {
                 if ($val->kapacitet < $this->request->getVar('brojOsoba')) {
                     unset($sviSmestaji[$k]);
                 }
             }
+            if(intval ($this->request->getVar('brojOsoba'))<0){
+              $greska = "Broj gostiju ne moze biti negativan.";
+            return $this->prikaz('pretraga',['greska'=>$greska]);
+          }
         }
-        
+
         //Ovaj deo koda se izvrsava samo ako je popunjeno polje Cena.
         //Za svaki do smestaja proverava da li je cena smestaja veca od trazenoge i
         //izbacuje ga iz povratnog niza ako uslov nije ispunjen.
@@ -111,7 +126,7 @@ class Gost extends BaseController {
                 }
             }
         }
-        
+
         //Ovaj deo koda se izvrsava samo ako je popunjeno polje Grad.
         //U polje grad se ne mora uneti tacan naziv grada vec se moze
         //uneti i deo naziva grada, ako se uneti string poklapa sa nekim
@@ -140,7 +155,7 @@ class Gost extends BaseController {
                 ['ime' => 'required|min_length[2]|max_length[45]',
                 'prezime' => 'required|min_length[5]|max_length[45]',
                 'username'=> 'required|min_length[2]|max_length[12]',
-                'email' =>'required', 
+                'email' =>'required',
                 'registration_password' => 'required|min_length[8]|max_length[45]',
                 'registration_password_confirm' => 'required|min_length[8]|max_length[45]|matches[registration_password]',
                 'datum_rodjenja' => 'required',
@@ -154,7 +169,7 @@ class Gost extends BaseController {
                 'registration_password_confirm' => ['required' => 'Lozinka ne sme biti prazna!','min_length' => 'Lozinka mora biti duza od 7 karaktera!','max_length'=>'Lozinka mora biti kraca od 46 karaktera!','matches'=>'Lozinke se moraju poklapati!'],
                 'datum_rodjenja' => ['required' => 'Datum rodjenja je obavezan!'],
                 'adresa' => ['required' => 'Adresa ne sme biti prazna!','max_length'=>'Adresa mora biti kraca od 70 karaktera!',] ,
-                'registration_type' =>['required'=>'Morate odabrati tip korisnika pre registracije!'   ] ] 
+                'registration_type' =>['required'=>'Morate odabrati tip korisnika pre registracije!'   ] ]
             )) return $this->prikaz('register',['errors' => $this->validator->getErrors()]);
 
         $korisniciModel = new KorisniciModel();
@@ -178,11 +193,11 @@ class Gost extends BaseController {
             'status' => $status
         ]);
         if($tip == 'korisnik'){
-            $telo_poruke = "    
+            $telo_poruke = "
                   <html>
                   <body>
                   <h1 style=\"color:blue;\">Podaci o korisniku</h1>
-                  <p>Ime: {$this->request->getVar('ime')}</p>     
+                  <p>Ime: {$this->request->getVar('ime')}</p>
                   <p>Prezime: {$this->request->getVar('prezime')}</p>
                   <p style=\"color:red;\">Korisnicko ime: {$this->request->getVar('username')}</p>
                   <p style=\"color:red;\"><b><u>Sifra: {$this->request->getVar('registration_password')}</u></b></p>
@@ -192,7 +207,7 @@ class Gost extends BaseController {
                   <p>Datum Rodjenja: {$this->request->getVar('datum_rodjenja')}</p>
                   <p>Status: {$status}</p>
                   </html> ";
-             
+
             $promenljiva = $this->request->getVar('ime') . " " . $this->request->getVar('prezime');
             Gost::mail($promenljiva, $this->request->getVar('email'), "Podaci o registrovanom korisniku na sajtu \"Smesti.se\"", $telo_poruke);
         }
@@ -206,7 +221,7 @@ class Gost extends BaseController {
     }
 
     //funkcija koja potvrdjuje logovanje korisnika
-    public function loginSubmit() { 
+    public function loginSubmit() {
         if (!$this->validate(['login_username' => 'required|min_length[2]', 'login_password' => 'required'],
             ['login_username' => ['required' => 'Korisničko ime ne sme biti prazno!','min_length'=>'Korisničko ime mora imati vise od jednog karaktera!'],
                         'login_password' => [
@@ -262,14 +277,14 @@ class Gost extends BaseController {
     public function backToHome() {
         return redirect()->to(site_url('Gost/index'));
     }
-    
+
     //Ova metoda iz LogIn forme otvara stranicu sa formom za resetovanje sifre.
     //Klikom na dugme povrati poziva se metoda ispod.
     public function password_recovery($poruka = null) { //
         $this->prikaz('password_recovery.php', ['poruka' => $poruka]);
     }
 
-    
+
     //Ova metoda se poziva kada korisnik stisne dugme za povrat sifre
     //u slucaju da korisnik ne unese korisnicko ime verifikacijom se vrati na tu istu formu uz obavestenje
     //u slucaju da korisnik sa uneim korisnickim imenom ne postoji vraca se na formu uz prikladno obavestenje
@@ -277,7 +292,7 @@ class Gost extends BaseController {
     //redirektuje na pocetnu stranu Gosta.
     public function password_recoverySubmit() { //
         if (!$this->validate(['recovery_username' => 'required'],
-                        [//prikaz srpskih gresaka 
+                        [//prikaz srpskih gresaka
                             //ovde se prave nase poruke koje se pokazuju ako neko polje ne prodje validaciju
                             'recovery_username' => [
                                 'required' => 'Korisničko ime ne sme biti prazno!'
@@ -292,11 +307,11 @@ class Gost extends BaseController {
         $korisnik = $korisniciModel->where('username', $this->request->getVar('recovery_username'))->first();
         if ($korisnik != NULL) {//postoji korisnik sa tim imenom
             //ovde se pravi sadrzaj Emaila
-            $telo_poruke = "    
+            $telo_poruke = "
                   <html>
                   <body>
                   <h1 style=\"color:blue;\">Podaci o korisniku</h1>
-                  <p>Ime: {$korisnik->ime}</p>     
+                  <p>Ime: {$korisnik->ime}</p>
                   <p>Prezime: {$korisnik->prezime}</p>
                   <p style=\"color:red;\">Korisnicko ime: {$korisnik->username}</p>
                   <p style=\"color:red;\"><b><u>Sifra: {$korisnik->password}</u></b></p>
@@ -306,7 +321,7 @@ class Gost extends BaseController {
                   <p>Datum Rodjenja: {$korisnik->datumRodjenja}</p>
                   <p>Status: {$korisnik->status}</p>
                   </html> ";
-             
+
             $promenljiva = $korisnik->ime . " " . $korisnik->prezime;
             Gost::mail($promenljiva, $korisnik->email, "Podaci za prijavu na sajt \"Smesti.se\"", $telo_poruke);
             return redirect()->to(site_url('Gost/index'));
