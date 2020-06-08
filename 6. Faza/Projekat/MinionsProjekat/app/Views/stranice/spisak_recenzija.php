@@ -153,6 +153,17 @@
                         }
                     }
                 ?>
+                <?php if($controller=='Gost' || $controller=='Korisnik'){ ?>
+                <tr>
+                    <td class='tableText' style="width:100px">Odgovor:</td>
+                    <td style="width:450px">
+                    <?php 
+                    if($recenzija->odgovor) echo $recenzija->odgovor;
+                    else echo "Još uvek ne postoji odgovor.";
+                    ?>
+                    </td>
+                </tr>
+                <?php } ?>
             </table>
             <?php
             }
