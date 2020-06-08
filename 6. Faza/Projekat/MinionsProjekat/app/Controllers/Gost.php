@@ -120,6 +120,10 @@ class Gost extends BaseController {
         //Za svaki do smestaja proverava da li je cena smestaja veca od trazenoge i
         //izbacuje ga iz povratnog niza ako uslov nije ispunjen.
         if ($this->request->getVar('cena') != '') {
+          if(intval($this->request->getVar('cena'))){
+              $greska = "Cena mora biti nenegativna.";
+              return $this->prikaz('pretraga',['greska'=>$greska]);
+          }
             foreach ($sviSmestaji as $k => $val) {
                 if ($val->cena >= $this->request->getVar('cena')) {
                     unset($sviSmestaji[$k]);
