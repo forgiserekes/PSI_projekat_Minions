@@ -52,12 +52,12 @@ class Gost extends BaseController {
         if ($this->request->getVar('datumOd') != '' && $this->request->getVar('datumDo') != ''){
             if(strtotime($this->request->getVar('datumOd')) >= strtotime($this->request->getVar('datumDo'))){
                 $greska = "Pocetni datum mora biti veci od krajnjeg datuma.";
-                return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+                return $this->prikaz('pretraga',['greska'=>$greska]);
             }
             //provera da li je pocetni datum veci od trenutnog
             if(strtotime($this->request->getVar('datumOd')) <= strtotime(date("Y-m-d"))){
                 $greska = "Pocetni datum mora biti veci od trenutnog.";
-                return $this->prikaz('rezervacija_smestaja',['greska'=>$greska]);
+                return $this->prikaz('pretraga',['greska'=>$greska]);
             }
         }
         //Ovaj deo koda se izvrsava samo ako su popunjena polja datumOd i datumDo.
